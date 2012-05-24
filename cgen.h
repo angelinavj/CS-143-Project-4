@@ -31,6 +31,8 @@ private:
    void code_bools(int);
    void code_select_gc();
    void code_constants();
+   void code_class_nameTab_wrapper();
+   void code_class_nameTab(CgenNodeP classNode);
 
 // The following creates an inheritance graph from
 // a list of classes.  The graph is implemented as

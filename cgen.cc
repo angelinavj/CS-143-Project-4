@@ -815,6 +815,23 @@ void CgenNode::set_parentnd(CgenNodeP p)
   parentnd = p;
 }
 
+void CgenClassTable::code_class_nameTab(CgenNodeP classNode) {
+  // print out the .word str_constX
+
+  str << WORD << stringtable.lookup_string((classNode->get_name())->get_string()) << endl;
+
+  for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
+    code_class_nameTab(l->hd());
+  }
+}
+
+void CgenClassTable::code_class_nameTab_wrapper() {
+  // print out the header
+
+  str << WORD << "-1" << endl;
+  str << CLASSNAMETAB << LABEL;
+  code_class_nameTab(root());
+}
 
 
 void CgenClassTable::code()
@@ -828,6 +845,7 @@ void CgenClassTable::code()
   if (cgen_debug) cout << "coding constants" << endl;
   code_constants();
 
+  code_class_nameTab_wrapper();
 //                 Add your code to emit
 //                   - prototype objects
 //                   - class_nameTab
