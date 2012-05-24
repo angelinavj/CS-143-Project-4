@@ -33,7 +33,10 @@ private:
    void code_constants();
    void code_class_nameTab_wrapper();
    void code_class_nameTab(CgenNodeP classNode);
-
+   void code_class_objTab_wrapper();
+   void code_class_objTab(CgenNodeP classNode);
+   void code_class_dispTab(CgenNodeP classNode);
+   void code_class_dispTab_all(CgenNodeP root);
 // The following creates an inheritance graph from
 // a list of classes.  The graph is implemented as
 // a tree of `CgenNode', and class names are placed
