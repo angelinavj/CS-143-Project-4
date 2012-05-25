@@ -21,11 +21,13 @@ private:
    int stringclasstag;
    int intclasstag;
    int boolclasstag;
-
+   Symbol* class_tags;
+   int numClasses;
+   int nextTagNumber;
 
 // The following methods emit code for
 // constants and global declarations.
-
+   
    void code_global_data();
    void code_global_text();
    void code_bools(int);
@@ -37,6 +39,14 @@ private:
    void code_class_objTab(CgenNodeP classNode);
    void code_class_dispTab(CgenNodeP classNode);
    void code_class_dispTab_all(CgenNodeP root);
+   void code_set_classTags(CgenNodeP classNode);
+   void code_gen_classTags(CgenNodeP root);
+   int get_num_classes(CgenNodeP classNode);
+   int get_class_tag(Symbol className);
+   int code_get_numAttr(CgenNodeP classNode);
+   void code_make_objProt(CgenNodeP classNode);
+   void code_make_objProt_all(CgenNodeP classNode);
+
 // The following creates an inheritance graph from
 // a list of classes.  The graph is implemented as
 // a tree of `CgenNode', and class names are placed

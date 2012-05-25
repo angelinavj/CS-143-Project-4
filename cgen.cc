@@ -548,6 +548,61 @@ void CgenClassTable::code_global_data()
 //
 //***************************************************
 
+/*
+Given the name of a class, return its class id #. 
+If class does not exist, return -1. code_gen_classTags
+MUST BE CALLED BEFORE THIS METHOD 
+*/
+int CgenClassTable::get_class_tag(Symbol className) {
+  for(int i = 0; i < numClasses; i++) {
+    Symbol curName = class_tags[i];
+    if(className == curName) return i;
+  }
+
+  return -1;
+}
+
+/*
+  code_gen_classTags will traverse the tree and create an array
+  (class_tags) that contains the name of every class in the program
+ */
+void CgenClassTable::code_gen_classTags(CgenNodeP root) {
+  numClasses = get_num_classes(root);
+  class_tags = new Symbol[numClasses];
+  nextTagNumber = 0;
+
+  code_set_classTags(root);
+}
+
+/*
+  code_set_classTags is a helper function that does the actual tree
+  traversal and populates the class_tags table
+ */
+void CgenClassTable::code_set_classTags(CgenNodeP classNode) {
+  if(classNode == NULL) return;
+
+  class_tags[nextTagNumber] = classNode->get_name();
+  nextTagNumber++;
+
+  for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
+    code_set_classTags(l->hd());
+  }
+}
+
+/*
+  get_num_classes returns the total number of classes in the program
+ */
+int CgenClassTable::get_num_classes(CgenNodeP classNode) {
+  if(classNode == NULL) return 0;
+  int sum = 1;
+
+  for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
+    sum += get_num_classes(l->hd());
+  }
+
+  return sum;
+}
+
 void CgenClassTable::code_global_text()
 {
   str << GLOBAL << HEAP_START << endl
@@ -619,15 +674,17 @@ void CgenClassTable::code_constants()
 
 CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
 {
-   stringclasstag = 0 /* Change to your String class tag here */;
-   intclasstag =    0 /* Change to your Int class tag here */;
-   boolclasstag =   0 /* Change to your Bool class tag here */;
-
    enterscope();
    if (cgen_debug) cout << "Building CgenClassTable" << endl;
    install_basic_classes();
    install_classes(classes);
    build_inheritance_tree();
+
+   code_gen_classTags(root());
+
+   stringclasstag = get_class_tag(Str); 
+   intclasstag = get_class_tag(Int);
+   boolclasstag = get_class_tag(Bool);
 
    code();
    exitscope();
@@ -847,6 +904,66 @@ void CgenClassTable::code_class_objTab_wrapper() {
 }
 
 
+/*
+  code_get_numAttr gets the number of attributes (including inheritted)
+  for a given class(Node) by recursively walking up the tree and then
+  printing out the attributes of the class as it walks back down; this
+  gets the order of the attributes correct from ancestors -> child
+ */
+int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
+  if (classNode == NULL) {
+    return 0;
+  }
+
+  //Recursive Call
+  int sum = code_get_numAttr(classNode->get_parentnd());
+  
+  Features attributes = classNode->get_attributes();
+  sum += attributes->len();
+
+  return sum;
+};
+
+/*
+  code_make_objProt makes the object prototype by printing out the class
+  tag, size, dispatch pointer, and list of all attributes (including inheritted)
+ */
+void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
+  if (classNode == NULL) {
+    return;
+  }
+
+  //Recursive Call
+  code_make_objProt(classNode->get_parentnd());
+  
+  //Get all attributes for the class and output
+  Features attributes = classNode->get_attributes();
+  for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
+    str << WORD; attributes->nth(i)->get_name()->code_ref(str); str << endl; 
+  }
+
+};
+
+/*
+  code_make_objProt_all makes the object prototype for every class in the
+  program by calling the helper function code_make_objProt for every class
+ */
+void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
+  int numAttr = code_get_numAttr(classNode);
+  int classTag = get_class_tag(classNode->get_name());
+
+  str << WORD << "-1" << endl;
+  emit_protobj_ref(classNode->get_name(), str); str << LABEL;
+  str << WORD << classTag << endl;
+  str << WORD << (numAttr + 3) << endl;
+
+  code_make_objProt(classNode);
+
+  for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
+    code_make_objProt_all(l->hd());
+  }
+}
+
 void CgenClassTable::code_class_dispTab(CgenNodeP classNode) {
   if (classNode == NULL) {
     return;
@@ -1016,6 +1133,15 @@ void no_expr_class::code(ostream &s) {
 void object_class::code(ostream &s) {
 }
 
+Features class__class::get_attributes() {
+  Features f = nil_Features();
+  for (int i = features->first(); features->more(i); i = features->next(i)) {
+    if (!features->nth(i)->is_method()) {
+      f = append_Features(f, single_Features(features->nth(i)));
+    }
+  }
+  return f;
+}
 
 Features class__class::get_methods() {
   Features f = nil_Features();
