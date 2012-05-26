@@ -3,7 +3,6 @@
 #include "emit.h"
 #include "cool-tree.h"
 #include "symtab.h"
-#include "vector.h"
 
 enum Basicness     {Basic, NotBasic};
 #define TRUE 1
@@ -17,7 +16,6 @@ typedef CgenNode *CgenNodeP;
 
 class CgenClassTable : public SymbolTable<Symbol,CgenNode> {
 private:
-   vector<CgenNode> a;
    List<CgenNode> *nds;
    ostream& str;
    int stringclasstag;

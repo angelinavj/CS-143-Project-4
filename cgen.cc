@@ -403,6 +403,8 @@ void StringEntry::code_def(ostream& s, int stringclasstag)
 
 
  /***** Add dispatch information for class String ******/
+  /* TODO: Very sketchy! Why didn't the starter code just have this */
+      emit_disptable_ref(Str,s);
 
       s << endl;                                              // dispatch table
       s << WORD;  lensym->code_ref(s);  s << endl;            // string length
@@ -445,6 +447,8 @@ void IntEntry::code_def(ostream &s, int intclasstag)
       << WORD; 
 
  /***** Add dispatch information for class Int ******/
+ /* TODO: Very sketchy! Why didn't the starter code just have this */
+      emit_disptable_ref(Int,s);
 
       s << endl;                                          // dispatch table
       s << WORD << str << endl;                           // integer value
@@ -489,6 +493,8 @@ void BoolConst::code_def(ostream& s, int boolclasstag)
       << WORD;
 
  /***** Add dispatch information for class Bool ******/
+   /* TODO: Very sketchy! Why didn't the starter code just have this */
+      emit_disptable_ref(Bool,s);
 
       s << endl;                                            // dispatch table
       s << WORD << val << endl;                             // value (0 or 1)
