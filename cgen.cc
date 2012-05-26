@@ -939,7 +939,16 @@ void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
   //Get all attributes for the class and output
   Features attributes = classNode->get_attributes();
   for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
-    str << WORD; attributes->nth(i)->get_name()->code_ref(str); str << endl; 
+    str << WORD;
+ 
+    if(((attr_class*)(attributes->nth(i)))->type_decl == Int) {
+      inttable.lookup_string("0")->code_ref(str);
+    }
+    else {
+      str << "0";
+    }
+
+    str << endl; 
   }
 
 };
@@ -956,6 +965,7 @@ void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
   emit_protobj_ref(classNode->get_name(), str); str << LABEL;
   str << WORD << classTag << endl;
   str << WORD << (numAttr + 3) << endl;
+  str << WORD; emit_disptable_ref(classNode->get_name(),str); str << endl;
 
   code_make_objProt(classNode);
 
@@ -1003,6 +1013,8 @@ void CgenClassTable::code()
   code_class_nameTab_wrapper();
   code_class_objTab_wrapper();
   code_class_dispTab_all(root());
+  code_make_objProt_all(root());
+
 //                 Add your code to emit
 //                   - prototype objects
 //                   - class_nameTab
@@ -1133,6 +1145,15 @@ void no_expr_class::code(ostream &s) {
 void object_class::code(ostream &s) {
 }
 
+/*
+  Some helper methods
+ */
+
+/*
+  get_attributes() gets the attributes for a given class node
+  including inherited attributes; looks at the list of features for a
+  class and checks each one to see if it's a method or not
+ */
 Features class__class::get_attributes() {
   Features f = nil_Features();
   for (int i = features->first(); features->more(i); i = features->next(i)) {
@@ -1143,6 +1164,10 @@ Features class__class::get_attributes() {
   return f;
 }
 
+/*
+  get_methods() gets the methods for a given class node
+  including inherited methods
+ */
 Features class__class::get_methods() {
   Features f = nil_Features();
   for (int i = features->first(); features->more(i); i = features->next(i)) {
