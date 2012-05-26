@@ -950,6 +950,12 @@ void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
     if(((attr_class*)(attributes->nth(i)))->type_decl == Int) {
       inttable.lookup_string("0")->code_ref(str);
     }
+    else if(((attr_class*)(attributes->nth(i)))->type_decl == Str) {
+      stringtable.lookup_string("")->code_ref(str);
+    }
+    else if(((attr_class*)(attributes->nth(i)))->type_decl == Bool) {
+      falsebool.code_ref(str);
+    }
     else {
       str << "0";
     }
