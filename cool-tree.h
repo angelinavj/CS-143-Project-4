@@ -187,7 +187,7 @@ public:
    }
    Feature copy_Feature();
    void dump(ostream& stream, int n);
-
+   int get_num_params();
 #ifdef Feature_SHARED_EXTRAS
    Feature_SHARED_EXTRAS
 #endif

@@ -1012,7 +1012,15 @@ void CgenClassTable::code_class_dispTab_all(CgenNodeP root) {
 
 
 void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) {
+  emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
+  emit_move(FP, SP, str);
+  emit_push(RA, str);
+  method->expr->code(str);
+  emit_load(RA, 1, SP, str);
+  emit_addiu(SP, SP, 4 * method->get_num_params() + 8, str);
+  emit_load(FP, 0, SP, str);
+  emit_return(str); 
 }
 
 
@@ -1020,12 +1028,12 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
   if (root == NULL) { return; }
 
 
-  if ((root->get_name() != Object) && (root->get_name() != String) && (root->get_name() != Bool) &&
+  if ((root->get_name() != Object) && (root->get_name() != Str) && (root->get_name() != Bool) &&
       (root->get_name() != IO) && (root->get_name() != Int)) {
     Features methods = root->get_methods();
 
     for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
-      code_gen_method(root, method->nth(i));
+      code_gen_method(root, (method_class *)(methods->nth(i)));
     }
   }
 
@@ -1128,15 +1136,39 @@ void let_class::code(ostream &s) {
 }
 
 void plus_class::code(ostream &s) {
+  e1->code(s);
+  emit_push(ACC, s);
+  e2->code(s); 
+  emit_load(T1, 1, SP, s);
+  emit_add(ACC, T1, ACC, s);
+  emit_addiu(SP, SP, 4, s);
 }
 
 void sub_class::code(ostream &s) {
+  e1->code(s);
+  emit_push(ACC, s);
+  e2->code(s); 
+  emit_load(T1, 1, SP, s);
+  emit_sub(ACC, T1, ACC, s);
+  emit_addiu(SP, SP, 4, s);
 }
 
 void mul_class::code(ostream &s) {
+  e1->code(s);
+  emit_push(ACC, s);
+  e2->code(s); 
+  emit_load(T1, 1, SP, s);
+  emit_mul(ACC, T1, ACC, s);
+  emit_addiu(SP, SP, 4, s);
 }
 
 void divide_class::code(ostream &s) {
+  e1->code(s);
+  emit_push(ACC, s);
+  e2->code(s); 
+  emit_load(T1, 1, SP, s);
+  emit_div(ACC, T1, ACC, s);
+  emit_addiu(SP, SP, 4, s);
 }
 
 void neg_class::code(ostream &s) {
@@ -1223,4 +1255,8 @@ bool method_class::is_method() {
 
 bool attr_class::is_method() {
   return false;
+}
+
+int method_class::get_num_params() {
+  return formals->len();
 }
