@@ -1011,6 +1011,30 @@ void CgenClassTable::code_class_dispTab_all(CgenNodeP root) {
 }
 
 
+void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) {
+
+}
+
+
+void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
+  if (root == NULL) { return; }
+
+
+  if ((root->get_name() != Object) && (root->get_name() != String) && (root->get_name() != Bool) &&
+      (root->get_name() != IO) && (root->get_name() != Int)) {
+    Features methods = root->get_methods();
+
+    for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
+      code_gen_method(root, method->nth(i));
+    }
+  }
+
+  for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
+    code_gen_methods_all(l->hd());
+  }
+}
+
+
 void CgenClassTable::code()
 {
   if (cgen_debug) cout << "coding global data" << endl;
@@ -1038,6 +1062,9 @@ void CgenClassTable::code()
 
 //                 Add your code to emit
 //                   - object initializer
+
+  code_gen_methods_all(root());
+
 //                   - the class methods
 //                   - etc...
 
