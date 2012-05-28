@@ -51,6 +51,7 @@ Symbol
        cool_abort,
        copy,
        Int,
+       init,
        in_int,
        in_string,
        IO,
@@ -81,6 +82,7 @@ static void initialize_constants(void)
   concat      = idtable.add_string("concat");
   cool_abort  = idtable.add_string("abort");
   copy        = idtable.add_string("copy");
+  init        = idtable.add_string("init");
   Int         = idtable.add_string("Int");
   in_int      = idtable.add_string("in_int");
   in_string   = idtable.add_string("in_string");
@@ -1043,6 +1045,45 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
 }
 
 
+void CgenClassTable::code_gen_init(CgenNodeP classNode) {
+  if ((classNode->get_name() != Object) && (classNode->get_name() != Str) && (classNode->get_name() != Bool) &&
+      (classNode->get_name() != IO) && (classNode->get_name() != Int)) {
+    return;
+  }
+
+  Expressions initBody = nil_Expressions();
+  Features attributes = classNode->get_attributes();
+  for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
+    attr_class *attr = (attr_class *)(attributes->nth(i));
+    // if attr has an init expr
+    // initBody = append_Expressions(initBody,
+    //					new assign_class(attr->get_name(), attr->init));
+    // if attr is no expr
+    if (attr->type_decl == Str) {
+      initBody = append_Expressions(initBody,
+					single_Expressions(new assign_class(attr->get_name(), new string_const_class(stringtable.lookup_string(""))) ));
+    } else if (attr->type_decl == Int) {
+      initBody = append_Expressions(initBody,
+					single_Expressions(new assign_class(attr->get_name(), new int_const_class(inttable.lookup_string("0"))) ));
+    } else if (attr->type_decl == Bool) {
+      initBody = append_Expressions(initBody,
+					single_Expressions(new assign_class(attr->get_name(), new bool_const_class(false))));
+    }
+  }
+  initBody = append_Expressions(initBody, single_Expressions(new object_class(self)));
+  method_class *method = new method_class(init, nil_Formals(), SELF_TYPE,
+					      new block_class(initBody));
+  code_gen_method(classNode, method);
+}
+
+void CgenClassTable::code_gen_init_objects(CgenNodeP root) {
+
+  code_gen_init(root);
+  for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
+    code_gen_init_objects(l->hd());
+  }
+}
+
 void CgenClassTable::code()
 {
   if (cgen_debug) cout << "coding global data" << endl;
@@ -1068,6 +1109,7 @@ void CgenClassTable::code()
   if (cgen_debug) cout << "coding global text" << endl;
   code_global_text();
 
+  code_gen_init_objects(root());
 //                 Add your code to emit
 //                   - object initializer
 

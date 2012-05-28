@@ -50,6 +50,8 @@ private:
    void code_make_objProt(CgenNodeP classNode);
    void code_make_objProt_all(CgenNodeP classNode);
 
+   void code_gen_init(CgenNodeP classNode);
+   void code_gen_init_objects(CgenNodeP root);
 // The following creates an inheritance graph from
 // a list of classes.  The graph is implemented as
 // a tree of `CgenNode', and class names are placed
