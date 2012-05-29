@@ -988,6 +988,11 @@ void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
   }
 }
 
+/*
+ * code_class_dispTab makes the dispatch table for every class in the
+ * program. A class dispatch table includes the methods that the class itself
+ * has and the methods that its ancestors has.
+ */
 void CgenClassTable::code_class_dispTab(CgenNodeP classNode) {
   if (classNode == NULL) {
     return;
@@ -1032,6 +1037,10 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
 
   if ((root->get_name() != Object) && (root->get_name() != Str) && (root->get_name() != Bool) &&
       (root->get_name() != IO) && (root->get_name() != Int)) {
+    /*
+     * Generating codes for all the methods that this current node has.
+     * Doesn't include the methods that the ancestors have.
+     */
     Features methods = root->get_methods();
 
     for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
@@ -1044,7 +1053,7 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
   }
 }
 
-
+// TODO: this method needs to be completed.
 void CgenClassTable::code_gen_init(CgenNodeP classNode) {
   if ((classNode->get_name() != Object) && (classNode->get_name() != Str) && (classNode->get_name() != Bool) &&
       (classNode->get_name() != IO) && (classNode->get_name() != Int)) {
@@ -1076,6 +1085,7 @@ void CgenClassTable::code_gen_init(CgenNodeP classNode) {
   code_gen_method(classNode, method);
 }
 
+// TODO : this method needs to be completed.
 void CgenClassTable::code_gen_init_objects(CgenNodeP root) {
 
   code_gen_init(root);
@@ -1264,7 +1274,7 @@ void object_class::code(ostream &s) {
 
 /*
   get_attributes() gets the attributes for a given class node
-  including inherited attributes; looks at the list of features for a
+  doesn't include inherited attributes; looks at the list of features for a
   class and checks each one to see if it's a method or not
  */
 Features class__class::get_attributes() {
@@ -1279,7 +1289,7 @@ Features class__class::get_attributes() {
 
 /*
   get_methods() gets the methods for a given class node
-  including inherited methods
+  doesn't include inherited methods
  */
 Features class__class::get_methods() {
   Features f = nil_Features();
