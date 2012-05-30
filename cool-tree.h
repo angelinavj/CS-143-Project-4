@@ -203,6 +203,7 @@ public:
    Symbol name;
    Symbol type_decl;
    Expression init;
+   int offset;
 public:
    attr_class(Symbol a1, Symbol a2, Expression a3) {
       name = a1;
@@ -211,7 +212,8 @@ public:
    }
    Feature copy_Feature();
    void dump(ostream& stream, int n);
-
+   void set_offset(int offset_) { offset = offset_; };
+   int get_offset() { return offset; }
 #ifdef Feature_SHARED_EXTRAS
    Feature_SHARED_EXTRAS
 #endif

@@ -253,6 +253,9 @@ static void emit_protobj_ref(Symbol sym, ostream& s)
 static void emit_method_ref(Symbol classname, Symbol methodname, ostream& s)
 { s << classname << METHOD_SEP << methodname; }
 
+static void emit_attribute_offset_const(Symbol classname, Symbol attrname, ostream &s)
+{ s << classname << ATTR_SEP << attrname << OFFSET_SUFFIX; }
+
 static void emit_label_def(int l, ostream &s)
 {
   emit_label_ref(l,s);
@@ -557,6 +560,52 @@ void CgenClassTable::code_global_data()
 //***************************************************
 
 /*
+ * Set the offset of all attributes defined directly in this classNode.
+ * The first / smallest offset that can be used by this attributes in classNode
+ * is defined in the parameter.
+ */
+void CgenClassTable::code_set_attrOffset(CgenNodeP classNode, int offset) {
+  int offsetToUse = offset;
+  Features attributes = classNode->get_attributes();
+  for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
+    attr_class *attr = (attr_class *)(attributes->nth(i));
+    attr->set_offset(offsetToUse);
+    offsetToUse += WORD_SIZE;
+  }
+}
+
+/*
+ * Returns the offset of the last attribute of the parameter classNode.
+ */
+int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
+  Features attributes = classNode->get_attributes();
+  if (attributes->len() > 0) {
+    attr_class *attr = (attr_class *)(attributes->nth(attributes->len() - 1));
+    return attr->get_offset();
+  }
+  return 0;
+}
+
+int max (int a, int b) {
+  if (a > b) return a;
+  return b;
+}
+
+/*
+  code_gen_attrOffset will traverse the tree and generate offset for all the
+  attributes defined in all descendant classes of root.
+  offset defines the first available offset for attributes defined in this subtree.
+ */
+void CgenClassTable::code_gen_attrOffsets(CgenNodeP root, int offset) {
+  code_set_attrOffset(root, offset);
+  int nextOffset = max(offset, get_last_attrOffset(root) + WORD_SIZE);
+
+  for (List<CgenNode> *l = root->get_children(); l; l = l -> tl()) {
+    code_gen_attrOffsets(l->hd(), nextOffset);
+  }
+}
+
+/*
 Given the name of a class, return its class id #. 
 If class does not exist, return -1. code_gen_classTags
 MUST BE CALLED BEFORE THIS METHOD 
@@ -653,6 +702,27 @@ void CgenClassTable::code_select_gc()
 }
 
 
+void CgenClassTable::code_attributes_offset(CgenNodeP classNode) {
+  CgenNodeP curNode = classNode;
+  while (curNode != NULL) {
+    Features attributes = curNode->get_attributes();
+    for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
+      attr_class *attr = (attr_class *)(attributes->nth(i));
+      emit_attribute_offset_const(classNode->get_name(), attr->get_name(), str);  
+      str << "=" << attr->get_offset() << endl;
+    }
+
+    curNode = curNode->get_parentnd();
+  }
+}
+
+void CgenClassTable::code_attributes_offset_all(CgenNodeP root) {
+  code_attributes_offset(root);
+  for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
+    code_attributes_offset_all(l->hd());
+  }
+}
+
 //********************************************************
 //
 // Emit code to reserve space for and initialize all of
@@ -677,6 +747,7 @@ void CgenClassTable::code_constants()
   stringtable.code_string_table(str,stringclasstag);
   inttable.code_string_table(str,intclasstag);
   code_bools(boolclasstag);
+  code_attributes_offset_all(root());
 }
 
 
@@ -689,7 +760,7 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    build_inheritance_tree();
 
    code_gen_classTags(root());
-
+   code_gen_attrOffsets(root(), FIRST_ATTR_OFFSET_IN_OBJ);
    stringclasstag = get_class_tag(Str); 
    intclasstag = get_class_tag(Int);
    boolclasstag = get_class_tag(Bool);

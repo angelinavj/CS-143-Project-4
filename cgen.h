@@ -39,8 +39,15 @@ private:
    void code_class_objTab(CgenNodeP classNode);
    void code_class_dispTab(CgenNodeP classNode);
    void code_class_dispTab_all(CgenNodeP root);
+
    void code_set_classTags(CgenNodeP classNode);
    void code_gen_classTags(CgenNodeP root);
+   void code_set_attrOffset(CgenNodeP classNode, int offset);
+   int get_last_attrOffset(CgenNodeP classNode);
+   void code_gen_attrOffsets(CgenNodeP root, int offset);
+
+   void code_attributes_offset_all(CgenNodeP root);
+   void code_attributes_offset(CgenNodeP classNode);
    void code_gen_methods_all(CgenNodeP root);
    void code_gen_method(CgenNodeP classNode, method_class * method);
 
