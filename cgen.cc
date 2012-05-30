@@ -1114,7 +1114,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
   localid_offset_table->enterscope();
-
+  // TODO(veni / grantho) - this doesn't look right?
   emit_move(FP, SP, str);
   emit_push(RA, str);
   method->expr->code(str, this, classNode);
@@ -1376,10 +1376,93 @@ void eq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_load(T1, 1, SP, s);
 
   emit_addiu(SP, SP, 4, s);
-  
+
+  int true_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  int int_label = ctable->labelCounter;
+  ctable->labelCounter++;
+
+  int str_label = ctable->labelCounter;
+  ctable->labelCounter++;
+
+  int bool_label = ctable->labelCounter;
+  ctable->labelCounter++;
+
+  int false_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
   // Check if the pointers / addresses are equal.
   // If yes, thnen the objects are equal.
-  // The value void is not equal to any object except itself.
+  // The value void is not equal to any object except itself (?).
+  emit_beq(T1, ACC, true_label, s);
+ 
+  // Compare String, Int, Bool
+  // First, check the class tag.
+  emit_load(T2, TAG_OFFSET, T1, s);
+
+  s << LW << T3 << " " << INTTAG << endl;
+  emit_beq(T2, T3, int_label, s);
+
+  s << LW << T3 << " " << STRINGTAG << endl;
+  emit_beq(T2, T3, str_label, s);
+
+  s << LW << T3 << " " << BOOLTAG << endl;
+  emit_beq(T2, T3, bool_label, s);
+  emit_branch(false_label, s);
+
+  // Int Branch
+  emit_label_def(int_label, s);
+  emit_load(T2, TAG_OFFSET, ACC, s);
+  emit_bne(T2, T3, false_label, s); // here, T3 is INTTAG.
+  emit_fetch_int(T2, T1, s); // T2 now holds the int value.
+  emit_fetch_int(T3, ACC, s); // T1 now holds the int value.
+
+  emit_beq(T2, T3, true_label, s); // if the int value is equal, then true.
+  emit_branch(false_label, s); // else, then false.
+
+  // String Branch
+  emit_label_def(str_label, s);
+  emit_load(T2, TAG_OFFSET, ACC, s);
+  emit_bne(T2, T3, false_label, s); // here, T3 is STRINGTAG. check if e2 is also string
+  // comparing the length of the string
+  emit_load(T2, DEFAULT_OBJFIELDS, T1, s);
+  emit_load(T3, DEFAULT_OBJFIELDS, ACC, s);
+  emit_bne(T2, T3, false_label, s); // if thelength is different, then it's not equal.
+
+  // comparing the string itself
+  emit_load(T2, DEFAULT_OBJFIELDS + 1, T1, s);
+  emit_load(T3, DEFAULT_OBJFIELDS + 1, ACC, s);
+  emit_bne(T2, T3, false_label, s); // if the string is different, then it is not equal
+  emit_branch(true_label, s); // else, then equal.
+  
+
+  // Bool Branch
+  emit_label_def(bool_label, s);
+  emit_load(T2, TAG_OFFSET, ACC, s);
+  emit_bne(T2, T3, false_label, s); // here, T3 is BOOLTAG. Check if e2 is also bool.
+
+  emit_load(T2, DEFAULT_OBJFIELDS, T1, s);
+  emit_load(T3, DEFAULT_OBJFIELDS, ACC, s);
+  emit_beq(T2, T3, true_label, s); // if the int value is equal, then true.
+  emit_branch(false_label, s); // else, then false.
+
+  // False Branch
+  emit_label_def(false_label, s);
+  emit_load_bool(ACC, falsebool, s);
+  emit_branch(end_label, s);
+
+
+  // True Branch
+  emit_label_def(true_label, s);
+  emit_load_bool(ACC, truebool, s);
+  
+  // Exit
+  emit_label_def(end_label, s);
+
 }
 
 void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
