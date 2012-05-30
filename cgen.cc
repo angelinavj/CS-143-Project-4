@@ -1094,7 +1094,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   emit_move(FP, SP, str);
   emit_push(RA, str);
-  method->expr->code(str);
+  method->expr->code(str, this, classNode);
   emit_load(RA, 1, SP, str);
   emit_addiu(SP, SP, 4 * method->get_num_params() + 8, str);
   emit_load(FP, 0, SP, str);
@@ -1234,109 +1234,106 @@ CgenNode::CgenNode(Class_ nd, Basicness bstatus, CgenClassTableP ct) :
 //
 //*****************************************************************
 
-void assign_class::code(ostream &s) {
+void assign_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void static_dispatch_class::code(ostream &s) {
+void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void dispatch_class::code(ostream &s) {
+void dispatch_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void cond_class::code(ostream &s) {
+void cond_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void loop_class::code(ostream &s) {
+void loop_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void typcase_class::code(ostream &s) {
+void typcase_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void block_class::code(ostream &s) {
+void block_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void let_class::code(ostream &s) {
+void let_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void plus_class::code(ostream &s) {
-  e1->code(s);
+void plus_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  e1->code(s, ctable, curClass);
   emit_push(ACC, s);
-  e2->code(s); 
+  e2->code(s, ctable, curClass); 
   emit_load(T1, 1, SP, s);
   emit_add(ACC, T1, ACC, s);
   emit_addiu(SP, SP, 4, s);
 }
 
-void sub_class::code(ostream &s) {
-  e1->code(s);
+void sub_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  e1->code(s, ctable, curClass);
   emit_push(ACC, s);
-  e2->code(s); 
+  e2->code(s, ctable, curClass);
   emit_load(T1, 1, SP, s);
   emit_sub(ACC, T1, ACC, s);
   emit_addiu(SP, SP, 4, s);
 }
 
-void mul_class::code(ostream &s) {
-  e1->code(s);
+void mul_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  e1->code(s, ctable, curClass);
   emit_push(ACC, s);
-  e2->code(s); 
+  e2->code(s, ctable, curClass);
   emit_load(T1, 1, SP, s);
   emit_mul(ACC, T1, ACC, s);
   emit_addiu(SP, SP, 4, s);
 }
 
-void divide_class::code(ostream &s) {
-  e1->code(s);
+void divide_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  e1->code(s, ctable, curClass);
   emit_push(ACC, s);
-  e2->code(s); 
+  e2->code(s, ctable, curClass); 
   emit_load(T1, 1, SP, s);
   emit_div(ACC, T1, ACC, s);
   emit_addiu(SP, SP, 4, s);
 }
 
-void neg_class::code(ostream &s) {
+void neg_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void lt_class::code(ostream &s) {
+void lt_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void eq_class::code(ostream &s) {
+void eq_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void leq_class::code(ostream &s) {
+void leq_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void comp_class::code(ostream &s) {
+void comp_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void int_const_class::code(ostream& s)  
-{
+void int_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
   //
   // Need to be sure we have an IntEntry *, not an arbitrary Symbol
   //
   emit_load_int(ACC,inttable.lookup_string(token->get_string()),s);
 }
 
-void string_const_class::code(ostream& s)
-{
+void string_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
   emit_load_string(ACC,stringtable.lookup_string(token->get_string()),s);
 }
 
-void bool_const_class::code(ostream& s)
-{
+void bool_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
   emit_load_bool(ACC, BoolConst(val), s);
 }
 
-void new__class::code(ostream &s) {
+void new__class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void isvoid_class::code(ostream &s) {
+void isvoid_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void no_expr_class::code(ostream &s) {
+void no_expr_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
-void object_class::code(ostream &s) {
+void object_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
 /*
