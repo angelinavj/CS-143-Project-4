@@ -74,7 +74,10 @@ public:
    void code();
    int get_attribute_offset(CgenNodeP classNode, Symbol attr_name);
    CgenNodeP root();
-
+   
+   //Tracks the number of labels created throughout the program to allow
+   //appropriate branching of the labels
+   int labelCounter;
    //localid_offset_table stores the offsets from the FRAME POINTER
    //for identifiers that aren't attributes.
    //Offsets are in terms of WORDS!

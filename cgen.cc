@@ -784,6 +784,7 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    intclasstag = get_class_tag(Int);
    boolclasstag = get_class_tag(Bool);
    localid_offset_table = new SymbolTable<Symbol, int>();
+   labelCounter = 0;
 
    code();
    exitscope();
@@ -1332,18 +1333,59 @@ void divide_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
 }
 
 void neg_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  emit_neg(ACC, ACC, s);
 }
 
 void lt_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  emit_push(ACC, s);
+  e2->code(s, ctable, curClass);
+  emit_load(T1, 1, SP, s);
+  emit_addiu(SP, SP, 4, s);
+
+  int true_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_blt(T1, ACC, true_label, s);
+  
+  //False Branch
+  emit_load_bool(ACC, falsebool, s);
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_branch(end_label, s);
+
+  //True branch
+  emit_label_def(true_label, s);
+  emit_load_bool(ACC, truebool, s);
+
+  //Exit
+  emit_label_def(end_label, s);
 }
 
 void eq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  emit_push(ACC, s);
+  e2->code(s, ctable, curClass);
+  emit_load(T1, 1, SP, s);
+  //T1 now stores e1's value
+  //ACC now stores e2's value
+  //just need to emit code to do T1 == ACC
+  emit_addiu(SP, SP, 4, s);
 }
 
 void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  emit_push(ACC, s);
+  e2->code(s, ctable, curClass);
+  emit_load(T1, 1, SP, s);
+  //T1 now stores e1's value
+  //ACC now stores e2's value
+  //just need to emit code to do T1 <= ACC
+  emit_addiu(SP, SP, 4, s);
 }
 
 void comp_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
 }
 
 void int_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curClass) {
