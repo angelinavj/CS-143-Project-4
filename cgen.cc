@@ -1151,6 +1151,7 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
 
 // TODO: this method needs to be completed.
 void CgenClassTable::code_gen_init(CgenNodeP classNode) {
+  /*
   if ((classNode->get_name() != Object) && (classNode->get_name() != Str) && (classNode->get_name() != Bool) &&
       (classNode->get_name() != IO) && (classNode->get_name() != Int)) {
     return;
@@ -1163,28 +1164,32 @@ void CgenClassTable::code_gen_init(CgenNodeP classNode) {
     // if attr has an init expr
     // initBody = append_Expressions(initBody,
     //					new assign_class(attr->get_name(), attr->init));
-    // if attr is no expr
-    if (attr->type_decl == Str) {
-      initBody = append_Expressions(initBody,
-					single_Expressions(new assign_class(attr->get_name(), new string_const_class(stringtable.lookup_string(""))) ));
-    } else if (attr->type_decl == Int) {
-      initBody = append_Expressions(initBody,
-					single_Expressions(new assign_class(attr->get_name(), new int_const_class(inttable.lookup_string("0"))) ));
-    } else if (attr->type_decl == Bool) {
-      initBody = append_Expressions(initBody,
-					single_Expressions(new assign_class(attr->get_name(), new bool_const_class(false))));
-    }
+    
+
+    // if attr is no expr - WE DO NOTHING!!!!!! Object Prototype already
+    // set to default values!!!!
+
+    //if (attr->type_decl == Str) {
+    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new string_const_class(stringtable.lookup_string(""))) ));
+    //} else if (attr->type_decl == Int) {
+    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new int_const_class(inttable.lookup_string("0"))) ));
+    //} else if (attr->type_decl == Bool) {
+    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new bool_const_class(false))));
+    //}
   }
   initBody = append_Expressions(initBody, single_Expressions(new object_class(self)));
   method_class *method = new method_class(init, nil_Formals(), SELF_TYPE,
 					      new block_class(initBody));
   code_gen_method(classNode, method);
+  */
 }
+
 
 // TODO : this method needs to be completed.
 void CgenClassTable::code_gen_init_objects(CgenNodeP root) {
-
-  code_gen_init(root);
+  
+  emit_jalr(RA, str);
+  //code_gen_init(root);
   for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
     code_gen_init_objects(l->hd());
   }
