@@ -46,6 +46,7 @@ private:
    int get_last_attrOffset(CgenNodeP classNode);
    void code_gen_attrOffsets(CgenNodeP root, int offset);
 
+
    void code_attributes_offset_all(CgenNodeP root);
    void code_attributes_offset(CgenNodeP classNode);
    void code_gen_methods_all(CgenNodeP root);
@@ -71,6 +72,7 @@ private:
 public:
    CgenClassTable(Classes, ostream& str);
    void code();
+   int get_attribute_offset(CgenNodeP classNode, Symbol attr_name);
    CgenNodeP root();
 
    //localid_offset_table stores the offsets from the FRAME POINTER

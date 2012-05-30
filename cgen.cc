@@ -586,6 +586,25 @@ int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
   return 0;
 }
 
+/*
+ * Returns the offset of the attribute with a given name in the class classNode.
+ * If not found, returns -1.
+ */
+int CgenClassTable::get_attribute_offset(CgenNodeP classNode, Symbol attr_name) {
+  if (classNode == NULL) {
+    return -1;
+  }
+  Features attributes = classNode->get_attributes();
+  for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
+    attr_class *attr = (attr_class *)(attributes->nth(i));
+    if (attr->get_name() == attr_name) {
+      return attr->get_offset();
+    }
+  }
+  return get_attribute_offset(classNode->get_parentnd(), attr_name);
+
+}
+
 int max (int a, int b) {
   if (a > b) return a;
   return b;
@@ -1355,10 +1374,10 @@ void object_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
   int* word_offset = ctable->localid_offset_table->lookup(name);
 
   if(word_offset == NULL) {
-    emit_load(ACC, ctable->get_attribute_offset(curClass, name), SELF, str);
+    emit_load(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
   }
   else {
-    emit_load(ACC, -(*byte_offset), FP, str);
+    emit_load(ACC, -(*byte_offset), FP, s);
   }
 }
 
