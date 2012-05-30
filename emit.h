@@ -28,8 +28,8 @@
 
 // Naming conventions
 #define DISPTAB_SUFFIX       "_dispTab"
-#define ATTR_SEP             "."
-#define METHOD_SEP           "_"
+#define ATTR_SEP             "_"
+#define METHOD_SEP           "."
 #define CLASSINIT_SUFFIX     "_init"
 #define PROTOBJ_SUFFIX       "_protObj"
 #define OBJECTPROTOBJ        "Object"PROTOBJ_SUFFIX

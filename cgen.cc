@@ -1187,7 +1187,7 @@ void CgenClassTable::code_gen_init(CgenNodeP classNode) {
 
 // TODO : this method needs to be completed.
 void CgenClassTable::code_gen_init_objects(CgenNodeP root) {
-  
+  emit_init_ref(root->get_name(), str); str << LABEL; 
   emit_jalr(RA, str);
   //code_gen_init(root);
   for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
