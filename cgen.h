@@ -63,7 +63,6 @@ private:
 // a list of classes.  The graph is implemented as
 // a tree of `CgenNode', and class names are placed
 // in the base class symbol table.
-
    void install_basic_classes();
    void install_class(CgenNodeP nd);
    void install_classes(Classes cs);
@@ -73,6 +72,10 @@ public:
    CgenClassTable(Classes, ostream& str);
    void code();
    CgenNodeP root();
+
+   //localid_offset_table stores the offsets from the FRAME POINTER
+   //for identifiers that aren't attributes
+   SymbolTable<Symbol, int> *localid_offset_table;
 };
 
 

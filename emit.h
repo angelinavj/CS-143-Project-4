@@ -17,7 +17,7 @@
 #define MAXINT  100000000    
 #define WORD_SIZE    4
 #define LOG_WORD_SIZE 2     // for logical shifts
-#define FIRST_ATTR_OFFSET_IN_OBJ 12
+#define FIRST_ATTR_OFFSET_IN_OBJ 3
 // Global names
 #define CLASSNAMETAB         "class_nameTab"
 #define CLASSOBJTAB          "class_objTab"

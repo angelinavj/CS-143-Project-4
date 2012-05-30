@@ -570,7 +570,7 @@ void CgenClassTable::code_set_attrOffset(CgenNodeP classNode, int offset) {
   for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
     attr_class *attr = (attr_class *)(attributes->nth(i));
     attr->set_offset(offsetToUse);
-    offsetToUse += WORD_SIZE;
+    offsetToUse += 1;
   }
 }
 
@@ -598,7 +598,7 @@ int max (int a, int b) {
  */
 void CgenClassTable::code_gen_attrOffsets(CgenNodeP root, int offset) {
   code_set_attrOffset(root, offset);
-  int nextOffset = max(offset, get_last_attrOffset(root) + WORD_SIZE);
+  int nextOffset = max(offset, get_last_attrOffset(root) + 1);
 
   for (List<CgenNode> *l = root->get_children(); l; l = l -> tl()) {
     code_gen_attrOffsets(l->hd(), nextOffset);
@@ -764,6 +764,7 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    stringclasstag = get_class_tag(Str); 
    intclasstag = get_class_tag(Int);
    boolclasstag = get_class_tag(Bool);
+   localid_offset_table = new SymbolTable<Symbol, int>();
 
    code();
    exitscope();
@@ -1092,6 +1093,8 @@ void CgenClassTable::code_class_dispTab_all(CgenNodeP root) {
 void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) {
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
+  localid_offset_table->enterscope();
+
   emit_move(FP, SP, str);
   emit_push(RA, str);
   method->expr->code(str, this, classNode);
@@ -1099,6 +1102,8 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_addiu(SP, SP, 4 * method->get_num_params() + 8, str);
   emit_load(FP, 0, SP, str);
   emit_return(str); 
+
+  localid_offset_table->exitscope();
 }
 
 
@@ -1244,18 +1249,31 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  ctable->localid_offset_table->enterscope();
+
+  ctable->localid_offset_table->exitscope();
 }
 
 void loop_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  ctable->localid_offset_table->enterscope();
+
+  ctable->localid_offset_table->exitscope();
 }
 
 void typcase_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  //Evaluate case expression, then enter scope and evaluate case body
+  ctable->localid_offset_table->enterscope();
+
+  ctable->localid_offset_table->exitscope();
 }
 
 void block_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
 void let_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  ctable->localid_offset_table->enterscope();
+
+  ctable->localid_offset_table->exitscope();
 }
 
 void plus_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
@@ -1334,6 +1352,15 @@ void no_expr_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
 }
 
 void object_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+  int* byte_offset = ctable->localid_offset_table->lookup(name);
+
+  if(byte_offset == NULL) {
+    ctable->get_attribute_offset(curClass, name)
+    emit_load(ACC, emit_attribute_offset_const(curClass->get_name(), name, str);
+  }
+  else {
+    
+  }
 }
 
 /*
