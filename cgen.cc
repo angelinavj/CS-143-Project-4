@@ -1239,44 +1239,44 @@ CgenNode::CgenNode(Class_ nd, Basicness bstatus, CgenClassTableP ct) :
 //
 //*****************************************************************
 
-void assign_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void dispatch_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void cond_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
 
   ctable->localid_offset_table->exitscope();
 }
 
-void loop_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void loop_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
 
   ctable->localid_offset_table->exitscope();
 }
 
-void typcase_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   //Evaluate case expression, then enter scope and evaluate case body
   ctable->localid_offset_table->enterscope();
 
   ctable->localid_offset_table->exitscope();
 }
 
-void block_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void let_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
 
   ctable->localid_offset_table->exitscope();
 }
 
-void plus_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void plus_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_push(ACC, s);
   e2->code(s, ctable, curClass); 
@@ -1285,7 +1285,7 @@ void plus_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
   emit_addiu(SP, SP, 4, s);
 }
 
-void sub_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void sub_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_push(ACC, s);
   e2->code(s, ctable, curClass);
@@ -1294,7 +1294,7 @@ void sub_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
   emit_addiu(SP, SP, 4, s);
 }
 
-void mul_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void mul_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_push(ACC, s);
   e2->code(s, ctable, curClass);
@@ -1303,7 +1303,7 @@ void mul_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
   emit_addiu(SP, SP, 4, s);
 }
 
-void divide_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void divide_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_push(ACC, s);
   e2->code(s, ctable, curClass); 
@@ -1312,54 +1312,53 @@ void divide_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
   emit_addiu(SP, SP, 4, s);
 }
 
-void neg_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void neg_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void lt_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void lt_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void eq_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void eq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void leq_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void comp_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void comp_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void int_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
+void int_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curClass) {
   //
   // Need to be sure we have an IntEntry *, not an arbitrary Symbol
   //
   emit_load_int(ACC,inttable.lookup_string(token->get_string()),s);
 }
 
-void string_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
+void string_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_load_string(ACC,stringtable.lookup_string(token->get_string()),s);
 }
 
-void bool_const_class::code(ostream& s, CgenClassTable *ctable, Class_ curClass) {
+void bool_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_load_bool(ACC, BoolConst(val), s);
 }
 
-void new__class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void isvoid_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void isvoid_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void no_expr_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
+void no_expr_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
-void object_class::code(ostream &s, CgenClassTable *ctable, Class_ curClass) {
-  int* byte_offset = ctable->localid_offset_table->lookup(name);
+void object_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  int* word_offset = ctable->localid_offset_table->lookup(name);
 
-  if(byte_offset == NULL) {
-    ctable->get_attribute_offset(curClass, name)
-    emit_load(ACC, emit_attribute_offset_const(curClass->get_name(), name, str);
+  if(word_offset == NULL) {
+    emit_load(ACC, ctable->get_attribute_offset(curClass, name), SELF, str);
   }
   else {
-    
+    emit_load(ACC, -(*byte_offset), FP, str);
   }
 }
 

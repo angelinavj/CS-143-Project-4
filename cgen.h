@@ -74,7 +74,8 @@ public:
    CgenNodeP root();
 
    //localid_offset_table stores the offsets from the FRAME POINTER
-   //for identifiers that aren't attributes
+   //for identifiers that aren't attributes.
+   //Offsets are in terms of WORDS!
    SymbolTable<Symbol, int> *localid_offset_table;
 };
 
