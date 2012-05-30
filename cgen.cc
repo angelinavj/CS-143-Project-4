@@ -1349,6 +1349,8 @@ void lt_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_load(T1, 1, SP, s);
   emit_addiu(SP, SP, 4, s);
 
+  emit_fetch_int(ACC, ACC, s);
+  emit_fetch_int(T1, T1, s);
   int true_label = ctable->labelCounter;
   (ctable->labelCounter)++;
   emit_blt(T1, ACC, true_label, s);
@@ -1372,10 +1374,12 @@ void eq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_push(ACC, s);
   e2->code(s, ctable, curClass);
   emit_load(T1, 1, SP, s);
-  //T1 now stores e1's value
-  //ACC now stores e2's value
-  //just need to emit code to do T1 == ACC
+
   emit_addiu(SP, SP, 4, s);
+  
+  // Check if the pointers / addresses are equal.
+  // If yes, thnen the objects are equal.
+  // The value void is not equal to any object except itself.
 }
 
 void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
@@ -1383,10 +1387,26 @@ void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_push(ACC, s);
   e2->code(s, ctable, curClass);
   emit_load(T1, 1, SP, s);
-  //T1 now stores e1's value
-  //ACC now stores e2's value
-  //just need to emit code to do T1 <= ACC
+
   emit_addiu(SP, SP, 4, s);
+  int true_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_fetch_int(ACC, ACC, s);
+  emit_fetch_int(T1, T1, s);
+  emit_bleq(T1, ACC, true_label, s);
+
+  // False branch
+  emit_load_bool(ACC, falsebool, s);
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_branch(end_label, s); // jump to end
+
+  // True branch
+  emit_label_def(true_label, s);
+  emit_load_bool(ACC, truebool, s);
+
+  emit_label_def(end_label, s);  
+
 }
 
 void comp_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
