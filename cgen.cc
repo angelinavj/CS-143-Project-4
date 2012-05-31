@@ -1361,8 +1361,15 @@ void plus_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_push(ACC, s);
   e2->code(s, ctable, curClass); 
+
   emit_load(T1, 1, SP, s);
-  emit_add(ACC, T1, ACC, s);
+  emit_fetch_int(T2, T1, s);
+  emit_fetch_int(T3, ACC, s);
+  emit_add(T2, T2, T3, s); // T2 now = T2 + T3.
+  emit_jal("Object.copy", s); // A0 now is a heap int object
+  emit_store(T2, DEFAULT_OBJFIELDS, ACC, s);
+  
+
   emit_addiu(SP, SP, 4, s);
 }
 
