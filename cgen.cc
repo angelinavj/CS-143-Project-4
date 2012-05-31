@@ -1473,10 +1473,9 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
 
   emit_load(T1, offset, T1, s);
  
-  emit_push(RA, s); 
   emit_jalr(T1, s);
 
-  emit_addiu(SP, SP, 4 + (actual->len() * 4), s);
+  emit_addiu(SP, SP, (actual->len() * 4), s);
 }
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
