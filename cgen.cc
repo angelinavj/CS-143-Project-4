@@ -1785,7 +1785,7 @@ void object_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
     emit_load(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
   }
   else {
-    emit_load(ACC, -(*word_offset), FP, s);
+    emit_load(ACC, *word_offset, FP, s);
   }
 }
 

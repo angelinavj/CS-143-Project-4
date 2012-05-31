@@ -34,6 +34,15 @@ class I inherits H {
 
 };
 
+(*
+Object: 0-14
+B: 6-8
+G: 11-11
+A: 5-13
+F: 10-10
+D: 7-7
+*)
+
 
 class Main {
       x : H;
