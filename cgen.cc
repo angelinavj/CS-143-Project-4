@@ -1285,7 +1285,28 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
+  pred->code(s, ctable, curClass);
 
+  emit_load(T2, DEFAULT_OBJFIELDS, ACC, s);
+
+  int false_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+ 
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  emit_beqz(T2, false_label, s); // if t2 != 0 then go to false.
+  // True branch
+  then_exp->code(s, ctable, curClass);
+  // ACC now has the value of then_exp
+  emit_branch(end_label, s);
+
+  // False branch
+  emit_label_def(false_label, s);
+  else_exp->code(s, ctable, curClass);
+  // ACC now has the value of else_exp.
+
+  emit_label_def(end_label, s);
   ctable->localid_offset_table->exitscope();
 }
 
