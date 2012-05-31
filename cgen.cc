@@ -1295,7 +1295,7 @@ void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   int end_label = ctable->labelCounter;
   (ctable->labelCounter)++;
 
-  emit_beqz(T2, false_label, s); // if t2 != 0 then go to false.
+  emit_beqz(T2, false_label, s); // if t2 is 0 then go to false.
   // True branch
   then_exp->code(s, ctable, curClass);
   // ACC now has the value of then_exp
@@ -1312,7 +1312,19 @@ void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
 void loop_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
+  int start_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
 
+
+  emit_label_def(start_label, s);
+  pred->code(s, ctable, curClass);
+  emit_load(T2, DEFAULT_OBJFIELDS, ACC, s);
+  emit_beqz(T2, end_label, s);
+  body->code(s, ctable, curClass);
+  emit_branch(start_label, s);
+  emit_label_def(end_label, s);
   ctable->localid_offset_table->exitscope();
 }
 
