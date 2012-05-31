@@ -1122,10 +1122,10 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
   localid_offset_table->enterscope();
-  // TODO(veni / grantho) - this doesn't look right?
   emit_move(FP, SP, str);
   emit_push(RA, str);
   method->expr->code(str, this, classNode);
+
   emit_load(RA, 1, SP, str);
   emit_addiu(SP, SP, 4 * method->get_num_params() + 8, str);
   emit_load(FP, 0, SP, str);
@@ -1289,6 +1289,31 @@ void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP c
 }
 
 void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  emit_push(FP, s);
+
+  for (int i = actual->len()-1; i >= 0; i--) {
+    Expression exp = actual->nth(i);
+    exp->code(s, ctable, curClass);
+    emit_push(ACC, s);
+  }
+  expr->code(s, ctable, curClass);
+
+  int success_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_bne(ACC, ZERO, success_label, s);
+
+  // If it is here, calling dispatch abort.
+  // filename in $a0, line number in $t1.
+  
+  emit_load_address(ACC, "str_const0", s); 
+  emit_load_imm(T1, get_line_number(), s);
+  emit_jal("_dispatch_abort", s);
+
+  // Success branch
+  emit_label_def(success_label, s);
+  emit_load(T1, DISPTABLE_OFFSET, ACC, s);
+  emit_load(T1, 0 /* INSERT OFFSET TO METHOD NAME */, T1, s);
+  emit_jalr(T1, s);
 }
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
