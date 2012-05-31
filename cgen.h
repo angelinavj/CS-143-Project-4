@@ -15,7 +15,7 @@ class CgenNode;
 typedef CgenNode *CgenNodeP;
 
 typedef struct classInfo {
-  Symbol name;
+  Symbol className;
   int lowestChild;
 } classInfo;
 
@@ -26,7 +26,7 @@ private:
    int stringclasstag;
    int intclasstag;
    int boolclasstag;
-   Symbol* class_tags;
+   classInfo* class_tags;
    int numClasses;
    int nextTagNumber;
 
@@ -45,12 +45,12 @@ private:
    void code_class_dispTab(CgenNodeP classNode);
    void code_class_dispTab_all(CgenNodeP root);
 
-   void code_set_classTags(CgenNodeP classNode);
+   int code_set_classTags(CgenNodeP classNode, int myLowestChild);
    void code_gen_classTags(CgenNodeP root);
    void code_set_attrOffset(CgenNodeP classNode, int offset);
    int get_last_attrOffset(CgenNodeP classNode);
    void code_gen_attrOffsets(CgenNodeP root, int offset);
-
+   void verify_class_tags(CgenNodeP classNode);
 
    void code_attributes_offset_all(CgenNodeP root);
    void code_attributes_offset(CgenNodeP classNode);
@@ -59,6 +59,7 @@ private:
 
    int get_num_classes(CgenNodeP classNode);
    int get_class_tag(Symbol className);
+   int get_lowest_child_tag(Symbol className);
    int code_get_numAttr(CgenNodeP classNode);
    void code_make_objProt(CgenNodeP classNode);
    void code_make_objProt_all(CgenNodeP classNode);

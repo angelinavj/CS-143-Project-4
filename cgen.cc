@@ -639,8 +639,23 @@ MUST BE CALLED BEFORE THIS METHOD
 */
 int CgenClassTable::get_class_tag(Symbol className) {
   for(int i = 0; i < numClasses; i++) {
-    Symbol curName = class_tags[i];
+    Symbol curName = class_tags[i].className;
     if(className == curName) return i;
+  }
+
+  return -1;
+}
+
+
+/*
+Given the name of a class, return the class id # for its lowest child. 
+If class does not exist, return -1. code_gen_classTags
+MUST BE CALLED BEFORE THIS METHOD 
+*/
+int CgenClassTable::get_lowest_child_tag(Symbol className) {
+  for(int i = 0; i < numClasses; i++) {
+    Symbol curName = class_tags[i].className;
+    if(className == curName) return class_tags[i].lowestChild;
   }
 
   return -1;
@@ -649,28 +664,52 @@ int CgenClassTable::get_class_tag(Symbol className) {
 /*
   code_gen_classTags will traverse the tree and create an array
   (class_tags) that contains the name of every class in the program
+  and the class tag of the class's lowest child 
  */
 void CgenClassTable::code_gen_classTags(CgenNodeP root) {
   numClasses = get_num_classes(root);
-  class_tags = new Symbol[numClasses];
+  class_tags = new classInfo[numClasses];
   nextTagNumber = 0;
 
-  code_set_classTags(root);
+  code_set_classTags(root, 0);
+}
+
+void CgenClassTable::verify_class_tags(CgenNodeP classNode) {
+  if(classNode == NULL) return;
+
+  Symbol cur = classNode->get_name();
+  cout << cur->get_string() << " tag number: [" << get_class_tag(cur) <<
+    ", " << get_lowest_child_tag(cur) << "]" << endl;
+
+  for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
+    verify_class_tags(l->hd());
+  }
 }
 
 /*
   code_set_classTags is a helper function that does the actual tree
   traversal and populates the class_tags table
  */
-void CgenClassTable::code_set_classTags(CgenNodeP classNode) {
-  if(classNode == NULL) return;
+int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) {
+  if(classNode == NULL) return lowestChildTag;
 
-  class_tags[nextTagNumber] = classNode->get_name();
+  class_tags[nextTagNumber].className = classNode->get_name();
+  int myTagNumber = nextTagNumber;
   nextTagNumber++;
 
+  //The for loop descends the class graph using DFS and updates the lowest
+  //child tag # for the current class as it returns
+  //REMEMBER THAT LOWEST CHILD ACTUALLY MEANS GREATER VALUE CLASS TAG
+  int myLowestChild = myTagNumber;
   for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
-    code_set_classTags(l->hd());
+    int childTag = code_set_classTags(l->hd(), myTagNumber);
+    if(childTag > myLowestChild) myLowestChild = childTag;
   }
+
+  //After getting the lowest child tag number among all its children
+  //set current class's lowest child and pass it up to the parent
+  class_tags[myTagNumber].lowestChild = myLowestChild;
+  return myLowestChild;
 }
 
 /*
@@ -787,6 +826,8 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    build_inheritance_tree();
 
    code_gen_classTags(root());
+   verify_class_tags(root());
+
    code_gen_attrOffsets(root(), FIRST_ATTR_OFFSET_IN_OBJ);
    stringclasstag = get_class_tag(Str); 
    intclasstag = get_class_tag(Int);
