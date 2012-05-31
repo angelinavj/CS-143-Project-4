@@ -688,8 +688,13 @@ CgenNodeP CgenClassTable::get_class_by_name(CgenNodeP root, Symbol classname) {
  
 int CgenClassTable::get_method_offset(Symbol classname, Symbol methodname) {
   CgenNodeP classNode = get_class_by_name(root(), classname);
-  if (classNode == NULL) return -1;
-
+  if (classNode == NULL)  {
+    if (cgen_debug) {
+      dump_Symbol(cerr, 2, classname);
+      printf("classNode == NULL\n");
+    }
+    return -1;
+  }
   CgenNodeP curNode = classNode;
   while (curNode->get_name() != No_class) {
     Features methods = curNode->get_methods();
@@ -1264,6 +1269,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   localid_offset_table->enterscope();
   emit_move(FP, SP, str);
+  emit_push(SELF, str);
   emit_push(RA, str);
   method->expr->code(str, this, classNode);
 
@@ -1432,14 +1438,14 @@ void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP c
 
 void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_push(FP, s);
-
+  
   for (int i = actual->len()-1; i >= 0; i--) {
     Expression exp = actual->nth(i);
     exp->code(s, ctable, curClass);
     emit_push(ACC, s);
   }
   expr->code(s, ctable, curClass);
-
+ 
   int success_label = ctable->labelCounter;
   (ctable->labelCounter)++;
   emit_bne(ACC, ZERO, success_label, s);
@@ -1454,9 +1460,23 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
   // Success branch
   emit_label_def(success_label, s);
   emit_load(T1, DISPTABLE_OFFSET, ACC, s);
-  int offset = ctable->get_method_offset(expr->get_type(), name);
+  
+  int offset;
+  if (expr->get_type() == SELF_TYPE)  {
+   offset = ctable->get_method_offset(curClass->get_name(), name);
+  } else {
+   offset = ctable->get_method_offset(expr->get_type(), name);
+  }
+  if (cgen_debug) {
+    printf("offset: %d\n", offset);
+  }
+
   emit_load(T1, offset, T1, s);
+ 
+  emit_push(RA, s); 
   emit_jalr(T1, s);
+
+  emit_addiu(SP, SP, 4 + (actual->len() * 4), s);
 }
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
@@ -1756,6 +1776,10 @@ void no_expr_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 }
 
 void object_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  if (name == self) {
+    emit_move(ACC, SELF, s);
+    return;
+  }
   int* word_offset = ctable->localid_offset_table->lookup(name);
 
   if(word_offset == NULL) {
