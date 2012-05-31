@@ -1265,6 +1265,16 @@ CgenNode::CgenNode(Class_ nd, Basicness bstatus, CgenClassTableP ct) :
 //*****************************************************************
 
 void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  expr->code(s, ctable, curClass);
+  // The return of expr is in ACC.
+  int* word_offset = ctable->localid_offset_table->lookup(name);
+
+  if(word_offset == NULL) {
+    emit_store(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
+  }
+  else {
+    emit_store(ACC, -(*word_offset), FP, s);
+  }
 }
 
 void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
