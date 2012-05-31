@@ -1303,8 +1303,8 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 }
 
 void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
-  for (int i = block->first(); block->more(i); i = block->next(i)) {
-    Expression exp = block->nth(i);
+  for (int i = body->first(); body->more(i); i = body->next(i)) {
+    Expression exp = body->nth(i);
     exp->code(s, ctable, curClass);
   }
   // doesn't need to update SP since we don't change it.
