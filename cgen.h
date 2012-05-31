@@ -14,6 +14,11 @@ typedef CgenClassTable *CgenClassTableP;
 class CgenNode;
 typedef CgenNode *CgenNodeP;
 
+typedef struct classInfo {
+  Symbol name;
+  int lowestChild;
+} classInfo;
+
 class CgenClassTable : public SymbolTable<Symbol,CgenNode> {
 private:
    List<CgenNode> *nds;
