@@ -1265,6 +1265,16 @@ CgenNode::CgenNode(Class_ nd, Basicness bstatus, CgenClassTableP ct) :
 //*****************************************************************
 
 void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  expr->code(s, ctable, curClass);
+  // The return of expr is in ACC.
+  int* word_offset = ctable->localid_offset_table->lookup(name);
+
+  if(word_offset == NULL) {
+    emit_store(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
+  }
+  else {
+    emit_store(ACC, -(*word_offset), FP, s);
+  }
 }
 
 void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
@@ -1275,7 +1285,28 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
 
 void cond_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
+  pred->code(s, ctable, curClass);
 
+  emit_load(T2, DEFAULT_OBJFIELDS, ACC, s);
+
+  int false_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+ 
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  emit_beqz(T2, false_label, s); // if t2 != 0 then go to false.
+  // True branch
+  then_exp->code(s, ctable, curClass);
+  // ACC now has the value of then_exp
+  emit_branch(end_label, s);
+
+  // False branch
+  emit_label_def(false_label, s);
+  else_exp->code(s, ctable, curClass);
+  // ACC now has the value of else_exp.
+
+  emit_label_def(end_label, s);
   ctable->localid_offset_table->exitscope();
 }
 
@@ -1293,6 +1324,11 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 }
 
 void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  for (int i = body->first(); body->more(i); i = body->next(i)) {
+    Expression exp = body->nth(i);
+    exp->code(s, ctable, curClass);
+  }
+  // doesn't need to update SP since we don't change it.
 }
 
 void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
