@@ -1381,6 +1381,10 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
   //Evaluate case expression, then enter scope and evaluate case body
   ctable->localid_offset_table->enterscope();
 
+  //Look up expression id - first for stack and then for attribute
+  //in test code the expression id is an attribute, which is why the
+  //offset if from self (a0) and not the framepointer!!!
+
   ctable->localid_offset_table->exitscope();
 }
 
