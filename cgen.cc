@@ -552,6 +552,14 @@ void CgenClassTable::code_global_data()
 }
 
 
+char *get_method_label(Symbol classname, Symbol methodname) {
+  char *cname = classname->get_string();
+  char *mname = methodname->get_string();
+  char *label = (char *)(malloc(strlen(cname) + strlen(mname) + strlen(METHOD_SEP)));
+  sprintf(label, "%s%s%s", cname, METHOD_SEP, mname);
+  return label; 
+}
+
 //***************************************************
 //
 //  Emit code to start the .text segment and to
