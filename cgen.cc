@@ -599,7 +599,7 @@ int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
  * If not found, returns -1.
  */
 int CgenClassTable::get_attribute_offset(CgenNodeP classNode, Symbol attr_name) {
-  if (classNode == NULL) {
+  if (classNode->get_name() == No_class) {
     return -1;
   }
   Features attributes = classNode->get_attributes();
@@ -616,6 +616,92 @@ int CgenClassTable::get_attribute_offset(CgenNodeP classNode, Symbol attr_name) 
 int max (int a, int b) {
   if (a > b) return a;
   return b;
+}
+
+/*
+ * Returns the biggest disptable offset that a method in this class has.
+ * Not including the offset of methods that it inherits.
+ */
+int CgenClassTable::get_biggest_method_offset(CgenNodeP classNode) { 
+  int biggest_offset = -1;
+  Features methods = classNode->get_methods();
+  for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
+    method_class *method = (method_class *)(methods->nth(i));
+    biggest_offset = max(biggest_offset, method->get_offset());
+  }
+  return biggest_offset;
+}
+
+/*
+ * Set the dispatch table offset for all methods in the class classNode.
+ * This set up is cognizant of superclass. Example: if B inherits from A, A.test and
+ * B.test will have the same offset. Other than overridden offset, all other offset
+ * will be unique.
+ */
+void CgenClassTable::code_set_methodOffset(CgenNodeP classNode, int offset) {
+  int nextEmptyOffset = offset;
+  Features methods = classNode->get_methods();
+  for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
+    method_class *method = (method_class *)(methods->nth(i));
+    CgenNodeP anc = classNode->get_parentnd();
+
+    int offsetToUse = nextEmptyOffset;
+    while (anc->get_name() != No_class) {
+      Features anc_methods = anc->get_methods();
+      for (int j = anc_methods->first(); anc_methods->more(j); j = anc_methods->next(j)) {
+        method_class *anc_method = (method_class *)(anc_methods->nth(j));
+
+        if (anc_method->get_name() == method->get_name()) {
+          offsetToUse = anc_method->get_offset();
+          break;
+        }
+      }
+
+      if (offsetToUse != nextEmptyOffset) break;
+      anc = anc->get_parentnd();
+    }
+    method->set_offset(offsetToUse);
+    if (offsetToUse == nextEmptyOffset) {
+      nextEmptyOffset++;
+    }
+  }
+}
+
+void CgenClassTable::code_gen_methodOffsets(CgenNodeP root, int offset) {
+  code_set_methodOffset(root, offset);
+  int nextOffset = max(offset, get_biggest_method_offset(root) + 1);
+  for (List<CgenNode> *l = root->get_children(); l; l = l -> tl()) {
+    code_gen_methodOffsets(l->hd(), nextOffset);
+  }
+}
+
+CgenNodeP CgenClassTable::get_class_by_name(CgenNodeP root, Symbol classname) {
+  if (root->get_name() == classname) {
+    return root;
+  }
+  for (List<CgenNode> *l = root->get_children(); l; l = l -> tl()) {
+    CgenNodeP temp = get_class_by_name(l->hd(), classname);
+    if (temp != NULL) return temp;
+  }
+  return NULL;
+}
+ 
+int CgenClassTable::get_method_offset(Symbol classname, Symbol methodname) {
+  CgenNodeP classNode = get_class_by_name(root(), classname);
+  if (classNode == NULL) return -1;
+
+  CgenNodeP curNode = classNode;
+  while (curNode->get_name() != No_class) {
+    Features methods = curNode->get_methods();
+    for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
+      method_class *m = (method_class *)(methods->nth(i));
+      if (m->get_name() == methodname) {
+        return m->get_offset();
+      }
+    }
+    curNode = curNode->get_parentnd();
+  }
+  return -1;
 }
 
 /*
@@ -675,7 +761,8 @@ void CgenClassTable::code_gen_classTags(CgenNodeP root) {
 }
 
 void CgenClassTable::verify_class_tags(CgenNodeP classNode) {
-  if(classNode == NULL) return;
+
+  if (classNode->get_name() == No_class) { return; }
 
   Symbol cur = classNode->get_name();
   cout << cur->get_string() << " tag number: [" << get_class_tag(cur) <<
@@ -691,7 +778,8 @@ void CgenClassTable::verify_class_tags(CgenNodeP classNode) {
   traversal and populates the class_tags table
  */
 int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) {
-  if(classNode == NULL) return lowestChildTag;
+
+  if(classNode->get_name() == No_class) return lowestChildTag;
 
   class_tags[nextTagNumber].className = classNode->get_name();
   int myTagNumber = nextTagNumber;
@@ -716,7 +804,8 @@ int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) 
   get_num_classes returns the total number of classes in the program
  */
 int CgenClassTable::get_num_classes(CgenNodeP classNode) {
-  if(classNode == NULL) return 0;
+
+  if(classNode->get_name() == No_class) return 0;
   int sum = 1;
 
   for(List<CgenNode> *l = classNode->get_children(); l; l = l->tl()) {
@@ -770,7 +859,7 @@ void CgenClassTable::code_select_gc()
 
 void CgenClassTable::code_attributes_offset(CgenNodeP classNode) {
   CgenNodeP curNode = classNode;
-  while (curNode != NULL) {
+  while (curNode->get_name() != No_class) {
     Features attributes = curNode->get_attributes();
     for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
       attr_class *attr = (attr_class *)(attributes->nth(i));
@@ -825,9 +914,10 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    install_classes(classes);
    build_inheritance_tree();
 
-   code_gen_classTags(root());
+   code_gen_classTags(root());   
    verify_class_tags(root());
 
+   code_gen_methodOffsets(root(), 0);
    code_gen_attrOffsets(root(), FIRST_ATTR_OFFSET_IN_OBJ);
    stringclasstag = get_class_tag(Str); 
    intclasstag = get_class_tag(Int);
@@ -1060,9 +1150,8 @@ void CgenClassTable::code_class_objTab_wrapper() {
   gets the order of the attributes correct from ancestors -> child
  */
 int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
-  if (classNode == NULL) {
-    return 0;
-  }
+
+  if(classNode->get_name() == No_class) return 0;
 
   //Recursive Call
   int sum = code_get_numAttr(classNode->get_parentnd());
@@ -1078,7 +1167,8 @@ int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
   tag, size, dispatch pointer, and list of all attributes (including inheritted)
  */
 void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
-  if (classNode == NULL) {
+
+  if (classNode->get_name() == No_class) {
     return;
   }
 
@@ -1135,15 +1225,25 @@ void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
  * has and the methods that its ancestors has.
  */
 void CgenClassTable::code_class_dispTab(CgenNodeP classNode) {
-  if (classNode == NULL) {
-    return;
+  bool found = true;
+  for (int i = 0; found; i++) {
+    found = false;
+
+    CgenNodeP curNode = classNode;
+    while ((curNode->get_name() != No_class) && (!found)) {
+      Features methods = curNode->get_methods();
+      for (int j = methods->first(); methods->more(j); j = methods->next(j)) {
+        method_class *m = (method_class *)(methods->nth(j));
+        if(m->get_offset() == i) {
+          str << WORD; emit_method_ref(curNode->get_name(), m->get_name(), str); str << endl; 
+          found = true;
+          break;
+        }
+      }
+      curNode = curNode->get_parentnd();
+    }
   }
 
-  code_class_dispTab(classNode->get_parentnd());
-  Features methods = classNode->get_methods();
-  for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
-    str << WORD; emit_method_ref(classNode->get_name(), methods->nth(i)->get_name(), str); str << endl; 
-  }
 
 };
 
@@ -1177,7 +1277,8 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
 
 void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
-  if (root == NULL) { return; }
+
+  if (root->get_name() == No_class) { return; }
 
 
   if ((root->get_name() != Object) && (root->get_name() != Str) && (root->get_name() != Bool) &&
@@ -1353,7 +1454,8 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
   // Success branch
   emit_label_def(success_label, s);
   emit_load(T1, DISPTABLE_OFFSET, ACC, s);
-  emit_load(T1, 0 /* INSERT OFFSET TO METHOD NAME */, T1, s);
+  int offset = ctable->get_method_offset(expr->get_type(), name);
+  emit_load(T1, offset, T1, s);
   emit_jalr(T1, s);
 }
 

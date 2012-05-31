@@ -42,9 +42,12 @@ private:
    void code_class_nameTab(CgenNodeP classNode);
    void code_class_objTab_wrapper();
    void code_class_objTab(CgenNodeP classNode);
+
    void code_class_dispTab(CgenNodeP classNode);
    void code_class_dispTab_all(CgenNodeP root);
-
+   int get_biggest_method_offset(CgenNodeP classNode);
+   void code_set_methodOffset(CgenNodeP classNode, int offset);
+   void code_gen_methodOffsets(CgenNodeP rot, int offset);
    int code_set_classTags(CgenNodeP classNode, int myLowestChild);
    void code_gen_classTags(CgenNodeP root);
    void code_set_attrOffset(CgenNodeP classNode, int offset);
@@ -56,6 +59,7 @@ private:
    void code_attributes_offset(CgenNodeP classNode);
    void code_gen_methods_all(CgenNodeP root);
    void code_gen_method(CgenNodeP classNode, method_class * method);
+   CgenNodeP get_class_by_name(CgenNodeP root, Symbol classname);
 
    int get_num_classes(CgenNodeP classNode);
    int get_class_tag(Symbol className);
@@ -79,6 +83,7 @@ public:
    CgenClassTable(Classes, ostream& str);
    void code();
    int get_attribute_offset(CgenNodeP classNode, Symbol attr_name);
+   int get_method_offset(Symbol classname, Symbol methodname);
    CgenNodeP root();
    
    //Tracks the number of labels created throughout the program to allow

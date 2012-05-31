@@ -178,6 +178,7 @@ public:
    Formals formals;
    Symbol return_type;
    Expression expr;
+   int offset;
 public:
    method_class(Symbol a1, Formals a2, Symbol a3, Expression a4) {
       name = a1;
@@ -188,6 +189,8 @@ public:
    Feature copy_Feature();
    void dump(ostream& stream, int n);
    int get_num_params();
+   void set_offset(int offset_) { offset = offset_; }
+   int get_offset() { return offset; }
 #ifdef Feature_SHARED_EXTRAS
    Feature_SHARED_EXTRAS
 #endif
