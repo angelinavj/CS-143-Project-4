@@ -1436,7 +1436,7 @@ void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
     emit_store(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
   }
   else {
-    emit_store(ACC, -(*word_offset), FP, s);
+    emit_store(ACC, *word_offset, FP, s);
   }
 }
 
