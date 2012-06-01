@@ -1272,6 +1272,15 @@ void CgenClassTable::code_class_dispTab_all(CgenNodeP root) {
 
 
 void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) {
+  int num_max_local_vars = method->count_num_max_locals();
+  if (cgen_debug) {
+    printf("Method name: \n");
+    dump_Symbol(cerr, 2, method->get_name());
+    printf("Class name: \n");
+    dump_Symbol(cerr, 2, classNode->get_name());
+    printf("The maximum number of local variables in this method: %d\n", num_max_local_vars);
+  }
+
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
   localid_offset_table->enterscope();
@@ -1963,4 +1972,172 @@ bool attr_class::is_method() {
 
 int method_class::get_num_params() {
   return formals->len();
+}
+
+
+
+int method_class::count_num_max_locals()
+{
+  return expr->count_num_max_locals();
+}
+
+
+int branch_class::count_num_max_locals()
+{
+  return expr->count_num_max_locals();
+}
+
+int let_class::count_num_max_locals()
+{
+  return 1 + init->count_num_max_locals() + 
+      body->count_num_max_locals();
+}
+
+int assign_class::count_num_max_locals()
+{
+  return expr->count_num_max_locals(); 
+
+}
+
+int static_dispatch_class::count_num_max_locals()
+{
+  int total = expr->count_num_max_locals();
+  for (int i = actual->first(); actual->more(i); i = actual->next(i)) {
+    total += actual->nth(i)->count_num_max_locals();
+  }
+  return total;
+}
+
+int dispatch_class::count_num_max_locals()
+{
+  int total = expr->count_num_max_locals();
+  for (int i = actual->first(); actual->more(i); i = actual->next(i)) {
+    total += actual->nth(i)->count_num_max_locals();
+  }
+  return total;
+}
+
+int cond_class::count_num_max_locals()
+{
+  return pred->count_num_max_locals() +
+      then_exp->count_num_max_locals() +
+      else_exp->count_num_max_locals();
+
+}
+
+int loop_class::count_num_max_locals()
+{
+  return pred->count_num_max_locals() +
+      body->count_num_max_locals();
+
+}
+
+int block_class::count_num_max_locals()
+{
+  int total = 0;
+  for(int i = body->first(); body->more(i); i = body->next(i)) {
+    total += body->nth(i)->count_num_max_locals();
+  }
+
+  return total;
+}
+
+int typcase_class::count_num_max_locals()
+{
+  int total = expr->count_num_max_locals() + 1;
+  for(int i = cases->first(); cases->more(i); i = cases->next(i))
+    total += cases->nth(i)->count_num_max_locals();
+
+  return total;
+}
+
+int plus_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() + 
+          e2->count_num_max_locals();
+
+}
+
+int sub_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() +
+      e2->count_num_max_locals();
+
+}
+
+int mul_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() +
+      e2->count_num_max_locals();
+
+}
+
+int divide_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() +
+      e2->count_num_max_locals();
+
+}
+
+int neg_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals();
+}
+
+int lt_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() +
+      e2->count_num_max_locals();
+}
+
+int eq_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() +
+      e2->count_num_max_locals();
+}
+
+int leq_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals() + 
+    e2->count_num_max_locals();
+
+}
+
+int comp_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals();
+}
+
+int int_const_class::count_num_max_locals()
+{
+  return 0;
+}
+
+int bool_const_class::count_num_max_locals()
+{
+  return 0;
+}
+
+int string_const_class::count_num_max_locals()
+{
+  return 0;
+}
+
+int new__class::count_num_max_locals()
+{
+  return 0;
+}
+int isvoid_class::count_num_max_locals()
+{
+  return e1->count_num_max_locals();
+}
+
+int no_expr_class::count_num_max_locals()
+{
+  return 0;
+}
+
+int object_class::count_num_max_locals()
+{
+  return 0;
 }

@@ -179,6 +179,7 @@ public:
    Symbol return_type;
    Expression expr;
    int offset;
+   int num_max_locals;
 public:
    method_class(Symbol a1, Formals a2, Symbol a3, Expression a4) {
       name = a1;
@@ -192,6 +193,8 @@ public:
    int get_num_params();
    void set_offset(int offset_) { offset = offset_; }
    int get_offset() { return offset; }
+   int get_num_max_locals() { return num_max_locals; }
+   int count_num_max_locals();
 #ifdef Feature_SHARED_EXTRAS
    Feature_SHARED_EXTRAS
 #endif
