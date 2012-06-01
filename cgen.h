@@ -61,10 +61,6 @@ private:
    void code_gen_method(CgenNodeP classNode, method_class * method);
    CgenNodeP get_class_by_name(CgenNodeP root, Symbol classname);
 
-   int get_num_classes(CgenNodeP classNode);
-   int get_class_tag(Symbol className);
-   int get_lowest_child_tag(Symbol className);
-   int code_get_numAttr(CgenNodeP classNode);
    void code_make_objProt(CgenNodeP classNode);
    void code_make_objProt_all(CgenNodeP classNode);
 
@@ -84,6 +80,10 @@ public:
    void code();
    int get_attribute_offset(CgenNodeP classNode, Symbol attr_name);
    int get_method_offset(Symbol classname, Symbol methodname);
+   int get_num_classes(CgenNodeP classNode);
+   int get_class_tag(Symbol className);
+   int get_lowest_child_tag(Symbol className);
+   int code_get_numAttr(CgenNodeP classNode);
    CgenNodeP root();
    
    //Tracks the number of labels created throughout the program to allow

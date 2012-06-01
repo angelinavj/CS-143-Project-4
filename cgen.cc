@@ -1527,10 +1527,53 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
   //Evaluate case expression, then enter scope and evaluate case body
   ctable->localid_offset_table->enterscope();
 
-  //Look up expression id - first for stack and then for attribute
-  //in test code the expression id is an attribute, which is why the
-  //offset if from self (a0) and not the framepointer!!!
+  //Get the case expr's class tag and store in T2
+  expr->code(s, ctable, curClass);
+  emit_move(T2, ACC, s);
 
+  int* branch_tag_ordering = new int[cases->len()];
+  
+  //Get all the class tags for the branches and store in branch_tag_ordering
+  int branch_index = 0;
+  for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
+    int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
+    branch_tag_ordering[branch_index] = tag;
+    branch_index++;
+  }
+
+  //Bubble sort (lolz) the array of branch tags
+  for(int i = 0; i < cases->len(); i++) {
+    for(int j = 1; j < cases->len(); j++) {
+      if(branch_tag_ordering[j] > branch_tag_ordering[j-1]) {
+	int temp = branch_tag_ordering[j];
+	branch_tag_ordering[j] = branch_tag_ordering[j-1];
+	branch_tag_ordering[j-1] = temp;
+      }
+    }
+  }
+
+  //Output the branch code. Outer loop iterates over all of the
+  //branches; inner loop iterates over the sorted list of branch tags
+  //to output the correct label number and label code
+  for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
+    for(int j = 0; j < cases->len(); j++) {
+      int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
+      int lowestChildTag = ctable->get_lowest_child_tag(((branch_class*)cases->nth(i))->type_decl);
+      
+      if(branch_tag_ordering[j] == tag) {
+	//The label number is j+1 (and next is j+2) because 0 will be for the exit
+	emit_label_def(j+1, s);
+	emit_blti(T2, tag, j+2, s);
+	emit_bgti(T2, lowestChildTag, j+2, s);
+	expr->code(s, ctable, curClass);
+	emit_branch(0, s);
+	//break out of the inner loop since branch code generated
+	break; 
+      }
+    }
+  }
+
+  emit_label_def(0, s);
   ctable->localid_offset_table->exitscope();
 }
 
