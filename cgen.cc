@@ -1288,6 +1288,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_push(SELF, str);
   emit_move(FP, SP, str);
   emit_push(RA, str);
+  emit_move(SELF, ACC, str);
 
   Formals params = method->get_formals();
   for (int i = params->first(); params->more(i); i = params->next(i)) {
@@ -1298,7 +1299,8 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   method->expr->code(str, this, classNode);
 
   emit_load(RA, 1, SP, str);
-  emit_load(FP, 2, FP, str);
+  emit_load(SELF, 2, SP, str);
+  emit_load(FP, 3, SP, str);
   emit_addiu(SP, SP, 4 * method->get_num_params() + 12, str);
   emit_return(str); 
 
@@ -1931,6 +1933,21 @@ void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
 void isvoid_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  int void_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  emit_beq(ACC, ZERO, void_label, s);
+  //The expression is not void
+  emit_load_bool(ACC, falsebool, s);
+
+  //The expression is void
+  emit_label_def(void_label, s);
+  emit_load_bool(ACC, truebool, s);
+
+  emit_label_def(end_label, s);
 }
 
 void no_expr_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
