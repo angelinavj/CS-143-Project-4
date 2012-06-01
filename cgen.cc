@@ -1259,7 +1259,6 @@ void CgenClassTable::code_class_objTab_wrapper() {
 };
 
 void CgenClassTable::code_class_dispTab_all(CgenNodeP root) {
-  str << WORD << "-1" << endl;
   emit_disptable_ref(root->get_name(), str); str << LABEL;
 
   code_class_dispTab(root);
@@ -1618,6 +1617,11 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
   //Get all the class tags for the branches and store in branch_tag_ordering
   int branch_index = 0;
   for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
+    Symbol branchName = ((branch_class*)cases->nth(i))->name;
+    int offset = ctable->current_method->get_new_temporary_offset();
+    emit_store(ACC, offset, FP, s);
+    ctable->localid_offset_table->addid(branchName, new int(offset));
+ 
     int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
     branch_tag_ordering[branch_index] = tag;
     branch_index++;

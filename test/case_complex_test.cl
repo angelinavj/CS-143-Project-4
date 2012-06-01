@@ -43,8 +43,9 @@ F: 10-10
 D: 7-7
 *)
 
+(*
 class Main inherits IO {
-      x : H;
+      x : H <- new H;
       main() : Int {
       	     {      
       	     case x of 
@@ -59,12 +60,10 @@ class Main inherits IO {
        };
 };
 
-
-
-(*
+*)
 
 class Main inherits IO {
-      x : H;
+      x : H <- new H;
       main() : SELF_TYPE {
       	     {      
       	     out_int(case x of 
@@ -78,5 +77,3 @@ class Main inherits IO {
        	     }
        };
 };
-
-*)
