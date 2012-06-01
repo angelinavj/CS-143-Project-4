@@ -1,3 +1,3 @@
-class Main {
-  main() : Int { 5 * 3 };
+class Main  inherits IO {
+  main() : SELF_TYPE { out_int(5 * 3) };
 };
