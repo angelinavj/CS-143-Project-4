@@ -567,6 +567,14 @@ char *get_dispatch_label(Symbol classname) {
   sprintf(label, "%s%s", cname, DISPTAB_SUFFIX);
   return label; 
 }
+
+
+char *get_protObj_label(Symbol classname) {
+  char *cname = classname->get_string();
+  char *label = (char *)(malloc(strlen(cname) + strlen(PROTOBJ_SUFFIX)));
+  sprintf(label, "%s%s", cname, PROTOBJ_SUFFIX);
+  return label; 
+}
 //***************************************************
 //
 //  Emit code to start the .text segment and to
@@ -1280,6 +1288,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
     dump_Symbol(cerr, 2, classNode->get_name());
     printf("The maximum number of local variables in this method: %d\n", num_max_local_vars);
   }
+  current_method = method;
 
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
@@ -1288,6 +1297,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_push(SELF, str);
   emit_move(FP, SP, str);
   emit_push(RA, str);
+  emit_addiu(SP, SP, -1 * num_max_local_vars, str);
   emit_move(SELF, ACC, str);
 
   Formals params = method->get_formals();
@@ -1298,6 +1308,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   method->expr->code(str, this, classNode);
 
+  emit_addiu(SP, SP, 1 * num_max_local_vars, str);
   emit_load(RA, 1, SP, str);
   emit_load(SELF, 2, SP, str);
   emit_load(FP, 3, SP, str);
@@ -1670,6 +1681,27 @@ void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
 void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
+
+  if (!init->is_no_expr()) {
+    init->code(s, ctable, curClass);
+  } else {
+    // Load typename_protObj
+    emit_load_address(ACC, get_protObj_label(type_decl), s); 
+  }
+
+  // Call Object.copy
+  emit_jal("Object.copy", s);
+
+  int offsetFromFP = ctable->current_method->get_new_temporary_offset();
+  // Save the pointer in the stack.
+  // The pointer to the object in heap will be in ACC
+  emit_store(ACC, offsetFromFP, FP, s);
+
+  // Add the identifier to the localid_offset_table.
+  ctable->localid_offset_table->addid(identifier, new int(offsetFromFP)); 
+
+  body->code(s, ctable, curClass);
+  // Result will be in ACC.
 
   ctable->localid_offset_table->exitscope();
 }
