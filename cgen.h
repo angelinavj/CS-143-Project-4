@@ -85,7 +85,8 @@ public:
    int get_lowest_child_tag(Symbol className);
    int code_get_numAttr(CgenNodeP classNode);
    CgenNodeP root();
-   
+   // Tracks the current method that we are currently processing.
+   method_class *current_method;
    //Tracks the number of labels created throughout the program to allow
    //appropriate branching of the labels
    int labelCounter;
@@ -104,6 +105,7 @@ private:
                                               // `NotBasic' otherwise
 
 public:
+
    CgenNode(Class_ c,
             Basicness bstatus,
             CgenClassTableP class_table);
