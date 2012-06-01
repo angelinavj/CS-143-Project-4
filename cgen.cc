@@ -931,7 +931,6 @@ CgenClassTable::CgenClassTable(Classes classes, ostream& s) : nds(NULL) , str(s)
    build_inheritance_tree();
 
    code_gen_classTags(root());   
-   verify_class_tags(root());
 
    code_gen_methodOffsets(root(), 0);
    code_gen_attrOffsets(root(), FIRST_ATTR_OFFSET_IN_OBJ);

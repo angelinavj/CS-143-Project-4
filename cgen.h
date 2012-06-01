@@ -14,6 +14,8 @@ typedef CgenClassTable *CgenClassTableP;
 class CgenNode;
 typedef CgenNode *CgenNodeP;
 
+//Stores the class tag for each class and the
+//tag of the lowest child in the tree for that class
 typedef struct classInfo {
   Symbol className;
   int lowestChild;
@@ -63,7 +65,7 @@ private:
 
    void code_make_objProt(CgenNodeP classNode);
    void code_make_objProt_all(CgenNodeP classNode);
-	 void code_init_call(CgenNodeP classNode, method_class *method);
+   void code_init_call(CgenNodeP classNode, method_class *method);
    void code_gen_init(CgenNodeP classNode);
    void code_gen_init_objects(CgenNodeP root);
 // The following creates an inheritance graph from
