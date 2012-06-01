@@ -569,12 +569,13 @@ char *get_dispatch_label(Symbol classname) {
 }
 
 
-char *get_protObj_label(Symbol classname) {
+char *get_init_label(Symbol classname) {
   char *cname = classname->get_string();
-  char *label = (char *)(malloc(strlen(cname) + strlen(PROTOBJ_SUFFIX)));
-  sprintf(label, "%s%s", cname, PROTOBJ_SUFFIX);
+  char *label = (char *)(malloc(strlen(cname) + strlen(CLASSINIT_SUFFIX)));
+  sprintf(label, "%s%s", cname, CLASSINIT_SUFFIX);
   return label; 
 }
+
 //***************************************************
 //
 //  Emit code to start the .text segment and to
@@ -586,8 +587,7 @@ char *get_protObj_label(Symbol classname) {
  * Set the offset of all attributes defined directly in this classNode.
  * The first / smallest offset that can be used by this attributes in classNode
  * is defined in the parameter.
- */
-void CgenClassTable::code_set_attrOffset(CgenNodeP classNode, int offset) {
+ */ void CgenClassTable::code_set_attrOffset(CgenNodeP classNode, int offset) {
   int offsetToUse = offset;
   Features attributes = classNode->get_attributes();
   for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
@@ -599,8 +599,7 @@ void CgenClassTable::code_set_attrOffset(CgenNodeP classNode, int offset) {
 
 /*
  * Returns the offset of the last attribute of the parameter classNode.
- */
-int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
+ */ int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
   Features attributes = classNode->get_attributes();
   if (attributes->len() > 0) {
     attr_class *attr = (attr_class *)(attributes->nth(attributes->len() - 1));
@@ -612,8 +611,7 @@ int CgenClassTable::get_last_attrOffset(CgenNodeP classNode) {
 /*
  * Returns the offset of the attribute with a given name in the class classNode.
  * If not found, returns -1.
- */
-int CgenClassTable::get_attribute_offset(CgenNodeP classNode, Symbol attr_name) {
+ */ int CgenClassTable::get_attribute_offset(CgenNodeP classNode, Symbol attr_name) {
   if (classNode->get_name() == No_class) {
     return -1;
   }
@@ -636,8 +634,7 @@ int max (int a, int b) {
 /*
  * Returns the biggest disptable offset that a method in this class has.
  * Not including the offset of methods that it inherits.
- */
-int CgenClassTable::get_biggest_method_offset(CgenNodeP classNode) { 
+ */ int CgenClassTable::get_biggest_method_offset(CgenNodeP classNode) { 
   int biggest_offset = -1;
   Features methods = classNode->get_methods();
   for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
@@ -652,8 +649,7 @@ int CgenClassTable::get_biggest_method_offset(CgenNodeP classNode) {
  * This set up is cognizant of superclass. Example: if B inherits from A, A.test and
  * B.test will have the same offset. Other than overridden offset, all other offset
  * will be unique.
- */
-void CgenClassTable::code_set_methodOffset(CgenNodeP classNode, int offset) {
+ */ void CgenClassTable::code_set_methodOffset(CgenNodeP classNode, int offset) {
   int nextEmptyOffset = offset;
   Features methods = classNode->get_methods();
   for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
@@ -728,8 +724,7 @@ int CgenClassTable::get_method_offset(Symbol classname, Symbol methodname) {
   code_gen_attrOffset will traverse the tree and generate offset for all the
   attributes defined in all descendant classes of root.
   offset defines the first available offset for attributes defined in this subtree.
- */
-void CgenClassTable::code_gen_attrOffsets(CgenNodeP root, int offset) {
+ */ void CgenClassTable::code_gen_attrOffsets(CgenNodeP root, int offset) {
   code_set_attrOffset(root, offset);
   int nextOffset = max(offset, get_last_attrOffset(root) + 1);
 
@@ -742,8 +737,7 @@ void CgenClassTable::code_gen_attrOffsets(CgenNodeP root, int offset) {
 Given the name of a class, return its class id #. 
 If class does not exist, return -1. code_gen_classTags
 MUST BE CALLED BEFORE THIS METHOD 
-*/
-int CgenClassTable::get_class_tag(Symbol className) {
+*/ int CgenClassTable::get_class_tag(Symbol className) {
   for(int i = 0; i < numClasses; i++) {
     Symbol curName = class_tags[i].className;
     if(className == curName) return i;
@@ -757,8 +751,7 @@ int CgenClassTable::get_class_tag(Symbol className) {
 Given the name of a class, return the class id # for its lowest child. 
 If class does not exist, return -1. code_gen_classTags
 MUST BE CALLED BEFORE THIS METHOD 
-*/
-int CgenClassTable::get_lowest_child_tag(Symbol className) {
+*/ int CgenClassTable::get_lowest_child_tag(Symbol className) {
   for(int i = 0; i < numClasses; i++) {
     Symbol curName = class_tags[i].className;
     if(className == curName) return class_tags[i].lowestChild;
@@ -771,8 +764,7 @@ int CgenClassTable::get_lowest_child_tag(Symbol className) {
   code_gen_classTags will traverse the tree and create an array
   (class_tags) that contains the name of every class in the program
   and the class tag of the class's lowest child 
- */
-void CgenClassTable::code_gen_classTags(CgenNodeP root) {
+ */ void CgenClassTable::code_gen_classTags(CgenNodeP root) {
   numClasses = get_num_classes(root);
   class_tags = new classInfo[numClasses];
   nextTagNumber = 0;
@@ -796,8 +788,7 @@ void CgenClassTable::verify_class_tags(CgenNodeP classNode) {
 /*
   code_set_classTags is a helper function that does the actual tree
   traversal and populates the class_tags table
- */
-int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) {
+ */ int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) {
 
   if(classNode->get_name() == No_class) return lowestChildTag;
 
@@ -822,8 +813,7 @@ int CgenClassTable::code_set_classTags(CgenNodeP classNode, int lowestChildTag) 
 
 /*
   get_num_classes returns the total number of classes in the program
- */
-int CgenClassTable::get_num_classes(CgenNodeP classNode) {
+ */ int CgenClassTable::get_num_classes(CgenNodeP classNode) {
 
   if(classNode->get_name() == No_class) return 0;
   int sum = 1;
@@ -1168,8 +1158,7 @@ void CgenClassTable::code_class_objTab_wrapper() {
   for a given class(Node) by recursively walking up the tree and then
   printing out the attributes of the class as it walks back down; this
   gets the order of the attributes correct from ancestors -> child
- */
-int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
+ */ int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
 
   if(classNode->get_name() == No_class) return 0;
 
@@ -1185,8 +1174,7 @@ int CgenClassTable::code_get_numAttr(CgenNodeP classNode) {
 /*
   code_make_objProt makes the object prototype by printing out the class
   tag, size, dispatch pointer, and list of all attributes (including inheritted)
- */
-void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
+ */ void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
 
   if (classNode->get_name() == No_class) {
     return;
@@ -1221,8 +1209,7 @@ void CgenClassTable::code_make_objProt(CgenNodeP classNode) {
 /*
   code_make_objProt_all makes the object prototype for every class in the
   program by calling the helper function code_make_objProt for every class
- */
-void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
+ */ void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
   int numAttr = code_get_numAttr(classNode);
   int classTag = get_class_tag(classNode->get_name());
 
@@ -1243,8 +1230,7 @@ void CgenClassTable::code_make_objProt_all(CgenNodeP classNode) {
  * code_class_dispTab makes the dispatch table for every class in the
  * program. A class dispatch table includes the methods that the class itself
  * has and the methods that its ancestors has.
- */
-void CgenClassTable::code_class_dispTab(CgenNodeP classNode) {
+ */ void CgenClassTable::code_class_dispTab(CgenNodeP classNode) {
   bool found = true;
   for (int i = 0; found; i++) {
     found = false;
@@ -1288,16 +1274,12 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
     dump_Symbol(cerr, 2, classNode->get_name());
     printf("The maximum number of local variables in this method: %d\n", num_max_local_vars);
   }
-  current_method = method;
-
-  emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
   localid_offset_table->enterscope();
   emit_push(FP, str);
   emit_push(SELF, str);
   emit_move(FP, SP, str);
   emit_push(RA, str);
-  emit_addiu(SP, SP, -1 * num_max_local_vars, str);
   emit_move(SELF, ACC, str);
 
   Formals params = method->get_formals();
@@ -1308,7 +1290,6 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   method->expr->code(str, this, classNode);
 
-  emit_addiu(SP, SP, 1 * num_max_local_vars, str);
   emit_load(RA, 1, SP, str);
   emit_load(SELF, 2, SP, str);
   emit_load(FP, 3, SP, str);
@@ -1333,6 +1314,7 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
     Features methods = root->get_methods();
 
     for (int i = methods->first(); methods->more(i); i = methods->next(i)) {
+      emit_method_ref(root->get_name(), ((method_class *)(methods->nth(i)))->get_name(), str); str << LABEL;
       code_gen_method(root, (method_class *)(methods->nth(i)));
     }
   }
@@ -1342,49 +1324,51 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
   }
 }
 
-// TODO: this method needs to be completed.
-void CgenClassTable::code_gen_init(CgenNodeP classNode) {
-  //Make Method Call
-  //Call Parent Init in Method Call
-  //Initialize Attributes in Method Call
-  //Return from Method Call
-
-  if ((classNode->get_name() != Object) && (classNode->get_name() != Str) && (classNode->get_name() != Bool) &&
-      (classNode->get_name() != IO) && (classNode->get_name() != Int)) {
-    return;
+void CgenClassTable::code_init_call(CgenNodeP classNode, method_class* method) {
+  emit_push(FP, str);
+  emit_push(SELF, str);
+  emit_move(FP, SP, str);
+  emit_push(RA, str);
+  emit_move(SELF, ACC, str);
+	if (classNode->get_name() != Object) {
+  	emit_jal(get_init_label(classNode->get_parentnd()->get_name()), str);
+	}
+  Formals params = method->get_formals();
+  for (int i = params->first(); params->more(i); i = params->next(i)) {
+    formal_class *param = (formal_class *)(params->nth(i));
+    localid_offset_table->addid(param->get_name(), new int(i - params->first() + 3));
   }
 
+  method->expr->code(str, this, classNode);
+
+  emit_load(RA, 1, SP, str);
+  emit_load(SELF, 2, SP, str);
+  emit_load(FP, 3, SP, str);
+  emit_addiu(SP, SP, 4 * method->get_num_params() + 12, str);
+  emit_return(str); 
+}
+
+void CgenClassTable::code_gen_init(CgenNodeP classNode) {
   Expressions initBody = nil_Expressions();
+  
+
+  //Look for class attributes to initialize
   Features attributes = classNode->get_attributes();
   for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
     attr_class *attr = (attr_class *)(attributes->nth(i));
-    // if attr has an init expr
-    initBody = append_Expressions(initBody, new assign_class(attr->get_name(), attr->init));
+  
+    if(!attr->init->is_no_expr()) initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), attr->init)));
     
-
-    // if attr is no expr - WE DO NOTHING!!!!!! Object Prototype already
-    // set to default values!!!!
-
-    //if (attr->type_decl == Str) {
-    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new string_const_class(stringtable.lookup_string(""))) ));
-    //} else if (attr->type_decl == Int) {
-    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new int_const_class(inttable.lookup_string("0"))) ));
-    //} else if (attr->type_decl == Bool) {
-    //initBody = append_Expressions(initBody, single_Expressions(new assign_class(attr->get_name(), new bool_const_class(false))));
-    //}
   }
   initBody = append_Expressions(initBody, single_Expressions(new object_class(self)));
   method_class *method = new method_class(init, nil_Formals(), SELF_TYPE,
 					      new block_class(initBody));
-  code_gen_method(classNode, method);
+  code_init_call(classNode, method);
 }
 
-
-// TODO : this method needs to be completed.
 void CgenClassTable::code_gen_init_objects(CgenNodeP root) {
-  emit_init_ref(root->get_name(), str); str << LABEL; 
-  emit_jalr(RA, str);
-  //code_gen_init(root);
+  emit_init_ref(root->get_name(), str); str << LABEL;
+  code_gen_init(root);
   for(List<CgenNode> *l = root->get_children(); l; l = l->tl()) {
     code_gen_init_objects(l->hd());
   }
@@ -1681,27 +1665,6 @@ void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
 void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
-
-  if (!init->is_no_expr()) {
-    init->code(s, ctable, curClass);
-  } else {
-    // Load typename_protObj
-    emit_load_address(ACC, get_protObj_label(type_decl), s); 
-  }
-
-  // Call Object.copy
-  emit_jal("Object.copy", s);
-
-  int offsetFromFP = ctable->current_method->get_new_temporary_offset();
-  // Save the pointer in the stack.
-  // The pointer to the object in heap will be in ACC
-  emit_store(ACC, offsetFromFP, FP, s);
-
-  // Add the identifier to the localid_offset_table.
-  ctable->localid_offset_table->addid(identifier, new int(offsetFromFP)); 
-
-  body->code(s, ctable, curClass);
-  // Result will be in ACC.
 
   ctable->localid_offset_table->exitscope();
 }
@@ -2010,8 +1973,7 @@ void object_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
   get_attributes() gets the attributes for a given class node
   doesn't include inherited attributes; looks at the list of features for a
   class and checks each one to see if it's a method or not
- */
-Features class__class::get_attributes() {
+ */ Features class__class::get_attributes() {
   Features f = nil_Features();
   for (int i = features->first(); features->more(i); i = features->next(i)) {
     if (!features->nth(i)->is_method()) {
@@ -2024,8 +1986,7 @@ Features class__class::get_attributes() {
 /*
   get_methods() gets the methods for a given class node
   doesn't include inherited methods
- */
-Features class__class::get_methods() {
+ */ Features class__class::get_methods() {
   Features f = nil_Features();
   for (int i = features->first(); features->more(i); i = features->next(i)) {
     if (features->nth(i)->is_method()) {
