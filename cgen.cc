@@ -1268,15 +1268,14 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_method_ref(classNode->get_name(), method->get_name(), str); str << LABEL;
 
   localid_offset_table->enterscope();
-  emit_move(FP, SP, str);
   emit_push(SELF, str);
+  emit_move(FP, SP, str);
   emit_push(RA, str);
 
   Formals params = method->get_formals();
   for (int i = params->first(); params->more(i); i = params->next(i)) {
     formal_class *param = (formal_class *)(params->nth(i));
-    int offset = i - params->first() + 1;
-    localid_offset_table->addid(param->get_name(), &offset);
+    localid_offset_table->addid(param->get_name(), new int(i - param->first() + 2));
   }
 
   method->expr->code(str, this, classNode);
