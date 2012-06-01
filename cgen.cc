@@ -1333,7 +1333,11 @@ void CgenClassTable::code_gen_methods_all(CgenNodeP root) {
 
 // TODO: this method needs to be completed.
 void CgenClassTable::code_gen_init(CgenNodeP classNode) {
-  /*
+  //Make Method Call
+  //Call Parent Init in Method Call
+  //Initialize Attributes in Method Call
+  //Return from Method Call
+
   if ((classNode->get_name() != Object) && (classNode->get_name() != Str) && (classNode->get_name() != Bool) &&
       (classNode->get_name() != IO) && (classNode->get_name() != Int)) {
     return;
@@ -1344,8 +1348,7 @@ void CgenClassTable::code_gen_init(CgenNodeP classNode) {
   for (int i = attributes->first(); attributes->more(i); i = attributes->next(i)) {
     attr_class *attr = (attr_class *)(attributes->nth(i));
     // if attr has an init expr
-    // initBody = append_Expressions(initBody,
-    //					new assign_class(attr->get_name(), attr->init));
+    initBody = append_Expressions(initBody, new assign_class(attr->get_name(), attr->init));
     
 
     // if attr is no expr - WE DO NOTHING!!!!!! Object Prototype already
@@ -1363,7 +1366,6 @@ void CgenClassTable::code_gen_init(CgenNodeP classNode) {
   method_class *method = new method_class(init, nil_Formals(), SELF_TYPE,
 					      new block_class(initBody));
   code_gen_method(classNode, method);
-  */
 }
 
 
