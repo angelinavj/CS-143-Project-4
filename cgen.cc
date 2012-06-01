@@ -1442,14 +1442,39 @@ void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
 
 void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_push(FP, s);
-
+  
   for (int i = actual->len()-1; i >= 0; i--) {
-    Expression param = actual->nth(i);
-    param->code(s, ctable, curClass);
+    Expression exp = actual->nth(i);
+    exp->code(s, ctable, curClass);
     emit_push(ACC, s);
   }
   expr->code(s, ctable, curClass);
+ 
+  int success_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_bne(ACC, ZERO, success_label, s);
 
+  // If it is here, calling dispatch abort.
+  // filename in $a0, line number in $t1.
+  
+  emit_load_address(ACC, "str_const0", s); 
+  emit_load_imm(T1, get_line_number(), s);
+  emit_jal("_dispatch_abort", s);
+
+  // Success branch
+  emit_label_def(success_label, s);
+  emit_load(T1, DISPTABLE_OFFSET, ACC, s);
+  
+  int offset = ctable->get_method_offset(type_name, name);
+  if (cgen_debug) {
+    printf("offset: %d\n", offset);
+  }
+
+  emit_load(T1, offset, T1, s);
+ 
+  emit_jalr(T1, s);
+
+  emit_addiu(SP, SP, (actual->len() * 4), s);
 
 }
 
@@ -1569,8 +1594,6 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
     }
   }
 
-  int exit_label = ctable->labelCounter;
-  (ctable->labelCounter)++;
   //Output the branch code. Outer loop iterates over all of the
   //branches; inner loop iterates over the sorted list of branch tags
   //to output the correct label number and label code
@@ -1580,26 +1603,19 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
       int lowestChildTag = ctable->get_lowest_child_tag(((branch_class*)cases->nth(i))->type_decl);
       
       if(branch_tag_ordering[j] == tag) {
-	int cur_label = ctable->labelCounter;
-	(ctable->labelCounter)++;
-	
-	emit_label_def(cur_label, s);
-	emit_blti(T2, tag, cur_label+1, s);
-	emit_bgti(T2, lowestChildTag, cur_label+1, s);
+	//The label number is j+1 (and next is j+2) because 0 will be for the exit
+	emit_label_def(j+1, s);
+	emit_blti(T2, tag, j+2, s);
+	emit_bgti(T2, lowestChildTag, j+2, s);
 	expr->code(s, ctable, curClass);
-	emit_branch(exit_label, s);
+	emit_branch(0, s);
 	//break out of the inner loop since branch code generated
 	break; 
       }
     }
   }
 
-  int abort_label = ctable->labelCounter;
-  (ctable->labelCounter)++;
-  emit_label_def(abort_label, s);
-  emit_jal("_case_abort", s);
-
-  emit_label_def(exit_label, s);
+  emit_label_def(0, s);
   ctable->localid_offset_table->exitscope();
 }
 
