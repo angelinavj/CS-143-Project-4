@@ -8,9 +8,9 @@ class Main {
   	 case x of
 	      a : Object => 100;
 	      b : String => 101;
-	      c : Bool => 102;
+	      c : Bool => 0;
 	      d : Bull => 103;
-	      e : Int => 0;	      
+	      e : Int => 100;	      
 	 esac 
   };
 };

@@ -1298,6 +1298,8 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_move(FP, SP, str);
   emit_push(RA, str);
   emit_addiu(SP, SP, -1 * num_max_local_vars, str);
+  emit_move(SELF, ACC, str);
+
   Formals params = method->get_formals();
   for (int i = params->first(); params->more(i); i = params->next(i)) {
     formal_class *param = (formal_class *)(params->nth(i));
@@ -1308,7 +1310,8 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   emit_addiu(SP, SP, 1 * num_max_local_vars, str);
   emit_load(RA, 1, SP, str);
-  emit_load(FP, 2, FP, str);
+  emit_load(SELF, 2, SP, str);
+  emit_load(FP, 3, SP, str);
   emit_addiu(SP, SP, 4 * method->get_num_params() + 12, str);
   emit_return(str); 
 
@@ -1596,7 +1599,6 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 
   //Get the case expr's class tag and store in T2
   expr->code(s, ctable, curClass);
-  emit_move(T2, ACC, s);
 
   int* branch_tag_ordering = new int[cases->len()];
   
@@ -1619,28 +1621,51 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
     }
   }
 
-  //Output the branch code. Outer loop iterates over all of the
-  //branches; inner loop iterates over the sorted list of branch tags
+  int exit_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  //Error handling for void case expression
+  int firstLabel = ctable->labelCounter;
+  emit_bne(ACC, ZERO, firstLabel, s);
+  emit_load_string(ACC, stringtable.lookup_string(curClass->filename->get_string()), s); 
+  emit_load_imm(T1, get_line_number(), s);
+  emit_jal("_case_abort2", s);
+
+  //Output the branch code. Outer loop iterates over sorted list of the
+  //branch tags; inner loop iterates over all the branch
   //to output the correct label number and label code
-  for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
-    for(int j = 0; j < cases->len(); j++) {
+  for(int j = 0; j < cases->len(); j++) {
+    for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
       int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
       int lowestChildTag = ctable->get_lowest_child_tag(((branch_class*)cases->nth(i))->type_decl);
       
       if(branch_tag_ordering[j] == tag) {
-	//The label number is j+1 (and next is j+2) because 0 will be for the exit
-	emit_label_def(j+1, s);
-	emit_blti(T2, tag, j+2, s);
-	emit_bgti(T2, lowestChildTag, j+2, s);
+	int cur_label = ctable->labelCounter;
+	(ctable->labelCounter)++;
+	
+	//Set Branch Label
+	emit_label_def(cur_label, s);
+	
+	//If it's the first branch, load the class tag of the expr
+	if(cur_label == firstLabel)  emit_load(T2, 0, ACC, s);
+ 
+	//Compare the expr class tag against branches and act
+	emit_blti(T2, tag, cur_label+1, s);
+	emit_bgti(T2, lowestChildTag, cur_label+1, s);
 	expr->code(s, ctable, curClass);
-	emit_branch(0, s);
+	emit_branch(exit_label, s);
 	//break out of the inner loop since branch code generated
 	break; 
       }
     }
   }
 
-  emit_label_def(0, s);
+  int abort_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  emit_label_def(abort_label, s);
+  emit_jal("_case_abort", s);
+
+  emit_label_def(exit_label, s);
   ctable->localid_offset_table->exitscope();
 }
 
@@ -1940,6 +1965,21 @@ void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
 void isvoid_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  e1->code(s, ctable, curClass);
+  int void_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  emit_beq(ACC, ZERO, void_label, s);
+  //The expression is not void
+  emit_load_bool(ACC, falsebool, s);
+
+  //The expression is void
+  emit_label_def(void_label, s);
+  emit_load_bool(ACC, truebool, s);
+
+  emit_label_def(end_label, s);
 }
 
 void no_expr_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
