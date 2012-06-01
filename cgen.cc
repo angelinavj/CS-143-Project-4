@@ -1297,7 +1297,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   emit_push(SELF, str);
   emit_move(FP, SP, str);
   emit_push(RA, str);
-  emit_addiu(SP, SP, -1 * num_max_local_vars, str);
+  emit_addiu(SP, SP, -4 * num_max_local_vars, str);
   emit_move(SELF, ACC, str);
 
   Formals params = method->get_formals();
@@ -1308,7 +1308,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
 
   method->expr->code(str, this, classNode);
 
-  emit_addiu(SP, SP, 1 * num_max_local_vars, str);
+  emit_addiu(SP, SP, 4 * num_max_local_vars, str);
   emit_load(RA, 1, SP, str);
   emit_load(SELF, 2, SP, str);
   emit_load(FP, 3, SP, str);
