@@ -1275,7 +1275,7 @@ void CgenClassTable::code_gen_method(CgenNodeP classNode, method_class *method) 
   Formals params = method->get_formals();
   for (int i = params->first(); params->more(i); i = params->next(i)) {
     formal_class *param = (formal_class *)(params->nth(i));
-    localid_offset_table->addid(param->get_name(), new int(i - param->first() + 2));
+    localid_offset_table->addid(param->get_name(), new int(i - params->first() + 2));
   }
 
   method->expr->code(str, this, classNode);
