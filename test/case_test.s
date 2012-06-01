@@ -138,7 +138,7 @@ str_const0:
 	.word	9
 	.word	String_dispTab
 	.word	int_const11
-	.ascii	"./test/case_test.cl"
+	.ascii	"test/case_test.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -146,7 +146,7 @@ int_const11:
 	.word	2
 	.word	4
 	.word	Int_dispTab
-	.word	19
+	.word	17
 	.word	-1
 int_const10:
 	.word	2
@@ -255,12 +255,10 @@ class_objTab:
 	.word	Bull_init
 	.word	Main_protObj
 	.word	Main_init
-	.word	-1
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 IO_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -269,17 +267,14 @@ IO_dispTab:
 	.word	IO.out_int
 	.word	IO.in_string
 	.word	IO.in_int
-	.word	-1
 Int_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 Bool_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 String_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -287,12 +282,10 @@ String_dispTab:
 	.word	String.length
 	.word	String.concat
 	.word	String.substr
-	.word	-1
 Bull_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 Main_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -348,19 +341,130 @@ heap_start:
 	.globl	Bool_init
 	.globl	Main.main
 Object_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 IO_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 Int_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 Bool_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 String_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 Bull_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 Main_init:
-	jalr		$ra
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
 Main.main:
 	sw	$fp 0($sp)
 	addiu	$sp $sp -4
@@ -369,38 +473,63 @@ Main.main:
 	move	$fp $sp
 	sw	$ra 0($sp)
 	addiu	$sp $sp -4
+	addiu	$sp $sp -20
+	move	$s0 $a0
 	lw	$a0 12($s0)
-	lw	$t2 0($a0)
+	sw	$a0 0($sp)
+	addiu	$sp $sp -4
+	bne	$a0 $zero label1
+	la	$a0 str_const0
+	li	$t1 8
+	jal	_case_abort2
 label1:
-	blt	$t2 0 label2
-	bgt	$t2 6 label2
-	lw	$a0 12($s0)
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
+	blt	$t2 5 label2
+	bgt	$t2 5 label2
+	sw	$t1 -4($fp)
+	la	$a0 int_const3
 	b	label0
 label2:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 4 label3
 	bgt	$t2 4 label3
-	lw	$a0 12($s0)
+	sw	$t1 -8($fp)
+	la	$a0 int_const1
 	b	label0
 label3:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 3 label4
 	bgt	$t2 3 label4
-	lw	$a0 12($s0)
+	sw	$t1 -12($fp)
+	la	$a0 int_const2
 	b	label0
 label4:
-	blt	$t2 5 label5
-	bgt	$t2 5 label5
-	lw	$a0 12($s0)
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
+	blt	$t2 2 label5
+	bgt	$t2 2 label5
+	sw	$t1 -16($fp)
+	la	$a0 int_const0
 	b	label0
 label5:
-	blt	$t2 2 label6
-	bgt	$t2 2 label6
-	lw	$a0 12($s0)
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
+	blt	$t2 0 label6
+	bgt	$t2 6 label6
+	sw	$t1 -20($fp)
+	la	$a0 int_const0
 	b	label0
 label6:
 	jal	_case_abort
 label0:
+	addiu	$sp $sp 4
+	addiu	$sp $sp 20
 	lw	$ra 4($sp)
-	lw	$fp 8($fp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
 

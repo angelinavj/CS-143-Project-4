@@ -1611,17 +1611,14 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 
   //Get the case expr's class tag and store in T2
   expr->code(s, ctable, curClass);
+  emit_push(ACC, s);
+
 
   int* branch_tag_ordering = new int[cases->len()];
   
   //Get all the class tags for the branches and store in branch_tag_ordering
   int branch_index = 0;
   for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
-    Symbol branchName = ((branch_class*)cases->nth(i))->name;
-    int offset = ctable->current_method->get_new_temporary_offset();
-    emit_store(ACC, offset, FP, s);
-    ctable->localid_offset_table->addid(branchName, new int(offset));
- 
     int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
     branch_tag_ordering[branch_index] = tag;
     branch_index++;
@@ -1641,35 +1638,54 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
   int exit_label = ctable->labelCounter;
   (ctable->labelCounter)++;
 
-  //Error handling for void case expression
+  // The first branch in the case.
   int firstLabel = ctable->labelCounter;
   emit_bne(ACC, ZERO, firstLabel, s);
   emit_load_string(ACC, stringtable.lookup_string(curClass->filename->get_string()), s); 
   emit_load_imm(T1, get_line_number(), s);
   emit_jal("_case_abort2", s);
 
+
+  int next_label = ctable->labelCounter;
+  ctable->labelCounter++;
+
   //Output the branch code. Outer loop iterates over sorted list of the
   //branch tags; inner loop iterates over all the branch
   //to output the correct label number and label code
   for(int j = 0; j < cases->len(); j++) {
     for(int i = cases->first(); cases->more(i); i = cases->next(i)) {
-      int tag = ctable->get_class_tag(((branch_class*)cases->nth(i))->type_decl);
-      int lowestChildTag = ctable->get_lowest_child_tag(((branch_class*)cases->nth(i))->type_decl);
+      branch_class *cur_branch = (branch_class *)(cases->nth(i));
+
+      int tag = ctable->get_class_tag(cur_branch->type_decl);
+      int lowestChildTag = ctable->get_lowest_child_tag(cur_branch->type_decl);
       
       if(branch_tag_ordering[j] == tag) {
-	int cur_label = ctable->labelCounter;
-	(ctable->labelCounter)++;
-	
+	int cur_label = next_label;
+	next_label = ctable->labelCounter;
+  ctable->labelCounter++;
+
+
 	//Set Branch Label
 	emit_label_def(cur_label, s);
-	
-	//If it's the first branch, load the class tag of the expr
-	if(cur_label == firstLabel)  emit_load(T2, 0, ACC, s);
- 
+
+  emit_load(T1, 1, SP, s); // T1 now contains result of expr
+  emit_load(T2, TAG_OFFSET, T1, s); // T2 now contains the class tag of expr
+
+
 	//Compare the expr class tag against branches and act
-	emit_blti(T2, tag, cur_label+1, s);
-	emit_bgti(T2, lowestChildTag, cur_label+1, s);
-	expr->code(s, ctable, curClass);
+	emit_blti(T2, tag, next_label, s);
+	emit_bgti(T2, lowestChildTag, next_label, s);
+
+  ctable->localid_offset_table->enterscope();
+  // Value of nameInBranch = value of expr
+  Symbol nameInBranch = cur_branch->name;
+  int offset = ctable->current_method->get_new_temporary_offset();
+  emit_store(T1, offset, FP, s);
+  ctable->localid_offset_table->addid(nameInBranch, new int(offset));
+	cur_branch->expr->code(s, ctable, curClass);
+  ctable->localid_offset_table->exitscope();
+
+  // Done spewing code for expression inside branch.
 	emit_branch(exit_label, s);
 	//break out of the inner loop since branch code generated
 	break; 
@@ -1677,13 +1693,12 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
     }
   }
 
-  int abort_label = ctable->labelCounter;
-  (ctable->labelCounter)++;
-  emit_label_def(abort_label, s);
+  emit_label_def(next_label, s);
   emit_jal("_case_abort", s);
 
   emit_label_def(exit_label, s);
   ctable->localid_offset_table->exitscope();
+  emit_addiu(SP, SP, 4, s);
 }
 
 void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
@@ -2008,7 +2023,7 @@ int method_class::count_num_max_locals()
 
 int branch_class::count_num_max_locals()
 {
-  return expr->count_num_max_locals();
+  return 1 + expr->count_num_max_locals();
 }
 
 int let_class::count_num_max_locals()
@@ -2068,7 +2083,7 @@ int block_class::count_num_max_locals()
 
 int typcase_class::count_num_max_locals()
 {
-  int total = expr->count_num_max_locals() + 1;
+  int total = expr->count_num_max_locals();
   for(int i = cases->first(); cases->more(i); i = cases->next(i))
     total += cases->nth(i)->count_num_max_locals();
 
