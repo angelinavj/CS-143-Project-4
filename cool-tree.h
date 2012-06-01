@@ -188,6 +188,7 @@ public:
    }
    Feature copy_Feature();
    void dump(ostream& stream, int n);
+   Formals get_formals() { return formals; }
    int get_num_params();
    void set_offset(int offset_) { offset = offset_; }
    int get_offset() { return offset; }
@@ -236,6 +237,7 @@ public:
       name = a1;
       type_decl = a2;
    }
+   Symbol get_name() { return name; }
    Formal copy_Formal();
    void dump(ostream& stream, int n);
 

@@ -1,3 +1,5 @@
+(* TODO: initialization in A *)
+
 class A {
   test(a: Int): Int {
     5
