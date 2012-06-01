@@ -1657,7 +1657,9 @@ void divide_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
 
 void neg_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
-  emit_neg(ACC, ACC, s);
+  emit_fetch_int(T1, ACC, s);
+  emit_neg(T1, T1, s);
+  emit_store_int(T1, ACC, s);
 }
 
 void lt_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
