@@ -1812,6 +1812,23 @@ void leq_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
 void comp_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
+  emit_load(T3, DEFAULT_OBJFIELDS, ACC, s);
+  int false_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+  int end_label = ctable->labelCounter;
+  (ctable->labelCounter)++;
+
+  emit_beqz(T3, false_label, s);
+  // The bool value of e1 is true
+  emit_load_bool(ACC, falsebool, s);
+  emit_branch(end_label, s);
+
+
+  // The bool value of e1 is false
+  emit_label_def(false_label, s);
+  emit_load_bool(ACC, truebool, s);
+
+  emit_label_def(end_label, s);  
 }
 
 void int_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curClass) {
