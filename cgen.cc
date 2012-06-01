@@ -1606,9 +1606,6 @@ void loop_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 }
 
 void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
-  //Evaluate case expression, then enter scope and evaluate case body
-  ctable->localid_offset_table->enterscope();
-
   //Get the case expr's class tag and store in T2
   expr->code(s, ctable, curClass);
   emit_push(ACC, s);
@@ -1647,7 +1644,7 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
 
 
   int next_label = ctable->labelCounter;
-  ctable->labelCounter++;
+  (ctable->labelCounter)++;
 
   //Output the branch code. Outer loop iterates over sorted list of the
   //branch tags; inner loop iterates over all the branch
@@ -1662,30 +1659,30 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
       if(branch_tag_ordering[j] == tag) {
 	int cur_label = next_label;
 	next_label = ctable->labelCounter;
-  ctable->labelCounter++;
+	ctable->labelCounter++;
 
 
 	//Set Branch Label
 	emit_label_def(cur_label, s);
 
-  emit_load(T1, 1, SP, s); // T1 now contains result of expr
-  emit_load(T2, TAG_OFFSET, T1, s); // T2 now contains the class tag of expr
+	emit_load(T1, 1, SP, s); // T1 now contains result of expr
+	emit_load(T2, TAG_OFFSET, T1, s); // T2 now contains the class tag of expr
 
 
 	//Compare the expr class tag against branches and act
 	emit_blti(T2, tag, next_label, s);
 	emit_bgti(T2, lowestChildTag, next_label, s);
 
-  ctable->localid_offset_table->enterscope();
-  // Value of nameInBranch = value of expr
-  Symbol nameInBranch = cur_branch->name;
-  int offset = ctable->current_method->get_new_temporary_offset();
-  emit_store(T1, offset, FP, s);
-  ctable->localid_offset_table->addid(nameInBranch, new int(offset));
+	ctable->localid_offset_table->enterscope();
+	// Value of nameInBranch = value of expr
+	Symbol nameInBranch = cur_branch->name;
+	int offset = ctable->current_method->get_new_temporary_offset();
+	emit_store(T1, offset, FP, s);
+	ctable->localid_offset_table->addid(nameInBranch, new int(offset));
 	cur_branch->expr->code(s, ctable, curClass);
-  ctable->localid_offset_table->exitscope();
-
-  // Done spewing code for expression inside branch.
+	ctable->localid_offset_table->exitscope();
+	
+	// Done spewing code for expression inside branch.
 	emit_branch(exit_label, s);
 	//break out of the inner loop since branch code generated
 	break; 
@@ -1697,7 +1694,6 @@ void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass)
   emit_jal("_case_abort", s);
 
   emit_label_def(exit_label, s);
-  ctable->localid_offset_table->exitscope();
   emit_addiu(SP, SP, 4, s);
 }
 
