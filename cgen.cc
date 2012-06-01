@@ -1940,7 +1940,7 @@ void isvoid_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
   emit_beq(ACC, ZERO, void_label, s);
   //The expression is not void
   emit_load_bool(ACC, falsebool, s);
-
+  emit_branch(end_label, s);
   //The expression is void
   emit_label_def(void_label, s);
   emit_load_bool(ACC, truebool, s);
