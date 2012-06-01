@@ -548,43 +548,45 @@ I_init:
 Main_init:
 	jalr		$ra
 Main.main:
-	move	$fp $sp
 	sw	$s0 0($sp)
 	addiu	$sp $sp -4
+	move	$fp $sp
 	sw	$ra 0($sp)
 	addiu	$sp $sp -4
 	lw	$a0 12($s0)
 	move	$t2 $a0
-label6:
-	blt	$t2 0 label7
-	bgt	$t2 14 label7
-	lw	$a0 12($s0)
-	b	label0
-label4:
-	blt	$t2 6 label5
-	bgt	$t2 8 label5
-	lw	$a0 12($s0)
-	b	label0
 label1:
-	blt	$t2 11 label2
-	bgt	$t2 11 label2
-	lw	$a0 12($s0)
-	b	label0
-label5:
-	blt	$t2 5 label6
-	bgt	$t2 13 label6
+	blt	$t2 0 label2
+	bgt	$t2 14 label2
 	lw	$a0 12($s0)
 	b	label0
 label2:
-	blt	$t2 10 label3
-	bgt	$t2 10 label3
+	blt	$t2 6 label3
+	bgt	$t2 8 label3
 	lw	$a0 12($s0)
 	b	label0
 label3:
-	blt	$t2 7 label4
-	bgt	$t2 7 label4
+	blt	$t2 11 label4
+	bgt	$t2 11 label4
 	lw	$a0 12($s0)
 	b	label0
+label4:
+	blt	$t2 5 label5
+	bgt	$t2 13 label5
+	lw	$a0 12($s0)
+	b	label0
+label5:
+	blt	$t2 10 label6
+	bgt	$t2 10 label6
+	lw	$a0 12($s0)
+	b	label0
+label6:
+	blt	$t2 7 label7
+	bgt	$t2 7 label7
+	lw	$a0 12($s0)
+	b	label0
+label7:
+	jal	_case_abort
 label0:
 	lw	$ra 4($sp)
 	addiu	$sp $sp 8
