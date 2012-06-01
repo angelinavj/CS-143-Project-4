@@ -207,10 +207,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	11
+	.word	21
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"./test/case_complex_test.cl"
+	.ascii	"/afs/ir/users/v/e/veni/CS-143-Project-4/test/case_complex_test.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -218,7 +218,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	27
+	.word	65
 	.word	-1
 int_const9:
 	.word	3
@@ -786,47 +786,67 @@ Main.main:
 	move	$fp $sp
 	sw	$ra 0($sp)
 	addiu	$sp $sp -4
-	addiu	$sp $sp -4
+	addiu	$sp $sp -24
 	move	$s0 $a0
 	lw	$a0 12($s0)
+	sw	$a0 0($sp)
+	addiu	$sp $sp -4
 	bne	$a0 $zero label1
 	la	$a0 str_const0
 	li	$t1 69
 	jal	_case_abort2
 label1:
-	lw	$t2 0($a0)
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 12 label2
 	bgt	$t2 12 label2
-	lw	$a0 12($s0)
+	sw	$t1 -4($fp)
+	la	$a0 int_const0
 	b	label0
 label2:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 11 label3
 	bgt	$t2 11 label3
-	lw	$a0 12($s0)
+	sw	$t1 -8($fp)
+	la	$a0 int_const0
 	b	label0
 label3:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 8 label4
 	bgt	$t2 8 label4
-	lw	$a0 12($s0)
+	sw	$t1 -12($fp)
+	la	$a0 int_const0
 	b	label0
 label4:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 7 label5
 	bgt	$t2 9 label5
-	lw	$a0 12($s0)
+	sw	$t1 -16($fp)
+	la	$a0 int_const0
 	b	label0
 label5:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 6 label6
 	bgt	$t2 14 label6
-	lw	$a0 12($s0)
+	sw	$t1 -20($fp)
+	la	$a0 int_const1
 	b	label0
 label6:
+	lw	$t1 4($sp)
+	lw	$t2 0($t1)
 	blt	$t2 0 label7
 	bgt	$t2 14 label7
-	lw	$a0 12($s0)
+	sw	$t1 -24($fp)
+	la	$a0 int_const0
 	b	label0
 label7:
 	jal	_case_abort
 label0:
+	addiu	$sp $sp 4
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -838,7 +858,7 @@ label8:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr		$t1
-	addiu	$sp $sp 4
+	addiu	$sp $sp 24
 	lw	$ra 4($sp)
 	lw	$s0 8($sp)
 	lw	$fp 12($sp)

@@ -230,12 +230,10 @@ class_objTab:
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	-1
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 IO_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -244,7 +242,6 @@ IO_dispTab:
 	.word	IO.out_int
 	.word	IO.in_string
 	.word	IO.in_int
-	.word	-1
 Main_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -254,17 +251,14 @@ Main_dispTab:
 	.word	IO.in_string
 	.word	IO.in_int
 	.word	Main.main
-	.word	-1
 Int_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 Bool_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
 String_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -316,25 +310,122 @@ heap_start:
 	.globl	Bool_init
 	.globl	Main.main
 Object_init:
-	jalr		$ra
-IO_init:
-	jalr		$ra
-Main_init:
-	jalr		$ra
-Int_init:
-	jalr		$ra
-Bool_init:
-	jalr		$ra
-String_init:
-	jalr		$ra
-Main.main:
-	move	$fp $sp
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
 	sw	$fp 0($sp)
 	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO_init:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Main_init:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	IO_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Int_init:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Bool_init:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+String_init:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	addiu	$sp $sp 0
+	lw	$ra 4($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Main.main:
+	sw	$fp 0($sp)
+	addiu	$sp $sp -4
+	sw	$s0 0($sp)
+	addiu	$sp $sp -4
+	move	$fp $sp
+	sw	$ra 0($sp)
+	addiu	$sp $sp -4
+	addiu	$sp $sp 0
+	move	$s0 $a0
 	la	$a0 int_const0
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -357,10 +448,11 @@ label0:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr		$t1
-	addiu	$sp $sp 4
+	addiu	$sp $sp 0
 	lw	$ra 4($sp)
-	addiu	$sp $sp 8
-	lw	$fp 0($sp)
+	lw	$s0 8($sp)
+	lw	$fp 12($sp)
+	addiu	$sp $sp 12
 	jr	$ra	
 
 # end of generated code
