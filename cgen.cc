@@ -1978,6 +1978,14 @@ void bool_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curCla
 }
 
 void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
+  if (type_name == SELF_TYPE) {
+    emit_load_address(ACC, get_protObj_label(curClass->get_name()), s); 
+    emit_jal(get_init_label(curClass->get_name()), s);
+  } else {
+    emit_load_address(ACC, get_protObj_label(type_name), s); 
+    emit_jal(get_init_label(type_name), s);
+  }
+
 }
 
 void isvoid_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
