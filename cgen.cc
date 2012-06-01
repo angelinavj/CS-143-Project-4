@@ -1136,7 +1136,6 @@ void CgenClassTable::code_class_nameTab(CgenNodeP classNode) {
 }
 
 void CgenClassTable::code_class_nameTab_wrapper() {
-  str << WORD << "-1" << endl;
   str << CLASSNAMETAB << LABEL;
   code_class_nameTab(root());
 }
@@ -1152,7 +1151,6 @@ void CgenClassTable::code_class_objTab(CgenNodeP classNode) {
 }
 
 void CgenClassTable::code_class_objTab_wrapper() {
-  str << WORD << "-1" << endl;
   str << CLASSOBJTAB << LABEL;
   code_class_objTab(root());
 }
@@ -1483,9 +1481,7 @@ void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
 }
 
 void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
-  //Push current frame pointer (caller)
-  //emit_push(FP, s);
-  
+    
   //Compute and push parameters in reverse order (caller)
   for (int i = actual->len()-1; i >= 0; i--) {
     Expression exp = actual->nth(i);
