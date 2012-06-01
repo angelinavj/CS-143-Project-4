@@ -109,6 +109,7 @@ Expression set_type(Symbol s) { type = s; return this; } \
 virtual void code(ostream&, CgenClassTable *, CgenNodeP) = 0; \
 virtual void dump_with_types(ostream&,int) = 0;  \
 virtual int count_num_max_locals() = 0; \
+virtual bool is_no_type() = 0; \
 void dump_type(ostream&, int);               \
 Expression_class() { type = (Symbol) NULL; }
 
