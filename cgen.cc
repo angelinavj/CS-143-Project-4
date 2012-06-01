@@ -1925,8 +1925,28 @@ void bool_const_class::code(ostream& s, CgenClassTable *ctable, CgenNodeP curCla
 
 void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   if (type_name == SELF_TYPE) {
-    emit_load_address(ACC, get_protObj_label(curClass->get_name()), s); 
-    emit_jal(get_init_label(curClass->get_name()), s);
+    // get tag
+    emit_load(T1, TAG_OFFSET, ACC, s);
+
+    // lookup in class_objTab
+    // this is really silly. Trying to get the number 2 inside a register.
+    emit_load_bool(T2, truebool, s);
+    emit_store(T2, DEFAULT_OBJFIELDS, T2, s); // now T2 has the number 1.
+    emit_add(T2, T2, T2, s); // now T2 has the number 2.
+
+    emit_mul(T1, T1, T2, s); // now T1 = tag number * 2. This is the offset in word
+                             // of protObj inside class_objTab
+    emit_mul(T2, T2, T2, s); // now T2 has the number 4.
+    emit_mul(T1, T1, T2, s); // now T1 = tag number * 2 * 4.
+
+    emit_load_address(T2, CLASSOBJTAB, s);
+    emit_add(T2, T2, T1, s); // T2 now points to the prototype object.
+    // get protObj
+    emit_load(ACC, 0, T2, s); 
+
+    // get initialized.
+    emit_load(T2, 1, T2, s); // T2 now points to the initialization method.
+    emit_jal(T2, s);
   } else {
     emit_load_address(ACC, get_protObj_label(type_name), s); 
     emit_jal(get_init_label(type_name), s);
