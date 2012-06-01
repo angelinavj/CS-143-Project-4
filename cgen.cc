@@ -555,11 +555,18 @@ void CgenClassTable::code_global_data()
 char *get_method_label(Symbol classname, Symbol methodname) {
   char *cname = classname->get_string();
   char *mname = methodname->get_string();
-  char *label = (char *)(malloc(strlen(cname) + strlen(mname) + strlen(METHOD_SEP)));
+  char *label = (char *)(malloc(strlen(cname) + strlen(METHOD_SEP) + strlen(mname)));
   sprintf(label, "%s%s%s", cname, METHOD_SEP, mname);
   return label; 
 }
 
+
+char *get_dispatch_label(Symbol classname) {
+  char *cname = classname->get_string();
+  char *label = (char *)(malloc(strlen(cname) + strlen(DISPTAB_SUFFIX)));
+  sprintf(label, "%s%s", cname, DISPTAB_SUFFIX);
+  return label; 
+}
 //***************************************************
 //
 //  Emit code to start the .text segment and to
@@ -1463,7 +1470,7 @@ void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP c
 
   // Success branch
   emit_label_def(success_label, s);
-  emit_load(T1, DISPTABLE_OFFSET, ACC, s);
+  emit_load_address(T1, get_dispatch_label(type_name), s);
   
   int offset = ctable->get_method_offset(type_name, name);
   if (cgen_debug) {
