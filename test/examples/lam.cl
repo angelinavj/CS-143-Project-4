@@ -229,7 +229,10 @@ class Lambda inherits Expr {
   -- We allow variables to be reused
   substitute(x : Variable, e : Expr) : Expr {
     if x = arg then
-      self
+    {
+      out_string("here\n");  
+      self;
+    }
     else
       let new_body : Expr <- body.substitute(x, e),
 	  new_lam : Lambda <- new Lambda in
@@ -295,13 +298,25 @@ class App inherits Expr {
   };
 
   beta() : Expr {
+    {
     case fun of
-      l : Lambda => l.apply(arg);     -- Lazy evaluation
+      l : Lambda => {
+        out_string("doing lazy evaluation\n");
+        l.apply(arg);     -- Lazy evaluation
+        l.print_self();
+      };
       e : Expr =>
 	let new_fun : Expr <- fun.beta(),
 	    new_app : App <- new App in
-	  new_app.init(new_fun, arg);
-    esac
+    {
+	    new_app.init(new_fun, arg);
+      out_string("new_app.print_self\n");
+      new_app.print_self();
+    };
+    esac;
+
+    }
+
   };
 
   substitute(x : Variable, e : Expr) : Expr {

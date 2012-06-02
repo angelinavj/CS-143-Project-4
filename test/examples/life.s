@@ -1,4 +1,3 @@
-# start of generated code
 	.data
 	.align	2
 	.globl	class_nameTab
@@ -26,38 +25,11 @@ _MemMgr_COLLECTOR:
 _MemMgr_TEST:
 	.word	0
 	.word	-1
-str_const71:
+str_const68:
 	.word	7
 	.word	5
 	.word	String_dispTab
 	.word	int_const10
-	.byte	0	
-	.align	2
-	.word	-1
-str_const70:
-	.word	7
-	.word	6
-	.word	String_dispTab
-	.word	int_const4
-	.ascii	"Main"
-	.byte	0	
-	.align	2
-	.word	-1
-str_const69:
-	.word	7
-	.word	9
-	.word	String_dispTab
-	.word	int_const21
-	.ascii	"CellularAutomaton"
-	.byte	0	
-	.align	2
-	.word	-1
-str_const68:
-	.word	7
-	.word	6
-	.word	String_dispTab
-	.word	int_const2
-	.ascii	"Board"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -90,6 +62,33 @@ str_const65:
 	.word	-1
 str_const64:
 	.word	7
+	.word	6
+	.word	String_dispTab
+	.word	int_const4
+	.ascii	"Main"
+	.byte	0	
+	.align	2
+	.word	-1
+str_const63:
+	.word	7
+	.word	9
+	.word	String_dispTab
+	.word	int_const21
+	.ascii	"CellularAutomaton"
+	.byte	0	
+	.align	2
+	.word	-1
+str_const62:
+	.word	7
+	.word	6
+	.word	String_dispTab
+	.word	int_const2
+	.ascii	"Board"
+	.byte	0	
+	.align	2
+	.word	-1
+str_const61:
+	.word	7
 	.word	5
 	.word	String_dispTab
 	.word	int_const12
@@ -97,39 +96,12 @@ str_const64:
 	.byte	0	
 	.align	2
 	.word	-1
-str_const63:
+str_const60:
 	.word	7
 	.word	6
 	.word	String_dispTab
 	.word	int_const13
 	.ascii	"Object"
-	.byte	0	
-	.align	2
-	.word	-1
-str_const62:
-	.word	7
-	.word	7
-	.word	String_dispTab
-	.word	int_const16
-	.ascii	"_prim_slot"
-	.byte	0	
-	.align	2
-	.word	-1
-str_const61:
-	.word	7
-	.word	7
-	.word	String_dispTab
-	.word	int_const15
-	.ascii	"SELF_TYPE"
-	.byte	0	
-	.align	2
-	.word	-1
-str_const60:
-	.word	7
-	.word	7
-	.word	String_dispTab
-	.word	int_const15
-	.ascii	"_no_class"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -876,33 +848,15 @@ bool_const1:
 	.word	4
 	.word	Bool_dispTab
 	.word	1
-Board_rows_attrOffset=3
-Board_columns_attrOffset=4
-Board_board_size_attrOffset=5
-CellularAutomaton_population_map_attrOffset=6
-CellularAutomaton_rows_attrOffset=3
-CellularAutomaton_columns_attrOffset=4
-CellularAutomaton_board_size_attrOffset=5
-Main_cells_attrOffset=7
-Main_population_map_attrOffset=6
-Main_rows_attrOffset=3
-Main_columns_attrOffset=4
-Main_board_size_attrOffset=5
-Int__val_attrOffset=3
-Bool__val_attrOffset=3
-String__val_attrOffset=3
-String__str_field_attrOffset=4
-	.word	-1
 class_nameTab:
+	.word	str_const60
+	.word	str_const61
+	.word	str_const62
 	.word	str_const63
 	.word	str_const64
-	.word	str_const68
-	.word	str_const69
-	.word	str_const70
 	.word	str_const65
 	.word	str_const66
 	.word	str_const67
-	.word	-1
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -920,12 +874,25 @@ class_objTab:
 	.word	Bool_init
 	.word	String_protObj
 	.word	String_init
-	.word	-1
 Object_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
 	.word	Object.copy
-	.word	-1
+String_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+	.word	String.length
+	.word	String.concat
+	.word	String.substr
+Bool_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
+Int_dispTab:
+	.word	Object.abort
+	.word	Object.type_name
+	.word	Object.copy
 IO_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -934,7 +901,6 @@ IO_dispTab:
 	.word	IO.out_int
 	.word	IO.in_string
 	.word	IO.in_int
-	.word	-1
 Board_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -945,7 +911,6 @@ Board_dispTab:
 	.word	IO.in_int
 	.word	Board.size_of_board
 	.word	Board.board_init
-	.word	-1
 CellularAutomaton_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -974,7 +939,6 @@ CellularAutomaton_dispTab:
 	.word	CellularAutomaton.option
 	.word	CellularAutomaton.prompt
 	.word	CellularAutomaton.prompt2
-	.word	-1
 Main_dispTab:
 	.word	Object.abort
 	.word	Object.type_name
@@ -1005,28 +969,29 @@ Main_dispTab:
 	.word	CellularAutomaton.prompt2
 	.word	Main.main
 	.word	-1
-Int_dispTab:
-	.word	Object.abort
-	.word	Object.type_name
-	.word	Object.copy
-	.word	-1
-Bool_dispTab:
-	.word	Object.abort
-	.word	Object.type_name
-	.word	Object.copy
-	.word	-1
-String_dispTab:
-	.word	Object.abort
-	.word	Object.type_name
-	.word	Object.copy
-	.word	String.length
-	.word	String.concat
-	.word	String.substr
-	.word	-1
 Object_protObj:
 	.word	0
 	.word	3
 	.word	Object_dispTab
+	.word	-1
+String_protObj:
+	.word	7
+	.word	5
+	.word	String_dispTab
+	.word	int_const10
+	.word	0
+	.word	-1
+Bool_protObj:
+	.word	6
+	.word	4
+	.word	Bool_dispTab
+	.word	0
+	.word	-1
+Int_protObj:
+	.word	5
+	.word	4
+	.word	Int_dispTab
+	.word	0
 	.word	-1
 IO_protObj:
 	.word	1
@@ -1048,7 +1013,7 @@ CellularAutomaton_protObj:
 	.word	int_const10
 	.word	int_const10
 	.word	int_const10
-	.word	str_const71
+	.word	str_const68
 	.word	-1
 Main_protObj:
 	.word	4
@@ -1057,26 +1022,7 @@ Main_protObj:
 	.word	int_const10
 	.word	int_const10
 	.word	int_const10
-	.word	str_const71
-	.word	0
-	.word	-1
-Int_protObj:
-	.word	5
-	.word	4
-	.word	Int_dispTab
-	.word	0
-	.word	-1
-Bool_protObj:
-	.word	6
-	.word	4
-	.word	Bool_dispTab
-	.word	0
-	.word	-1
-String_protObj:
-	.word	7
-	.word	5
-	.word	String_dispTab
-	.word	int_const10
+	.word	str_const68
 	.word	0
 	.globl	heap_start
 heap_start:
@@ -1088,157 +1034,122 @@ heap_start:
 	.globl	Bool_init
 	.globl	Main.main
 Object_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
 	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
 	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-IO_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	Object_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
 	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Board_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	IO_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
 	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-CellularAutomaton_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	Board_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Main_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	CellularAutomaton_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Int_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	Object_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-Bool_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	jal	Object_init
-	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
 String_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
 	jal	Object_init
 	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
 	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Bool_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Int_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+IO_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	Object_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Board_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	IO_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+CellularAutomaton_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	Board_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
+	addiu	$sp $sp 12
+	jr	$ra	
+Main_init:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	jal	CellularAutomaton_init
+	move	$a0 $s0
+	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
 Board.size_of_board:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
 	lw	$a0 12($fp)
 	bne	$a0 $zero label0
@@ -1249,23 +1160,21 @@ label0:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
 	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
 	addiu	$sp $sp 16
 	jr	$ra	
 Board.board_init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -4
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
@@ -1277,168 +1186,141 @@ label1:
 	lw	$t1 8($a0)
 	lw	$t1 28($t1)
 	jalr		$t1
-	jal	Object.copy
-	sw	$a0 -4($fp)
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const0
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s2 $a0
+	move	$s1 $s2
+	la	$t2 int_const0
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label2
+	beq	$t1 $t2 label4
 	la	$a1 bool_const0
 	jal	equality_test
-label2:
-	lw	$t2 12($a0)
-	beqz	$t2 label3
-	la	$a0 int_const1
-	sw	$a0 12($s0)
-	la	$a0 int_const2
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label4
-label3:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label5
-	la	$a1 bool_const0
-	jal	equality_test
-label5:
-	lw	$t2 12($a0)
-	beqz	$t2 label6
-	la	$a0 int_const4
-	sw	$a0 12($s0)
-	la	$a0 int_const4
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label7
-label6:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const5
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label8
-	la	$a1 bool_const0
-	jal	equality_test
-label8:
-	lw	$t2 12($a0)
-	beqz	$t2 label9
-	la	$a0 int_const4
-	sw	$a0 12($s0)
-	la	$a0 int_const2
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label10
-label9:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const6
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label11
-	la	$a1 bool_const0
-	jal	equality_test
-label11:
-	lw	$t2 12($a0)
-	beqz	$t2 label12
-	la	$a0 int_const1
-	sw	$a0 12($s0)
-	la	$a0 int_const7
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label13
-label12:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const8
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label14
-	la	$a1 bool_const0
-	jal	equality_test
-label14:
-	lw	$t2 12($a0)
-	beqz	$t2 label15
-	la	$a0 int_const2
-	sw	$a0 12($s0)
-	la	$a0 int_const2
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label16
-label15:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const9
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label17
-	la	$a1 bool_const0
-	jal	equality_test
-label17:
-	lw	$t2 12($a0)
-	beqz	$t2 label18
-	la	$a0 int_const7
-	sw	$a0 12($s0)
-	la	$a0 int_const4
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-	b	label19
-label18:
-	la	$a0 int_const2
-	sw	$a0 12($s0)
-	la	$a0 int_const2
-	sw	$a0 16($s0)
-	lw	$a0 -4($fp)
-	sw	$a0 20($s0)
-label19:
-label16:
-label13:
-label10:
-label7:
 label4:
+	lw	$t1 12($a0)
+	beqz	$t1 label2
+	la	$a0 int_const1
+	sw	$a0 12($s0)
+	la	$a0 int_const2
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label3
+label2:
+	move	$s1 $s2
+	la	$t2 int_const3
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label7
+	la	$a1 bool_const0
+	jal	equality_test
+label7:
+	lw	$t1 12($a0)
+	beqz	$t1 label5
+	la	$a0 int_const4
+	sw	$a0 12($s0)
+	la	$a0 int_const4
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label6
+label5:
+	move	$s1 $s2
+	la	$t2 int_const5
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label10
+	la	$a1 bool_const0
+	jal	equality_test
+label10:
+	lw	$t1 12($a0)
+	beqz	$t1 label8
+	la	$a0 int_const4
+	sw	$a0 12($s0)
+	la	$a0 int_const2
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label9
+label8:
+	move	$s1 $s2
+	la	$t2 int_const6
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label13
+	la	$a1 bool_const0
+	jal	equality_test
+label13:
+	lw	$t1 12($a0)
+	beqz	$t1 label11
+	la	$a0 int_const1
+	sw	$a0 12($s0)
+	la	$a0 int_const7
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label12
+label11:
+	move	$s1 $s2
+	la	$t2 int_const8
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label16
+	la	$a1 bool_const0
+	jal	equality_test
+label16:
+	lw	$t1 12($a0)
+	beqz	$t1 label14
+	la	$a0 int_const2
+	sw	$a0 12($s0)
+	la	$a0 int_const2
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label15
+label14:
+	move	$s1 $s2
+	la	$t2 int_const9
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label19
+	la	$a1 bool_const0
+	jal	equality_test
+label19:
+	lw	$t1 12($a0)
+	beqz	$t1 label17
+	la	$a0 int_const7
+	sw	$a0 12($s0)
+	la	$a0 int_const4
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+	b	label18
+label17:
+	la	$a0 int_const2
+	sw	$a0 12($s0)
+	la	$a0 int_const2
+	sw	$a0 16($s0)
+	sw	$s2 20($s0)
+	move	$a0 $s2
+label18:
+label15:
+label12:
+label9:
+label6:
+label3:
 	move	$a0 $s0
-	addiu	$sp $sp 4
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
 CellularAutomaton.init:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
 	lw	$a0 12($fp)
 	sw	$a0 24($s0)
@@ -1455,28 +1337,23 @@ label20:
 	lw	$t1 32($t1)
 	jalr		$t1
 	move	$a0 $s0
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
 	lw	$fp 12($sp)
+	lw	$s0 8($sp)
+	lw	$ra 4($sp)
 	addiu	$sp $sp 16
 	jr	$ra	
 CellularAutomaton.print:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -8
+	addiu	$sp $sp -24
+	sw	$fp 24($sp)
+	sw	$s0 20($sp)
+	sw	$ra 16($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	la	$a0 int_const10
-	jal	Object.copy
-	sw	$a0 -4($fp)
-	lw	$a0 20($s0)
-	jal	Object.copy
-	sw	$a0 -8($fp)
+	sw	$s1 8($fp)
+	sw	$s2 4($fp)
+	sw	$s3 0($fp)
+	la	$s3 int_const10
+	lw	$s2 20($s0)
 	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
@@ -1490,1505 +1367,1232 @@ label21:
 	lw	$t1 12($t1)
 	jalr		$t1
 label22:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 -8($fp)
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label24
-	la	$a0 bool_const0
-	b	label25
-label24:
+	move	$s1 $s3
+	lw	$t1 12($s1)
+	lw	$t2 12($s2)
 	la	$a0 bool_const1
-label25:
-	lw	$t2 12($a0)
-	beqz	$t2 label23
+	blt	$t1 $t2 label24
+	la	$a0 bool_const0
+label24:
+	lw	$t1 12($a0)
+	beq	$t1 $zero label23
+	sw	$s3 0($sp)
+	addiu	$sp $sp -4
 	lw	$a0 16($s0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	lw	$a0 -4($fp)
+	lw	$a0 24($s0)
+	bne	$a0 $zero label25
+	la	$a0 str_const0
+	li	$t1 132
+	jal	_dispatch_abort
+label25:
+	lw	$t1 8($a0)
+	lw	$t1 20($t1)
+	jalr		$t1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	lw	$a0 24($s0)
+	move	$a0 $s0
 	bne	$a0 $zero label26
 	la	$a0 str_const0
 	li	$t1 132
 	jal	_dispatch_abort
 label26:
 	lw	$t1 8($a0)
-	lw	$t1 20($t1)
+	lw	$t1 12($t1)
 	jalr		$t1
+	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label27
 	la	$a0 str_const0
-	li	$t1 132
+	li	$t1 133
 	jal	_dispatch_abort
 label27:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
+	move	$s1 $s3
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s3 $a0
+	b	label22
+label23:
+	move	$a0 $zero
 	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label28
 	la	$a0 str_const0
-	li	$t1 133
+	li	$t1 137
 	jal	_dispatch_abort
 label28:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 -4($fp)
-	b	label22
-label23:
-	la	$a0 str_const1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
 	move	$a0 $s0
+	lw	$s1 8($fp)
+	lw	$s2 4($fp)
+	lw	$s3 0($fp)
+	lw	$fp 24($sp)
+	lw	$s0 20($sp)
+	lw	$ra 16($sp)
+	addiu	$sp $sp 24
+	jr	$ra	
+CellularAutomaton.num_cells:
+	addiu	$sp $sp -12
+	sw	$fp 12($sp)
+	sw	$s0 8($sp)
+	sw	$ra 4($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	lw	$a0 24($s0)
 	bne	$a0 $zero label29
 	la	$a0 str_const0
-	li	$t1 137
+	li	$t1 144
 	jal	_dispatch_abort
 label29:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-	move	$a0 $s0
-	addiu	$sp $sp 8
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
 	lw	$fp 12($sp)
-	addiu	$sp $sp 12
-	jr	$ra	
-CellularAutomaton.num_cells:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	lw	$a0 24($s0)
-	bne	$a0 $zero label30
-	la	$a0 str_const0
-	li	$t1 144
-	jal	_dispatch_abort
-label30:
-	lw	$t1 8($a0)
-	lw	$t1 12($t1)
-	jalr		$t1
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
 	lw	$s0 8($sp)
-	lw	$fp 12($sp)
+	lw	$ra 4($sp)
 	addiu	$sp $sp 12
 	jr	$ra	
 CellularAutomaton.cell:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -16
+	sw	$fp 16($sp)
+	sw	$s0 12($sp)
+	sw	$ra 8($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 20($s0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	sw	$s1 0($fp)
+	lw	$s1 20($s0)
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label31
-	la	$a0 bool_const0
-	b	label32
-label31:
-	la	$a0 bool_const1
-label32:
 	lw	$t2 12($a0)
-	beqz	$t2 label33
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	lw	$a0 16($fp)
+	lw	$t1 12($s1)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label32
+	la	$a0 bool_const0
+label32:
+	lw	$t1 12($a0)
+	beqz	$t1 label30
 	la	$a0 str_const2
-	b	label34
-label33:
-	la	$a0 int_const11
+	b	label31
+label30:
+	lw	$a0 16($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	la	$a0 int_const11
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	lw	$a0 24($s0)
-	bne	$a0 $zero label35
+	bne	$a0 $zero label33
 	la	$a0 str_const0
 	li	$t1 151
 	jal	_dispatch_abort
-label35:
+label33:
 	lw	$t1 8($a0)
 	lw	$t1 20($t1)
 	jalr		$t1
-label34:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label31:
+	lw	$s1 0($fp)
+	lw	$fp 16($sp)
+	lw	$s0 12($sp)
+	lw	$ra 8($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 CellularAutomaton.north:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -16
+	sw	$fp 16($sp)
+	sw	$s0 12($sp)
+	sw	$ra 8($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	sw	$s1 0($fp)
+	lw	$s1 16($fp)
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const10
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label36
-	la	$a0 bool_const0
-	b	label37
-label36:
-	la	$a0 bool_const1
-label37:
 	lw	$t2 12($a0)
-	beqz	$t2 label38
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	la	$a0 int_const10
+	lw	$t1 12($s1)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label36
+	la	$a0 bool_const0
+label36:
+	lw	$t1 12($a0)
+	beqz	$t1 label34
 	la	$a0 str_const2
-	b	label39
-label38:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	b	label35
+label34:
+	lw	$s1 16($fp)
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label40
+	bne	$a0 $zero label37
 	la	$a0 str_const0
 	li	$t1 159
 	jal	_dispatch_abort
+label37:
+	lw	$t1 8($a0)
+	lw	$t1 48($t1)
+	jalr		$t1
+label35:
+	lw	$s1 0($fp)
+	lw	$fp 16($sp)
+	lw	$s0 12($sp)
+	lw	$ra 8($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+CellularAutomaton.south:
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$s2 20($s0)
+	lw	$s1 20($fp)
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	lw	$t1 12($s2)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label40
+	la	$a0 bool_const0
 label40:
+	lw	$t1 12($a0)
+	beqz	$t1 label38
+	la	$a0 str_const2
+	b	label39
+label38:
+	lw	$s2 20($fp)
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	sw	$a0 0($sp)
+	addiu	$sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label41
+	la	$a0 str_const0
+	li	$t1 167
+	jal	_dispatch_abort
+label41:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
 	jalr		$t1
 label39:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
-CellularAutomaton.south:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+CellularAutomaton.east:
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 20($s0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$s2 20($fp)
+	la	$a0 int_const11
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label41
-	la	$a0 bool_const0
-	b	label42
-label41:
-	la	$a0 bool_const1
-label42:
 	lw	$t2 12($a0)
-	beqz	$t2 label43
-	la	$a0 str_const2
-	b	label44
-label43:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$s1 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$t1 $s2
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label44
+	la	$a1 bool_const0
+	jal	equality_test
+label44:
+	lw	$t1 12($a0)
+	beqz	$t1 label42
+	la	$a0 str_const2
+	b	label43
+label42:
+	lw	$s2 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label45
 	la	$a0 str_const0
-	li	$t1 167
+	li	$t1 175
 	jal	_dispatch_abort
 label45:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
 	jalr		$t1
-label44:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
-	jr	$ra	
-CellularAutomaton.east:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label46
-	la	$a1 bool_const0
-	jal	equality_test
-label46:
-	lw	$t2 12($a0)
-	beqz	$t2 label47
-	la	$a0 str_const2
-	b	label48
-label47:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label49
-	la	$a0 str_const0
-	li	$t1 175
-	jal	_dispatch_abort
-label49:
-	lw	$t1 8($a0)
-	lw	$t1 48($t1)
-	jalr		$t1
-label48:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label43:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
 CellularAutomaton.west:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -16
+	sw	$fp 16($sp)
+	sw	$s0 12($sp)
+	sw	$ra 8($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const10
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	sw	$s1 0($fp)
+	lw	$s1 16($fp)
+	la	$t2 int_const10
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label50
+	beq	$t1 $t2 label48
 	la	$a1 bool_const0
 	jal	equality_test
-label50:
-	lw	$t2 12($a0)
-	beqz	$t2 label51
+label48:
+	lw	$t1 12($a0)
+	beqz	$t1 label46
 	la	$a0 str_const2
-	b	label52
+	b	label47
+label46:
+	lw	$s1 16($fp)
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	lw	$t2 16($fp)
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label51
+	la	$a1 bool_const0
+	jal	equality_test
 label51:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label53
-	la	$a1 bool_const0
-	jal	equality_test
-label53:
-	lw	$t2 12($a0)
-	beqz	$t2 label54
+	lw	$t1 12($a0)
+	beqz	$t1 label49
 	la	$a0 str_const2
-	b	label55
-label54:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	b	label50
+label49:
+	lw	$s1 16($fp)
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label56
+	bne	$a0 $zero label52
 	la	$a0 str_const0
 	li	$t1 186
 	jal	_dispatch_abort
-label56:
+label52:
 	lw	$t1 8($a0)
 	lw	$t1 48($t1)
 	jalr		$t1
-label55:
-label52:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label50:
+label47:
+	lw	$s1 0($fp)
+	lw	$fp 16($sp)
+	lw	$s0 12($sp)
+	lw	$ra 8($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 CellularAutomaton.northwest:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -16
+	sw	$fp 16($sp)
+	sw	$s0 12($sp)
+	sw	$ra 8($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	sw	$s1 0($fp)
+	lw	$s1 16($fp)
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const10
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label57
-	la	$a0 bool_const0
-	b	label58
-label57:
-	la	$a0 bool_const1
-label58:
 	lw	$t2 12($a0)
-	beqz	$t2 label59
-	la	$a0 str_const2
-	b	label60
-label59:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	la	$a0 int_const10
+	lw	$t1 12($s1)
+	lw	$t2 12($a0)
 	la	$a0 bool_const1
-	beq	$t1 $t2 label61
+	blt	$t1 $t2 label55
+	la	$a0 bool_const0
+label55:
+	lw	$t1 12($a0)
+	beqz	$t1 label53
+	la	$a0 str_const2
+	b	label54
+label53:
+	lw	$s1 16($fp)
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s1 $a0
+	lw	$t2 16($fp)
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label58
 	la	$a1 bool_const0
 	jal	equality_test
-label61:
-	lw	$t2 12($a0)
-	beqz	$t2 label62
+label58:
+	lw	$t1 12($a0)
+	beqz	$t1 label56
 	la	$a0 str_const2
-	b	label63
-label62:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	b	label57
+label56:
+	lw	$s1 16($fp)
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label64
+	bne	$a0 $zero label59
 	la	$a0 str_const0
 	li	$t1 196
 	jal	_dispatch_abort
-label64:
+label59:
 	lw	$t1 8($a0)
 	lw	$t1 52($t1)
 	jalr		$t1
-label63:
-label60:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label57:
+label54:
+	lw	$s1 0($fp)
+	lw	$fp 16($sp)
+	lw	$s0 12($sp)
+	lw	$ra 8($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 CellularAutomaton.northeast:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$s2 20($fp)
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const10
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label65
-	la	$a0 bool_const0
-	b	label66
-label65:
-	la	$a0 bool_const1
-label66:
 	lw	$t2 12($a0)
-	beqz	$t2 label67
-	la	$a0 str_const2
-	b	label68
-label67:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	lw	$t1 12($s2)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	la	$a0 int_const10
+	lw	$t1 12($s2)
+	lw	$t2 12($a0)
 	la	$a0 bool_const1
-	beq	$t1 $t2 label69
+	blt	$t1 $t2 label62
+	la	$a0 bool_const0
+label62:
+	lw	$t1 12($a0)
+	beqz	$t1 label60
+	la	$a0 str_const2
+	b	label61
+label60:
+	lw	$s2 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$s1 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$t1 $s2
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label65
 	la	$a1 bool_const0
 	jal	equality_test
-label69:
-	lw	$t2 12($a0)
-	beqz	$t2 label70
+label65:
+	lw	$t1 12($a0)
+	beqz	$t1 label63
 	la	$a0 str_const2
-	b	label71
-label70:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	b	label64
+label63:
+	lw	$s2 20($fp)
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label72
+	bne	$a0 $zero label66
 	la	$a0 str_const0
 	li	$t1 206
 	jal	_dispatch_abort
-label72:
+label66:
 	lw	$t1 8($a0)
 	lw	$t1 52($t1)
 	jalr		$t1
-label71:
-label68:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label64:
+label61:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
 CellularAutomaton.southeast:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 20($s0)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$s2 20($s0)
+	lw	$s1 20($fp)
 	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label73
-	la	$a0 bool_const0
-	b	label74
-label73:
-	la	$a0 bool_const1
-label74:
 	lw	$t2 12($a0)
-	beqz	$t2 label75
-	la	$a0 str_const2
-	b	label76
-label75:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	lw	$t1 12($s2)
+	lw	$t2 12($a0)
 	la	$a0 bool_const1
-	beq	$t1 $t2 label77
+	blt	$t1 $t2 label69
+	la	$a0 bool_const0
+label69:
+	lw	$t1 12($a0)
+	beqz	$t1 label67
+	la	$a0 str_const2
+	b	label68
+label67:
+	lw	$s2 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$s1 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$t1 $s2
+	move	$t2 $a0
+	la	$a0 bool_const1
+	beq	$t1 $t2 label72
 	la	$a1 bool_const0
 	jal	equality_test
-label77:
-	lw	$t2 12($a0)
-	beqz	$t2 label78
+label72:
+	lw	$t1 12($a0)
+	beqz	$t1 label70
 	la	$a0 str_const2
-	b	label79
-label78:
-	lw	$a0 12($fp)
+	b	label71
+label70:
+	lw	$s2 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+	move	$a0 $s0
+	bne	$a0 $zero label73
+	la	$a0 str_const0
+	li	$t1 216
+	jal	_dispatch_abort
+label73:
+	lw	$t1 8($a0)
+	lw	$t1 56($t1)
+	jalr		$t1
+label71:
+label68:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
+	jr	$ra	
+CellularAutomaton.southwest:
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$s2 20($s0)
+	lw	$s1 20($fp)
+	lw	$a0 16($s0)
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	lw	$t1 12($s2)
+	lw	$t2 12($a0)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label76
+	la	$a0 bool_const0
+label76:
+	lw	$t1 12($a0)
+	beqz	$t1 label74
+	la	$a0 str_const2
+	b	label75
+label74:
+	lw	$s2 20($fp)
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	div	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 16($s0)
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	mul	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$t2 20($fp)
+	move	$t1 $s2
+	la	$a0 bool_const1
+	beq	$t1 $t2 label79
+	la	$a1 bool_const0
+	jal	equality_test
+label79:
+	lw	$t1 12($a0)
+	beqz	$t1 label77
+	la	$a0 str_const2
+	b	label78
+label77:
+	lw	$s2 20($fp)
+	la	$a0 int_const11
+	jal	Object.copy
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	sub	$t1 $t1 $t2
+	sw	$t1 12($a0)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label80
 	la	$a0 str_const0
-	li	$t1 216
+	li	$t1 226
 	jal	_dispatch_abort
 label80:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
 	jalr		$t1
-label79:
-label76:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+label78:
+label75:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
-CellularAutomaton.southwest:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+CellularAutomaton.neighbors:
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 20($s0)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label81
-	la	$a0 bool_const0
-	b	label82
-label81:
+	move	$a0 $s0
+	bne	$a0 $zero label84
+	la	$a0 str_const0
+	li	$t1 232
+	jal	_dispatch_abort
+label84:
+	lw	$t1 8($a0)
+	lw	$t1 52($t1)
+	jalr		$t1
+	move	$s2 $a0
+	la	$t2 str_const3
+	move	$t1 $s2
 	la	$a0 bool_const1
-label82:
-	lw	$t2 12($a0)
-	beqz	$t2 label83
-	la	$a0 str_const2
-	b	label84
-label83:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	div	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 16($s0)
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	mul	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label85
+	beq	$t1 $t2 label83
 	la	$a1 bool_const0
 	jal	equality_test
-label85:
-	lw	$t2 12($a0)
-	beqz	$t2 label86
-	la	$a0 str_const2
-	b	label87
-label86:
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+label83:
+	lw	$t1 12($a0)
+	beqz	$t1 label81
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	sub	$t2 $t2 $t3
-	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
+	b	label82
+label81:
+	la	$a0 int_const10
+label82:
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label88
 	la	$a0 str_const0
-	li	$t1 226
+	li	$t1 233
 	jal	_dispatch_abort
 label88:
 	lw	$t1 8($a0)
 	lw	$t1 56($t1)
 	jalr		$t1
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label87
+	la	$a1 bool_const0
+	jal	equality_test
 label87:
-label84:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
-	jr	$ra	
-CellularAutomaton.neighbors:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
-	move	$s0 $a0
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label89
-	la	$a0 str_const0
-	li	$t1 232
-	jal	_dispatch_abort
-label89:
-	lw	$t1 8($a0)
-	lw	$t1 52($t1)
-	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label90
-	la	$a1 bool_const0
-	jal	equality_test
-label90:
-	lw	$t2 12($a0)
-	beqz	$t2 label91
+	lw	$t1 12($a0)
+	beqz	$t1 label85
 	la	$a0 int_const11
-	b	label92
-label91:
+	b	label86
+label85:
 	la	$a0 int_const10
-label92:
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label93
-	la	$a0 str_const0
-	li	$t1 233
-	jal	_dispatch_abort
-label93:
-	lw	$t1 8($a0)
-	lw	$t1 56($t1)
-	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label94
-	la	$a1 bool_const0
-	jal	equality_test
-label94:
-	lw	$t2 12($a0)
-	beqz	$t2 label95
-	la	$a0 int_const11
-	b	label96
-label95:
-	la	$a0 int_const10
-label96:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label86:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label97
+	bne	$a0 $zero label92
 	la	$a0 str_const0
 	li	$t1 234
 	jal	_dispatch_abort
-label97:
+label92:
 	lw	$t1 8($a0)
 	lw	$t1 60($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label98
+	beq	$t1 $t2 label91
 	la	$a1 bool_const0
 	jal	equality_test
-label98:
-	lw	$t2 12($a0)
-	beqz	$t2 label99
+label91:
+	lw	$t1 12($a0)
+	beqz	$t1 label89
 	la	$a0 int_const11
-	b	label100
-label99:
+	b	label90
+label89:
 	la	$a0 int_const10
-label100:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label90:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label101
+	bne	$a0 $zero label96
 	la	$a0 str_const0
 	li	$t1 235
 	jal	_dispatch_abort
-label101:
+label96:
 	lw	$t1 8($a0)
 	lw	$t1 64($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label102
+	beq	$t1 $t2 label95
 	la	$a1 bool_const0
 	jal	equality_test
-label102:
-	lw	$t2 12($a0)
-	beqz	$t2 label103
+label95:
+	lw	$t1 12($a0)
+	beqz	$t1 label93
 	la	$a0 int_const11
-	b	label104
-label103:
+	b	label94
+label93:
 	la	$a0 int_const10
-label104:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label94:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label105
+	bne	$a0 $zero label100
 	la	$a0 str_const0
 	li	$t1 236
 	jal	_dispatch_abort
-label105:
+label100:
 	lw	$t1 8($a0)
 	lw	$t1 72($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label106
+	beq	$t1 $t2 label99
 	la	$a1 bool_const0
 	jal	equality_test
-label106:
-	lw	$t2 12($a0)
-	beqz	$t2 label107
+label99:
+	lw	$t1 12($a0)
+	beqz	$t1 label97
 	la	$a0 int_const11
-	b	label108
-label107:
+	b	label98
+label97:
 	la	$a0 int_const10
-label108:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label98:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label109
+	bne	$a0 $zero label104
 	la	$a0 str_const0
 	li	$t1 237
 	jal	_dispatch_abort
-label109:
+label104:
 	lw	$t1 8($a0)
 	lw	$t1 68($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label110
+	beq	$t1 $t2 label103
 	la	$a1 bool_const0
 	jal	equality_test
-label110:
-	lw	$t2 12($a0)
-	beqz	$t2 label111
+label103:
+	lw	$t1 12($a0)
+	beqz	$t1 label101
 	la	$a0 int_const11
-	b	label112
-label111:
+	b	label102
+label101:
 	la	$a0 int_const10
-label112:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label102:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label113
+	bne	$a0 $zero label108
 	la	$a0 str_const0
 	li	$t1 238
 	jal	_dispatch_abort
-label113:
+label108:
 	lw	$t1 8($a0)
 	lw	$t1 76($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label114
+	beq	$t1 $t2 label107
 	la	$a1 bool_const0
 	jal	equality_test
-label114:
-	lw	$t2 12($a0)
-	beqz	$t2 label115
+label107:
+	lw	$t1 12($a0)
+	beqz	$t1 label105
 	la	$a0 int_const11
-	b	label116
-label115:
+	b	label106
+label105:
 	la	$a0 int_const10
-label116:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label106:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 12($fp)
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s2 $a0
+	lw	$a0 20($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label117
+	bne	$a0 $zero label112
 	la	$a0 str_const0
 	li	$t1 239
 	jal	_dispatch_abort
-label117:
+label112:
 	lw	$t1 8($a0)
 	lw	$t1 80($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label118
+	beq	$t1 $t2 label111
 	la	$a1 bool_const0
 	jal	equality_test
-label118:
-	lw	$t2 12($a0)
-	beqz	$t2 label119
+label111:
+	lw	$t1 12($a0)
+	beqz	$t1 label109
 	la	$a0 int_const11
-	b	label120
-label119:
+	b	label110
+label109:
 	la	$a0 int_const10
-label120:
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
+label110:
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
+	lw	$t2 12($a0)
+	lw	$t1 12($s2)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 24
 	jr	$ra	
 CellularAutomaton.cell_at_next_evolution:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp 0
+	addiu	$sp $sp -16
+	sw	$fp 16($sp)
+	sw	$s0 12($sp)
+	sw	$ra 8($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	lw	$a0 12($fp)
+	sw	$s1 0($fp)
+	lw	$a0 16($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label121
+	bne	$a0 $zero label116
 	la	$a0 str_const0
 	li	$t1 249
 	jal	_dispatch_abort
-label121:
+label116:
 	lw	$t1 8($a0)
 	lw	$t1 84($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const1
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 int_const1
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label122
+	beq	$t1 $t2 label115
 	la	$a1 bool_const0
 	jal	equality_test
-label122:
-	lw	$t2 12($a0)
-	beqz	$t2 label123
+label115:
+	lw	$t1 12($a0)
+	beqz	$t1 label113
 	la	$a0 str_const3
-	b	label124
-label123:
-	lw	$a0 12($fp)
+	b	label114
+label113:
+	lw	$a0 16($fp)
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label125
+	bne	$a0 $zero label120
 	la	$a0 str_const0
 	li	$t1 252
 	jal	_dispatch_abort
-label125:
+label120:
 	lw	$t1 8($a0)
 	lw	$t1 84($t1)
 	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const12
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $a0
+	la	$t2 int_const12
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label126
+	beq	$t1 $t2 label119
 	la	$a1 bool_const0
 	jal	equality_test
-label126:
-	lw	$t2 12($a0)
-	beqz	$t2 label127
-	lw	$a0 12($fp)
+label119:
+	lw	$t1 12($a0)
+	beqz	$t1 label117
+	lw	$a0 16($fp)
 	sw	$a0 0($sp)
+	addiu	$sp $sp -4
+	move	$a0 $s0
+	bne	$a0 $zero label124
+	la	$a0 str_const0
+	li	$t1 253
+	jal	_dispatch_abort
+label124:
+	lw	$t1 8($a0)
+	lw	$t1 48($t1)
+	jalr		$t1
+	move	$s1 $a0
+	la	$t2 str_const3
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label123
+	la	$a1 bool_const0
+	jal	equality_test
+label123:
+	lw	$t1 12($a0)
+	beqz	$t1 label121
+	la	$a0 str_const3
+	b	label122
+label121:
+	la	$a0 str_const4
+label122:
+	b	label118
+label117:
+	la	$a0 str_const4
+label118:
+label114:
+	lw	$s1 0($fp)
+	lw	$fp 16($sp)
+	lw	$s0 12($sp)
+	lw	$ra 8($sp)
+	addiu	$sp $sp 20
+	jr	$ra	
+CellularAutomaton.evolve:
+	addiu	$sp $sp -28
+	sw	$fp 28($sp)
+	sw	$s0 24($sp)
+	sw	$ra 20($sp)
+	addiu	$fp $sp 4
+	move	$s0 $a0
+	sw	$s1 12($fp)
+	sw	$s2 8($fp)
+	sw	$s3 4($fp)
+	sw	$s4 0($fp)
+	la	$s4 int_const10
+	move	$a0 $s0
+	bne	$a0 $zero label125
+	la	$a0 str_const0
+	li	$t1 266
+	jal	_dispatch_abort
+label125:
+	lw	$t1 8($a0)
+	lw	$t1 44($t1)
+	jalr		$t1
+	move	$s3 $a0
+	la	$s2 str_const68
+label126:
+	move	$s1 $s4
+	lw	$t1 12($s1)
+	lw	$t2 12($s3)
+	la	$a0 bool_const1
+	blt	$t1 $t2 label128
+	la	$a0 bool_const0
+label128:
+	lw	$t1 12($a0)
+	beq	$t1 $zero label127
+	sw	$s4 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
 	bne	$a0 $zero label129
 	la	$a0 str_const0
-	li	$t1 253
-	jal	_dispatch_abort
-label129:
-	lw	$t1 8($a0)
-	lw	$t1 48($t1)
-	jalr		$t1
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label130
-	la	$a1 bool_const0
-	jal	equality_test
-label130:
-	lw	$t2 12($a0)
-	beqz	$t2 label131
-	la	$a0 str_const3
-	b	label132
-label131:
-	la	$a0 str_const4
-label132:
-	b	label128
-label127:
-	la	$a0 str_const4
-label128:
-label124:
-	addiu	$sp $sp 0
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 16
-	jr	$ra	
-CellularAutomaton.evolve:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -12
-	move	$s0 $a0
-	la	$a0 int_const10
-	jal	Object.copy
-	sw	$a0 -4($fp)
-	move	$a0 $s0
-	bne	$a0 $zero label133
-	la	$a0 str_const0
-	li	$t1 266
-	jal	_dispatch_abort
-label133:
-	lw	$t1 8($a0)
-	lw	$t1 44($t1)
-	jalr		$t1
-	jal	Object.copy
-	sw	$a0 -8($fp)
-	la	$a0 String_protObj
-	jal	Object.copy
-	sw	$a0 -12($fp)
-label134:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	lw	$a0 -8($fp)
-	lw	$t1 4($sp)
-	addiu	$sp $sp 4
-	lw	$a0 12($a0)
-	lw	$t1 12($t1)
-	blt	$t1 $a0 label136
-	la	$a0 bool_const0
-	b	label137
-label136:
-	la	$a0 bool_const1
-label137:
-	lw	$t2 12($a0)
-	beqz	$t2 label135
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	move	$a0 $s0
-	bne	$a0 $zero label138
-	la	$a0 str_const0
 	li	$t1 271
 	jal	_dispatch_abort
-label138:
+label129:
 	lw	$t1 8($a0)
 	lw	$t1 88($t1)
 	jalr		$t1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
-	lw	$a0 -12($fp)
-	bne	$a0 $zero label139
+	move	$a0 $s2
+	bne	$a0 $zero label130
 	la	$a0 str_const0
 	li	$t1 271
 	jal	_dispatch_abort
-label139:
+label130:
 	lw	$t1 8($a0)
 	lw	$t1 16($t1)
 	jalr		$t1
-	sw	$a0 -12($fp)
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
+	move	$s2 $a0
+	move	$s1 $s4
 	la	$a0 int_const11
-	lw	$t1 4($sp)
-	lw	$t2 12($t1)
-	lw	$t3 12($a0)
-	add	$t2 $t2 $t3
 	jal	Object.copy
-	sw	$t2 12($a0)
-	addiu	$sp $sp 4
-	sw	$a0 -4($fp)
-	b	label134
-label135:
-	lw	$a0 -12($fp)
-	sw	$a0 24($s0)
+	lw	$t2 12($a0)
+	lw	$t1 12($s1)
+	add	$t1 $t1 $t2
+	sw	$t1 12($a0)
+	move	$s4 $a0
+	b	label126
+label127:
+	move	$a0 $zero
+	sw	$s2 24($s0)
 	move	$a0 $s0
-	addiu	$sp $sp 12
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
+	lw	$s1 12($fp)
+	lw	$s2 8($fp)
+	lw	$s3 4($fp)
+	lw	$s4 0($fp)
+	lw	$fp 28($sp)
+	lw	$s0 24($sp)
+	lw	$ra 20($sp)
+	addiu	$sp $sp 28
 	jr	$ra	
 CellularAutomaton.option:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -4
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	la	$a0 Int_protObj
-	jal	Object.copy
-	sw	$a0 -4($fp)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	la	$s2 int_const10
 	la	$a0 str_const5
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label140
+	bne	$a0 $zero label131
 	la	$a0 str_const0
 	li	$t1 288
 	jal	_dispatch_abort
-label140:
+label131:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -2996,11 +2600,11 @@ label140:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label141
+	bne	$a0 $zero label132
 	la	$a0 str_const0
 	li	$t1 289
 	jal	_dispatch_abort
-label141:
+label132:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3008,11 +2612,11 @@ label141:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label142
+	bne	$a0 $zero label133
 	la	$a0 str_const0
 	li	$t1 290
 	jal	_dispatch_abort
-label142:
+label133:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3020,11 +2624,11 @@ label142:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label143
+	bne	$a0 $zero label134
 	la	$a0 str_const0
 	li	$t1 291
 	jal	_dispatch_abort
-label143:
+label134:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3032,11 +2636,11 @@ label143:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label144
+	bne	$a0 $zero label135
 	la	$a0 str_const0
 	li	$t1 292
 	jal	_dispatch_abort
-label144:
+label135:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3044,11 +2648,11 @@ label144:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label145
+	bne	$a0 $zero label136
 	la	$a0 str_const0
 	li	$t1 293
 	jal	_dispatch_abort
-label145:
+label136:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3056,11 +2660,11 @@ label145:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label146
+	bne	$a0 $zero label137
 	la	$a0 str_const0
 	li	$t1 294
 	jal	_dispatch_abort
-label146:
+label137:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3068,11 +2672,11 @@ label146:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label147
+	bne	$a0 $zero label138
 	la	$a0 str_const0
 	li	$t1 295
 	jal	_dispatch_abort
-label147:
+label138:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3080,11 +2684,11 @@ label147:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label148
+	bne	$a0 $zero label139
 	la	$a0 str_const0
 	li	$t1 296
 	jal	_dispatch_abort
-label148:
+label139:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3092,11 +2696,11 @@ label148:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label149
+	bne	$a0 $zero label140
 	la	$a0 str_const0
 	li	$t1 297
 	jal	_dispatch_abort
-label149:
+label140:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3104,11 +2708,11 @@ label149:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label150
+	bne	$a0 $zero label141
 	la	$a0 str_const0
 	li	$t1 298
 	jal	_dispatch_abort
-label150:
+label141:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3116,11 +2720,11 @@ label150:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label151
+	bne	$a0 $zero label142
 	la	$a0 str_const0
 	li	$t1 299
 	jal	_dispatch_abort
-label151:
+label142:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3128,11 +2732,11 @@ label151:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label152
+	bne	$a0 $zero label143
 	la	$a0 str_const0
 	li	$t1 300
 	jal	_dispatch_abort
-label152:
+label143:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3140,11 +2744,11 @@ label152:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label153
+	bne	$a0 $zero label144
 	la	$a0 str_const0
 	li	$t1 301
 	jal	_dispatch_abort
-label153:
+label144:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3152,11 +2756,11 @@ label153:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label154
+	bne	$a0 $zero label145
 	la	$a0 str_const0
 	li	$t1 302
 	jal	_dispatch_abort
-label154:
+label145:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3164,11 +2768,11 @@ label154:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label155
+	bne	$a0 $zero label146
 	la	$a0 str_const0
 	li	$t1 303
 	jal	_dispatch_abort
-label155:
+label146:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3176,11 +2780,11 @@ label155:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label156
+	bne	$a0 $zero label147
 	la	$a0 str_const0
 	li	$t1 304
 	jal	_dispatch_abort
-label156:
+label147:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3188,11 +2792,11 @@ label156:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label157
+	bne	$a0 $zero label148
 	la	$a0 str_const0
 	li	$t1 305
 	jal	_dispatch_abort
-label157:
+label148:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3200,11 +2804,11 @@ label157:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label158
+	bne	$a0 $zero label149
 	la	$a0 str_const0
 	li	$t1 306
 	jal	_dispatch_abort
-label158:
+label149:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3212,11 +2816,11 @@ label158:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label159
+	bne	$a0 $zero label150
 	la	$a0 str_const0
 	li	$t1 307
 	jal	_dispatch_abort
-label159:
+label150:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3224,11 +2828,11 @@ label159:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label160
+	bne	$a0 $zero label151
 	la	$a0 str_const0
 	li	$t1 308
 	jal	_dispatch_abort
-label160:
+label151:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3236,11 +2840,11 @@ label160:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label161
+	bne	$a0 $zero label152
 	la	$a0 str_const0
 	li	$t1 309
 	jal	_dispatch_abort
-label161:
+label152:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3248,443 +2852,357 @@ label161:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label162
+	bne	$a0 $zero label153
 	la	$a0 str_const0
 	li	$t1 310
 	jal	_dispatch_abort
-label162:
+label153:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
 	move	$a0 $s0
-	bne	$a0 $zero label163
+	bne	$a0 $zero label154
 	la	$a0 str_const0
 	li	$t1 311
 	jal	_dispatch_abort
-label163:
+label154:
 	lw	$t1 8($a0)
 	lw	$t1 24($t1)
 	jalr		$t1
-	sw	$a0 -4($fp)
+	move	$s2 $a0
 	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label164
+	bne	$a0 $zero label155
 	la	$a0 str_const0
 	li	$t1 312
 	jal	_dispatch_abort
-label164:
+label155:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const11
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $s2
+	la	$t2 int_const11
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label165
+	beq	$t1 $t2 label158
 	la	$a1 bool_const0
 	jal	equality_test
-label165:
-	lw	$t2 12($a0)
-	beqz	$t2 label166
+label158:
+	lw	$t1 12($a0)
+	beqz	$t1 label156
 	la	$a0 str_const28
-	b	label167
-label166:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const12
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	b	label157
+label156:
+	move	$s1 $s2
+	la	$t2 int_const12
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label168
+	beq	$t1 $t2 label161
 	la	$a1 bool_const0
 	jal	equality_test
-label168:
-	lw	$t2 12($a0)
-	beqz	$t2 label169
+label161:
+	lw	$t1 12($a0)
+	beqz	$t1 label159
 	la	$a0 str_const29
-	b	label170
-label169:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const1
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	b	label160
+label159:
+	move	$s1 $s2
+	la	$t2 int_const1
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label171
+	beq	$t1 $t2 label164
 	la	$a1 bool_const0
 	jal	equality_test
-label171:
-	lw	$t2 12($a0)
-	beqz	$t2 label172
+label164:
+	lw	$t1 12($a0)
+	beqz	$t1 label162
 	la	$a0 str_const30
-	b	label173
-label172:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const4
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	b	label163
+label162:
+	move	$s1 $s2
+	la	$t2 int_const4
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label174
+	beq	$t1 $t2 label167
 	la	$a1 bool_const0
 	jal	equality_test
-label174:
-	lw	$t2 12($a0)
-	beqz	$t2 label175
-	la	$a0 str_const31
-	b	label176
-label175:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const2
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label177
-	la	$a1 bool_const0
-	jal	equality_test
-label177:
-	lw	$t2 12($a0)
-	beqz	$t2 label178
-	la	$a0 str_const32
-	b	label179
-label178:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const13
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label180
-	la	$a1 bool_const0
-	jal	equality_test
-label180:
-	lw	$t2 12($a0)
-	beqz	$t2 label181
-	la	$a0 str_const33
-	b	label182
-label181:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const7
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label183
-	la	$a1 bool_const0
-	jal	equality_test
-label183:
-	lw	$t2 12($a0)
-	beqz	$t2 label184
-	la	$a0 str_const34
-	b	label185
-label184:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const14
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label186
-	la	$a1 bool_const0
-	jal	equality_test
-label186:
-	lw	$t2 12($a0)
-	beqz	$t2 label187
-	la	$a0 str_const35
-	b	label188
-label187:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const15
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label189
-	la	$a1 bool_const0
-	jal	equality_test
-label189:
-	lw	$t2 12($a0)
-	beqz	$t2 label190
-	la	$a0 str_const36
-	b	label191
-label190:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const16
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label192
-	la	$a1 bool_const0
-	jal	equality_test
-label192:
-	lw	$t2 12($a0)
-	beqz	$t2 label193
-	la	$a0 str_const37
-	b	label194
-label193:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const17
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label195
-	la	$a1 bool_const0
-	jal	equality_test
-label195:
-	lw	$t2 12($a0)
-	beqz	$t2 label196
-	la	$a0 str_const38
-	b	label197
-label196:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const18
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label198
-	la	$a1 bool_const0
-	jal	equality_test
-label198:
-	lw	$t2 12($a0)
-	beqz	$t2 label199
-	la	$a0 str_const39
-	b	label200
-label199:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const19
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label201
-	la	$a1 bool_const0
-	jal	equality_test
-label201:
-	lw	$t2 12($a0)
-	beqz	$t2 label202
-	la	$a0 str_const40
-	b	label203
-label202:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const20
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label204
-	la	$a1 bool_const0
-	jal	equality_test
-label204:
-	lw	$t2 12($a0)
-	beqz	$t2 label205
-	la	$a0 str_const41
-	b	label206
-label205:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const0
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label207
-	la	$a1 bool_const0
-	jal	equality_test
-label207:
-	lw	$t2 12($a0)
-	beqz	$t2 label208
-	la	$a0 str_const42
-	b	label209
-label208:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const3
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label210
-	la	$a1 bool_const0
-	jal	equality_test
-label210:
-	lw	$t2 12($a0)
-	beqz	$t2 label211
-	la	$a0 str_const43
-	b	label212
-label211:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const21
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label213
-	la	$a1 bool_const0
-	jal	equality_test
-label213:
-	lw	$t2 12($a0)
-	beqz	$t2 label214
-	la	$a0 str_const44
-	b	label215
-label214:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const22
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label216
-	la	$a1 bool_const0
-	jal	equality_test
-label216:
-	lw	$t2 12($a0)
-	beqz	$t2 label217
-	la	$a0 str_const45
-	b	label218
-label217:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const23
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label219
-	la	$a1 bool_const0
-	jal	equality_test
-label219:
-	lw	$t2 12($a0)
-	beqz	$t2 label220
-	la	$a0 str_const46
-	b	label221
-label220:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const5
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label222
-	la	$a1 bool_const0
-	jal	equality_test
-label222:
-	lw	$t2 12($a0)
-	beqz	$t2 label223
-	la	$a0 str_const47
-	b	label224
-label223:
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 int_const6
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
-	la	$a0 bool_const1
-	beq	$t1 $t2 label225
-	la	$a1 bool_const0
-	jal	equality_test
-label225:
-	lw	$t2 12($a0)
-	beqz	$t2 label226
-	la	$a0 str_const48
-	b	label227
-label226:
-	la	$a0 str_const49
-label227:
-label224:
-label221:
-label218:
-label215:
-label212:
-label209:
-label206:
-label203:
-label200:
-label197:
-label194:
-label191:
-label188:
-label185:
-label182:
-label179:
-label176:
-label173:
-label170:
 label167:
-	addiu	$sp $sp 4
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
+	lw	$t1 12($a0)
+	beqz	$t1 label165
+	la	$a0 str_const31
+	b	label166
+label165:
+	move	$s1 $s2
+	la	$t2 int_const2
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label170
+	la	$a1 bool_const0
+	jal	equality_test
+label170:
+	lw	$t1 12($a0)
+	beqz	$t1 label168
+	la	$a0 str_const32
+	b	label169
+label168:
+	move	$s1 $s2
+	la	$t2 int_const13
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label173
+	la	$a1 bool_const0
+	jal	equality_test
+label173:
+	lw	$t1 12($a0)
+	beqz	$t1 label171
+	la	$a0 str_const33
+	b	label172
+label171:
+	move	$s1 $s2
+	la	$t2 int_const7
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label176
+	la	$a1 bool_const0
+	jal	equality_test
+label176:
+	lw	$t1 12($a0)
+	beqz	$t1 label174
+	la	$a0 str_const34
+	b	label175
+label174:
+	move	$s1 $s2
+	la	$t2 int_const14
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label179
+	la	$a1 bool_const0
+	jal	equality_test
+label179:
+	lw	$t1 12($a0)
+	beqz	$t1 label177
+	la	$a0 str_const35
+	b	label178
+label177:
+	move	$s1 $s2
+	la	$t2 int_const15
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label182
+	la	$a1 bool_const0
+	jal	equality_test
+label182:
+	lw	$t1 12($a0)
+	beqz	$t1 label180
+	la	$a0 str_const36
+	b	label181
+label180:
+	move	$s1 $s2
+	la	$t2 int_const16
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label185
+	la	$a1 bool_const0
+	jal	equality_test
+label185:
+	lw	$t1 12($a0)
+	beqz	$t1 label183
+	la	$a0 str_const37
+	b	label184
+label183:
+	move	$s1 $s2
+	la	$t2 int_const17
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label188
+	la	$a1 bool_const0
+	jal	equality_test
+label188:
+	lw	$t1 12($a0)
+	beqz	$t1 label186
+	la	$a0 str_const38
+	b	label187
+label186:
+	move	$s1 $s2
+	la	$t2 int_const18
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label191
+	la	$a1 bool_const0
+	jal	equality_test
+label191:
+	lw	$t1 12($a0)
+	beqz	$t1 label189
+	la	$a0 str_const39
+	b	label190
+label189:
+	move	$s1 $s2
+	la	$t2 int_const19
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label194
+	la	$a1 bool_const0
+	jal	equality_test
+label194:
+	lw	$t1 12($a0)
+	beqz	$t1 label192
+	la	$a0 str_const40
+	b	label193
+label192:
+	move	$s1 $s2
+	la	$t2 int_const20
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label197
+	la	$a1 bool_const0
+	jal	equality_test
+label197:
+	lw	$t1 12($a0)
+	beqz	$t1 label195
+	la	$a0 str_const41
+	b	label196
+label195:
+	move	$s1 $s2
+	la	$t2 int_const0
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label200
+	la	$a1 bool_const0
+	jal	equality_test
+label200:
+	lw	$t1 12($a0)
+	beqz	$t1 label198
+	la	$a0 str_const42
+	b	label199
+label198:
+	move	$s1 $s2
+	la	$t2 int_const3
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label203
+	la	$a1 bool_const0
+	jal	equality_test
+label203:
+	lw	$t1 12($a0)
+	beqz	$t1 label201
+	la	$a0 str_const43
+	b	label202
+label201:
+	move	$s1 $s2
+	la	$t2 int_const21
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label206
+	la	$a1 bool_const0
+	jal	equality_test
+label206:
+	lw	$t1 12($a0)
+	beqz	$t1 label204
+	la	$a0 str_const44
+	b	label205
+label204:
+	move	$s1 $s2
+	la	$t2 int_const22
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label209
+	la	$a1 bool_const0
+	jal	equality_test
+label209:
+	lw	$t1 12($a0)
+	beqz	$t1 label207
+	la	$a0 str_const45
+	b	label208
+label207:
+	move	$s1 $s2
+	la	$t2 int_const23
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label212
+	la	$a1 bool_const0
+	jal	equality_test
+label212:
+	lw	$t1 12($a0)
+	beqz	$t1 label210
+	la	$a0 str_const46
+	b	label211
+label210:
+	move	$s1 $s2
+	la	$t2 int_const5
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label215
+	la	$a1 bool_const0
+	jal	equality_test
+label215:
+	lw	$t1 12($a0)
+	beqz	$t1 label213
+	la	$a0 str_const47
+	b	label214
+label213:
+	move	$s1 $s2
+	la	$t2 int_const6
+	move	$t1 $s1
+	la	$a0 bool_const1
+	beq	$t1 $t2 label218
+	la	$a1 bool_const0
+	jal	equality_test
+label218:
+	lw	$t1 12($a0)
+	beqz	$t1 label216
+	la	$a0 str_const48
+	b	label217
+label216:
+	la	$a0 str_const49
+label217:
+label214:
+label211:
+label208:
+label205:
+label202:
+label199:
+label196:
+label193:
+label190:
+label187:
+label184:
+label181:
+label178:
+label175:
+label172:
+label169:
+label166:
+label163:
+label160:
+label157:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 CellularAutomaton.prompt:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -4
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	la	$a0 String_protObj
-	jal	Object.copy
-	sw	$a0 -4($fp)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	la	$s2 str_const68
 	la	$a0 str_const50
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label228
+	bne	$a0 $zero label219
 	la	$a0 str_const0
 	li	$t1 370
 	jal	_dispatch_abort
-label228:
+label219:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3692,83 +3210,77 @@ label228:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label229
+	bne	$a0 $zero label220
 	la	$a0 str_const0
 	li	$t1 371
 	jal	_dispatch_abort
-label229:
+label220:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
 	move	$a0 $s0
-	bne	$a0 $zero label230
+	bne	$a0 $zero label221
 	la	$a0 str_const0
 	li	$t1 372
 	jal	_dispatch_abort
-label230:
+label221:
 	lw	$t1 8($a0)
 	lw	$t1 20($t1)
 	jalr		$t1
-	sw	$a0 -4($fp)
+	move	$s2 $a0
 	la	$a0 str_const1
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label231
+	bne	$a0 $zero label222
 	la	$a0 str_const0
 	li	$t1 373
 	jal	_dispatch_abort
-label231:
+label222:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const52
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s1 $s2
+	la	$t2 str_const52
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label232
+	beq	$t1 $t2 label225
 	la	$a1 bool_const0
 	jal	equality_test
-label232:
-	lw	$t2 12($a0)
-	beqz	$t2 label233
+label225:
+	lw	$t1 12($a0)
+	beqz	$t1 label223
 	la	$a0 bool_const0
-	b	label234
-label233:
+	b	label224
+label223:
 	la	$a0 bool_const1
-label234:
-	addiu	$sp $sp 4
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
+label224:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 CellularAutomaton.prompt2:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -4
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	la	$a0 String_protObj
-	jal	Object.copy
-	sw	$a0 -4($fp)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	la	$s2 str_const68
 	la	$a0 str_const53
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label235
+	bne	$a0 $zero label226
 	la	$a0 str_const0
 	li	$t1 388
 	jal	_dispatch_abort
-label235:
+label226:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3776,11 +3288,11 @@ label235:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label236
+	bne	$a0 $zero label227
 	la	$a0 str_const0
 	li	$t1 389
 	jal	_dispatch_abort
-label236:
+label227:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3788,74 +3300,66 @@ label236:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label237
+	bne	$a0 $zero label228
 	la	$a0 str_const0
 	li	$t1 390
 	jal	_dispatch_abort
-label237:
+label228:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
 	move	$a0 $s0
-	bne	$a0 $zero label238
+	bne	$a0 $zero label229
 	la	$a0 str_const0
 	li	$t1 391
 	jal	_dispatch_abort
-label238:
+label229:
 	lw	$t1 8($a0)
 	lw	$t1 20($t1)
 	jalr		$t1
-	sw	$a0 -4($fp)
-	lw	$a0 -4($fp)
-	sw	$a0 0($sp)
-	addiu	$sp $sp -4
-	la	$a0 str_const56
-	lw	$t1 4($sp)
-	move	$t2 $a0
-	addiu	$sp $sp 4
+	move	$s2 $a0
+	move	$s1 $s2
+	la	$t2 str_const56
+	move	$t1 $s1
 	la	$a0 bool_const1
-	beq	$t1 $t2 label239
+	beq	$t1 $t2 label232
 	la	$a1 bool_const0
 	jal	equality_test
-label239:
-	lw	$t2 12($a0)
-	beqz	$t2 label240
+label232:
+	lw	$t1 12($a0)
+	beqz	$t1 label230
 	la	$a0 bool_const1
-	b	label241
-label240:
+	b	label231
+label230:
 	la	$a0 bool_const0
-label241:
-	addiu	$sp $sp 4
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
+label231:
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
 Main.main:
-	sw	$fp 0($sp)
-	addiu	$sp $sp -4
-	sw	$s0 0($sp)
-	addiu	$sp $sp -4
-	move	$fp $sp
-	sw	$ra 0($sp)
-	addiu	$sp $sp -4
-	addiu	$sp $sp -8
+	addiu	$sp $sp -20
+	sw	$fp 20($sp)
+	sw	$s0 16($sp)
+	sw	$ra 12($sp)
+	addiu	$fp $sp 4
 	move	$s0 $a0
-	la	$a0 Bool_protObj
-	jal	Object.copy
-	sw	$a0 -4($fp)
-	la	$a0 String_protObj
-	jal	Object.copy
-	sw	$a0 -8($fp)
+	sw	$s1 4($fp)
+	sw	$s2 0($fp)
+	la	$s2 bool_const0
+	la	$s1 str_const68
 	la	$a0 str_const57
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label242
+	bne	$a0 $zero label233
 	la	$a0 str_const0
 	li	$t1 412
 	jal	_dispatch_abort
-label242:
+label233:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
@@ -3863,109 +3367,108 @@ label242:
 	sw	$a0 0($sp)
 	addiu	$sp $sp -4
 	move	$a0 $s0
-	bne	$a0 $zero label243
+	bne	$a0 $zero label234
 	la	$a0 str_const0
 	li	$t1 413
 	jal	_dispatch_abort
-label243:
+label234:
 	lw	$t1 8($a0)
 	lw	$t1 12($t1)
 	jalr		$t1
-label244:
+label235:
 	move	$a0 $s0
-	bne	$a0 $zero label246
+	bne	$a0 $zero label237
 	la	$a0 str_const0
 	li	$t1 414
 	jal	_dispatch_abort
-label246:
+label237:
 	lw	$t1 8($a0)
 	lw	$t1 104($t1)
 	jalr		$t1
-	lw	$t2 12($a0)
-	beqz	$t2 label245
-	la	$a0 bool_const1
-	sw	$a0 -4($fp)
+	lw	$t1 12($a0)
+	beq	$t1 $zero label236
+	la	$s2 bool_const1
 	move	$a0 $s0
-	bne	$a0 $zero label247
+	bne	$a0 $zero label238
 	la	$a0 str_const0
 	li	$t1 417
 	jal	_dispatch_abort
-label247:
+label238:
 	lw	$t1 8($a0)
 	lw	$t1 96($t1)
 	jalr		$t1
-	sw	$a0 -8($fp)
-	lw	$a0 -8($fp)
-	sw	$a0 0($sp)
+	move	$s1 $a0
+	sw	$s1 0($sp)
 	addiu	$sp $sp -4
 	la	$a0 CellularAutomaton_protObj
+	jal	Object.copy
 	jal	CellularAutomaton_init
-	bne	$a0 $zero label248
+	bne	$a0 $zero label239
 	la	$a0 str_const0
 	li	$t1 418
 	jal	_dispatch_abort
-label248:
+label239:
 	lw	$t1 8($a0)
 	lw	$t1 36($t1)
 	jalr		$t1
 	sw	$a0 28($s0)
 	lw	$a0 28($s0)
-	bne	$a0 $zero label249
+	bne	$a0 $zero label240
 	la	$a0 str_const0
 	li	$t1 419
 	jal	_dispatch_abort
-label249:
+label240:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
 	jalr		$t1
-label250:
-	lw	$a0 -4($fp)
-	lw	$t2 12($a0)
-	beqz	$t2 label251
+label241:
+	lw	$t1 12($s2)
+	beq	$t1 $zero label242
 	move	$a0 $s0
-	bne	$a0 $zero label252
+	bne	$a0 $zero label245
 	la	$a0 str_const0
 	li	$t1 421
 	jal	_dispatch_abort
-label252:
+label245:
 	lw	$t1 8($a0)
 	lw	$t1 100($t1)
 	jalr		$t1
-	lw	$t2 12($a0)
-	beqz	$t2 label253
+	lw	$t1 12($a0)
+	beqz	$t1 label243
 	lw	$a0 28($s0)
-	bne	$a0 $zero label255
+	bne	$a0 $zero label246
 	la	$a0 str_const0
 	li	$t1 423
 	jal	_dispatch_abort
-label255:
+label246:
 	lw	$t1 8($a0)
 	lw	$t1 92($t1)
 	jalr		$t1
 	lw	$a0 28($s0)
-	bne	$a0 $zero label256
+	bne	$a0 $zero label247
 	la	$a0 str_const0
 	li	$t1 424
 	jal	_dispatch_abort
-label256:
+label247:
 	lw	$t1 8($a0)
 	lw	$t1 40($t1)
 	jalr		$t1
-	b	label254
-label253:
-	la	$a0 bool_const0
-	sw	$a0 -4($fp)
-label254:
-	b	label250
-label251:
 	b	label244
-label245:
+label243:
+	la	$s2 bool_const0
+	move	$a0 $s2
+label244:
+	b	label241
+label242:
+	move	$a0 $zero
+	b	label235
+label236:
+	move	$a0 $zero
 	move	$a0 $s0
-	addiu	$sp $sp 8
-	lw	$ra 4($sp)
-	lw	$s0 8($sp)
-	lw	$fp 12($sp)
-	addiu	$sp $sp 12
+	lw	$s1 4($fp)
+	lw	$s2 0($fp)
+	lw	$fp 20($sp)
+	lw	$s0 16($sp)
+	lw	$ra 12($sp)
+	addiu	$sp $sp 20
 	jr	$ra	
-
-# end of generated code
