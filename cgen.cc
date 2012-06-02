@@ -1940,13 +1940,17 @@ void new__class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
     // get protObj
     emit_load(ACC, 0, T2, s); 
 
+    
+    // Call Object.copy
+    emit_jal("Object.copy", s);
     // get initialized.
-
     emit_load(T2, 1, T2, s); // T2 now points to the initialization method.
-
+    
     emit_jalr(T2, s);
   } else {
     emit_load_address(ACC, get_protObj_label(type_name), s); 
+    // Call Object.copy
+    emit_jal("Object.copy", s);
     emit_jal(get_init_label(type_name), s);
   }
 
