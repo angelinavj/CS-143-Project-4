@@ -69,17 +69,43 @@ class Fact inherits C {
 
 class Main inherits IO {
       x : H <- new H;
-      main() : SELF_TYPE {
+      a1 : A;
+      f1 : F <- new F;
+      fact : Fact <- new Fact;
+      fib : Fib <- new Fib;
+      
+      main() : Int {
       	     {
-	           
-      	     case x of 
+	     if 2 + ~1 < 5 
+	     then 
+	     {
+	     	  a1 <- new A;
+	     	  out_string("Bad\n");	
+	     }
+	     else 
+	     {
+	     	  out_string("Bad\n");
+	     }
+	     fi; 	           
+      	     
+	     let x : Int <- 2 in
+	     {
+		while x < 6 loop
+		{
+			out_int(fact.factorial(x));
+			x <- x+1;
+		}      
+		pool;
+	     };
+
+	     case x of 
 	     	  a : Object => 100;
 		  b : B => 100;
 		  c : I => 100;
 		  d : A => 0;
 		  e : F => 100;
 		  f : D => 100;
-	     esac;		
+	     esac;
        	     }
        };
 };
