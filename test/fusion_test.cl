@@ -7,7 +7,7 @@ class A {
 
 class B inherits A {
       s : SELF_TYPE;
-      d : Int;
+      d : Int <- ~1;
       e : String;
       f : F;
 };
