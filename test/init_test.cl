@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class A {
       x : Int;
 };
@@ -24,8 +25,11 @@ class I inherits H {
 
 
 (*isvoid and other arithmetic might be good tests for init *)
+
 class Main inherits IO {
-      main() : Int {
-      	     0
-       };
+  a: Int <- 5;
+  main() : SELF_TYPE {
+    out_int(a)
+  };
+
 };
