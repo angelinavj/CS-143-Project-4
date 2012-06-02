@@ -1340,7 +1340,6 @@ void CgenClassTable::code_init_call(CgenNodeP classNode, method_class* method) {
     printf("The maximum number of local variables in this method: %d\n", num_max_local_vars);
   }
 
-
   current_method = method;
   localid_offset_table->enterscope();
   emit_push(FP, str);
@@ -1350,13 +1349,14 @@ void CgenClassTable::code_init_call(CgenNodeP classNode, method_class* method) {
   emit_addiu(SP, SP, -4 * num_max_local_vars, str);
   emit_move(SELF, ACC, str);
 
-	if (classNode->get_name() != Object) {
-  	emit_jal(get_init_label(classNode->get_parentnd()->get_name()), str);
-	}
+  if (classNode->get_name() != Object) {
+    emit_jal(get_init_label(classNode->get_parentnd()->get_name()), str);
+  }
+
   Formals params = method->get_formals();
   for (int i = params->first(); params->more(i); i = params->next(i)) {
     formal_class *param = (formal_class *)(params->nth(i));
-    localid_offset_table->addid(param->get_name(), new int(i - params->first() + 3));
+    localid_offset_table->addid(param->get_name(), new int(params->len() - i + params->first() - 1 + 3));
   }
 
   method->expr->code(str, this, classNode);
