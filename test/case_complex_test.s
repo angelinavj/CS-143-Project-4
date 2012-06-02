@@ -18,10 +18,10 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_GenGC_Init
+	.word	_NoGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_GenGC_Collect
+	.word	_NoGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
 	.word	0
@@ -553,8 +553,6 @@ Main_init:
 	la	$a0 H_protObj
 	jal	H_init
 	sw	$a0 12($s0)
-	addiu	$a1 $s0 3
-	jal	_GenGC_Assign
 	move	$a0 $s0
 	addiu	$sp $sp 0
 	lw	$ra 4($sp)
