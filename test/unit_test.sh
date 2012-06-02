@@ -19,6 +19,7 @@ files=(
 "$(pwd)/neg_test.cl"
 "$(pwd)/new_simple.cl" "$(pwd)/new_simple2.cl"
 "$(pwd)/static_disp_1.cl" "$(pwd)/static_dispatch_simple.cl"
+"$(pwd)/recursion_test.cl"
 )
 
 for file in "${files[@]}"

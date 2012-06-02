@@ -18,10 +18,10 @@ _string_tag:
 	.word	5
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
 	.word	0
@@ -207,10 +207,10 @@ str_const1:
 	.word	-1
 str_const0:
 	.word	5
-	.word	21
+	.word	11
 	.word	String_dispTab
 	.word	int_const10
-	.ascii	"/afs/ir/users/v/e/veni/CS-143-Project-4/test/case_complex_test.cl"
+	.ascii	"./test/case_complex_test.cl"
 	.byte	0	
 	.align	2
 	.word	-1
@@ -218,7 +218,7 @@ int_const10:
 	.word	3
 	.word	4
 	.word	Int_dispTab
-	.word	65
+	.word	27
 	.word	-1
 int_const9:
 	.word	3
@@ -296,7 +296,6 @@ Int__val_attrOffset=3
 Bool__val_attrOffset=3
 String__val_attrOffset=3
 String__str_field_attrOffset=4
-	.word	-1
 class_nameTab:
 	.word	str_const5
 	.word	str_const6
@@ -313,7 +312,6 @@ class_nameTab:
 	.word	str_const16
 	.word	str_const17
 	.word	str_const18
-	.word	-1
 class_objTab:
 	.word	Object_protObj
 	.word	Object_init
@@ -555,6 +553,8 @@ Main_init:
 	la	$a0 H_protObj
 	jal	H_init
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 3
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	addiu	$sp $sp 0
 	lw	$ra 4($sp)

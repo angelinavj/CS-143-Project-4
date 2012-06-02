@@ -1472,8 +1472,15 @@ void assign_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) 
   // The return of expr is in ACC.
   int* word_offset = ctable->localid_offset_table->lookup(name);
 
+  //If NULL then attribute
   if(word_offset == NULL) {
     emit_store(ACC, ctable->get_attribute_offset(curClass, name), SELF, s);
+    
+    //Will notify garbage collector every time attribute assignments occurs
+    if(cgen_Memmgr != GC_NOGC) {
+      emit_addiu(A1, SELF, ctable->get_attribute_offset(curClass, name), s);
+      emit_jal("_GenGC_Assign", s);
+    }
   }
   else {
     emit_store(ACC, *word_offset, FP, s);
