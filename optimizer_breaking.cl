@@ -22,23 +22,29 @@ class Fact {
 };
 
 class Main inherits IO {
-      fa : Int;
-      fibNum : Int <- 10;
       fib : Fib <- new Fib;
       fact : Fact;
       x : Int <- 2;
+      breaker : Int;
 
       main() : SELF_TYPE {
       	   {
-		fibNum <- let x : Int <- 5+7 in fib.fibonacci(x);
-		out_int(fibNum);	
-		out_string("\n");
+		let x : Int <- 1 in
+		{
+			while x < 1000 loop
 			
-		fact <- new Fact;
-		fa <- fact.factorial(x + 8);
-		
-		out_int(fa);
-		out_string("\n");
+			breaker <- fib.fibonacci(fact.factorial(x / 2));
+			
+			fibNum <- let breaker : Int <- 5+7 in 
+			{	
+				fib.fibonacci(breaker);
+			}
+			
+			fact <- new Fact;
+			fa <- fact.factorial(x + 8);
+			pool;
+		}
+		out_int(breaker);
       	   }
       };
 };
