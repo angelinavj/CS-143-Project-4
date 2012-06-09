@@ -1505,7 +1505,7 @@ void static_dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP c
   // If it is here, calling dispatch abort.
   // filename in $a0, line number in $t1.
   
-  emit_load_address(ACC, "str_const0", s); 
+  emit_load_string(ACC, stringtable.lookup_string(curClass->filename->get_string()), s); 
   emit_load_imm(T1, get_line_number(), s);
   emit_jal("_dispatch_abort", s);
 
@@ -1540,7 +1540,7 @@ void dispatch_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass
   // If it is here, calling dispatch abort.
   // filename in $a0, line number in $t1.
   
-  emit_load_address(ACC, "str_const0", s); 
+  emit_load_string(ACC, stringtable.lookup_string(curClass->filename->get_string()), s); 
   emit_load_imm(T1, get_line_number(), s);
   emit_jal("_dispatch_abort", s);
 
@@ -1606,6 +1606,8 @@ void loop_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   emit_branch(start_label, s);
   emit_label_def(end_label, s);
   ctable->localid_offset_table->exitscope();
+
+  emit_load_imm(ACC, 0, s);
 }
 
 void typcase_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
@@ -1714,14 +1716,16 @@ void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
   if (!init->is_no_expr()) {
     init->code(s, ctable, curClass);
+
+    // Call Object.copy
+    emit_jal("Object.copy", s);
   } else {
     // Load typename_protObj
-    emit_load_address(ACC, get_protObj_label(type_decl), s); 
+    //emit_load_address(ACC, get_protObj_label(type_decl), s); 
+    emit_load_imm(ACC, 0, s); 
   }
 
-  // Call Object.copy
-  emit_jal("Object.copy", s);
-
+  
   int offsetFromFP = ctable->current_method->get_new_temporary_offset();
   // Save the pointer in the stack.
   // The pointer to the object in heap will be in ACC
