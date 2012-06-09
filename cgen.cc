@@ -1818,7 +1818,10 @@ void neg_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   e1->code(s, ctable, curClass);
   emit_fetch_int(T1, ACC, s);
   emit_neg(T1, T1, s);
+  emit_push(T1, s);
   emit_jal("Object.copy", s);
+  emit_load(T1, 1, SP, s);
+  emit_addiu(SP, SP, 4, s);
   emit_store(T1, DEFAULT_OBJFIELDS, ACC, s);
 }
 
