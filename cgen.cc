@@ -1713,15 +1713,8 @@ void block_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
   ctable->localid_offset_table->enterscope();
 
-  int out_of_init_label = ctable->labelCounter;
-  (ctable->labelCounter)++;
-
   if (!init->is_no_expr()) {
     init->code(s, ctable, curClass);
-
-    emit_beqz(ACC, out_of_init_label, s);
-    // Call Object.copy
-    //emit_jal("Object.copy", s);
   } else {
     // Load typename_protObj
     if ((type_decl == Int) || (type_decl == Str) || (type_decl == Bool)) {
@@ -1732,8 +1725,6 @@ void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
       emit_load_imm(ACC, 0, s); 
     }
   }
-
-  emit_label_def(out_of_init_label, s);
 
   int offsetFromFP = ctable->current_method->get_new_temporary_offset();
   // Save the pointer in the stack.

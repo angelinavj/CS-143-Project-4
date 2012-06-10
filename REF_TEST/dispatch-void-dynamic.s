@@ -433,7 +433,6 @@ label1:
 label2:
 	li	$a0 0
 	beqz	$a0 label0
-	jal	Object.copy
 label0:
 	sw	$a0 -4($fp)
 	lw	$a0 -4($fp)

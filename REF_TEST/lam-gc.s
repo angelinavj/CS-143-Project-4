@@ -17,10 +17,10 @@ _string_tag:
 	.word	12
 	.globl	_MemMgr_INITIALIZER
 _MemMgr_INITIALIZER:
-	.word	_NoGC_Init
+	.word	_GenGC_Init
 	.globl	_MemMgr_COLLECTOR
 _MemMgr_COLLECTOR:
-	.word	_NoGC_Collect
+	.word	_GenGC_Collect
 	.globl	_MemMgr_TEST
 _MemMgr_TEST:
 	.word	0
@@ -1236,6 +1236,8 @@ LambdaListRef_init:
 	jal	Object_init
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1531,10 +1533,14 @@ LambdaListRef.reset:
 	move	$s0 $a0
 	la	$a0 int_const0
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	la	$a0 LambdaList_protObj
 	jal	Object.copy
 	jal	LambdaList_init
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1568,6 +1574,8 @@ label4:
 	lw	$t1 32($t1)
 	jalr		$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$s1 12($s0)
 	la	$a0 int_const1
 	jal	Object.copy
@@ -1576,6 +1584,8 @@ label4:
 	add	$t1 $t1 $t2
 	sw	$t1 12($a0)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$s1 12($s0)
 	la	$a0 int_const1
 	jal	Object.copy
@@ -1606,6 +1616,8 @@ label5:
 	lw	$t1 28($t1)
 	jalr		$t1
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -1828,12 +1840,20 @@ LambdaListNE.init:
 	move	$s0 $a0
 	lw	$a0 24($fp)
 	sw	$a0 20($s0)
+	addiu	$a1 $s0 20
+	jal	_GenGC_Assign
 	lw	$a0 20($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 16($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	lw	$a0 12($fp)
 	sw	$a0 24($s0)
+	addiu	$a1 $s0 24
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -3529,8 +3549,12 @@ App.init:
 	move	$s0 $a0
 	lw	$a0 16($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -3895,8 +3919,12 @@ Lambda.init:
 	move	$s0 $a0
 	lw	$a0 16($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -4330,6 +4358,8 @@ Variable.init:
 	move	$s0 $a0
 	lw	$a0 12($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
@@ -4715,8 +4745,12 @@ VarListNE.init:
 	move	$s0 $a0
 	lw	$a0 16($fp)
 	sw	$a0 12($s0)
+	addiu	$a1 $s0 12
+	jal	_GenGC_Assign
 	lw	$a0 12($fp)
 	sw	$a0 16($s0)
+	addiu	$a1 $s0 16
+	jal	_GenGC_Assign
 	move	$a0 $s0
 	lw	$fp 12($sp)
 	lw	$s0 8($sp)
