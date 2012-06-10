@@ -1721,7 +1721,7 @@ void let_class::code(ostream &s, CgenClassTable *ctable, CgenNodeP curClass) {
 
     emit_beqz(ACC, out_of_init_label, s);
     // Call Object.copy
-    emit_jal("Object.copy", s);
+    //emit_jal("Object.copy", s);
   } else {
     // Load typename_protObj
     if ((type_decl == Int) || (type_decl == Str) || (type_decl == Bool)) {
